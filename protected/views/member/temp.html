@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="language" content="en" />
+
+	
+	<!-- blueprint CSS framework -->
+	<link rel="stylesheet" type="text/css" href="/entryservice/css/screen.css" media="screen, projection" />
+	<link rel="stylesheet" type="text/css" href="/entryservice/css/print.css" media="print" />
+	<!--[if lt IE 8]>
+	<link rel="stylesheet" type="text/css" href="/entryservice/css/ie.css" media="screen, projection" />
+	<![endif]-->
+
+	<link rel="stylesheet" type="text/css" href="/entryservice/css/main.css" />
+	<link rel="stylesheet" type="text/css" href="/entryservice/css/form.css" />
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" type="text/css" href="/entryservice/assets/fbb8e3e/css/datepicker.css" />
+<link rel="stylesheet" type="text/css" href="/entryservice/assets/c79a20c8/css/bootstrap.css" />
+<link rel="stylesheet" type="text/css" href="/entryservice/assets/c79a20c8/css/bootstrap-responsive.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="/entryservice/assets/c79a20c8/css/yiistrap.css" />
+<script type="text/javascript" src="/entryservice/assets/9d0d91a4/jquery.js"></script>
+<title>Auroville Entry Service - Update Member</title>
+</head>
+
+<body>
+
+<div class="container" id="page">
+
+	<div id="header">
+		<div id="logo">Auroville Entry Service</div>
+	</div><!-- header -->
+	
+	<div id="tbnav">
+		<div class="navbar"><div class="navbar-inner"><div class="container"><a class="brand" href="/entryservice/index.php">Home</a><ul id="yw1" class="nav" role="menu"><li visible="1" class="dropdown" role="menuitem"><a class="dropdown-toggle" data-toggle="dropdown" href="/entryservice/index.php?r=applicant/admin"><i class="icon-user"></i> Applicants <b class="caret"></b></a><ul class="dropdown-menu" id="yt1" aria-labelledby="yt1" role="menu"><li role="menuitem"><a tabindex="-1" href="/entryservice/index.php?r=applicant/admin">Manage</a></li><li role="menuitem"><a tabindex="-1" href="#">Details</a></li><li role="menuitem"><a tabindex="-1" href="#">Status</a></li><li role="menuitem"><a tabindex="-1" href="#">Interviews</a></li></ul></li><li visible="1" role="menuitem"><a tabindex="-1" href="#"><i class="icon-list-alt"></i> Lists</a></li><li visible="1" role="menuitem"><a tabindex="-1" href="#"><i class="icon-signal"></i> Statistics</a></li><li visible="1" role="menuitem"><a tabindex="-1" href="/entryservice/index.php?r=Meeting/admin"><i class="icon-briefcase"></i> Meetings</a></li><li visible="1" class="dropdown" role="menuitem"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-flag"></i> Settings <b class="caret"></b></a><ul class="dropdown-menu" id="yt2" aria-labelledby="yt2" role="menu"><li role="menuitem"><a tabindex="-1" href="/entryservice/index.php?r=milestone/admin">Milestones</a></li><li role="menuitem"><a tabindex="-1" href="/entryservice/index.php?r=milestoneCategory/admin">Milestone Categories</a></li><li role="menuitem"><a tabindex="-1" href="/entryservice/index.php?r=status/admin">Status</a></li></ul></li><li visible="1" class="active dropdown" role="menuitem"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-cog"></i> Admin <b class="caret"></b></a><ul class="dropdown-menu" id="yt3" aria-labelledby="yt3" role="menu"><li role="menuitem"><a tabindex="-1" href="/entryservice/index.php?r=user/profile">Users</a></li><li role="menuitem"><a tabindex="-1" href="/entryservice/index.php?r=Member/admin">Members</a></li></ul></li></ul><ul class="pull-right nav" id="yw2" role="menu"><li visible="1" role="menuitem"><a tabindex="-1" href="/entryservice/index.php?r=user/logout">Logout (luk)</a></li></ul></div></div></div>	</div>
+
+	
+	
+	<div id="content">
+	
+
+   
+
+<div>
+	<div style="float: left;">
+		<h1>Update Pion Kripa</h1>
+	</div>
+	<div style="float: right;">
+		<div class="btn-group"><a class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" href="#">Action <b class="caret"></b></a><ul role="menu" class="dropdown-menu"><li role="menuitem"><a tabindex="-1" href="/entryservice/index.php?r=member/create">Create</a></li><li role="menuitem"><a tabindex="-1" href="/entryservice/index.php?r=member/view&amp;id=4">View</a></li><li role="menuitem"><a tabindex="-1" href="/entryservice/index.php?r=member/admin">Manage</a></li></ul></div>	</div>
+</div>
+<div style="clear:both;"></div>
+
+
+
+
+<div class="form">
+
+    <form id="member-form" class="form-horizontal" action="/entryservice/index.php?r=member/update&amp;id=4" method="post">
+    <p class="help-block">Fields with <span class="required">*</span> are required.</p>
+
+    
+            <div class="control-group"><label class="control-label required" for="Member_Name">Name <span class="required">*</span></label><div class="controls"><input maxlength="64" name="Member[Name]" id="Member_Name" class="span5" type="text" value="Pion" /></div></div>
+            <div class="control-group"><label class="control-label required" for="Member_Surname">Surname <span class="required">*</span></label><div class="controls"><input maxlength="64" name="Member[Surname]" id="Member_Surname" class="span5" type="text" value="Kripa" /></div></div>
+            <div class="control-group"><label class="control-label" for="Member_Email">Email</label><div class="controls"><input name="Member[Email]" id="Member_Email" class="span5" type="email" value="kripa@auroville.org.in" /></div></div>
+            <div class="control-group"><label class="control-label" for="Member_Phone">Phone</label><div class="controls"><input name="Member[Phone]" id="Member_Phone" class="span3" type="text" maxlength="16" value="" /></div></div>
+            <div class="control-group"><label class="control-label required" for="Member_FromDate">From <span class="required">*</span></label><div class="controls"><input name="Member[FromDate]" id="Member_FromDate" class="span2" type="date" value="2012-04-02" /></div></div>
+            <div class="control-group"><label class="control-label" for="Member_ToDate">To</label><div class="controls"><input name="Member[ToDate]" id="Member_ToDate" class="span2" type="date" /></div></div>
+ 
+            <div class="control-group ">
+                <label class="control-label" for="Member_ToDate">To</label>
+                <div class="controls">
+                    <input autocomplete="off" class="grd-white" id="Member_ToDate" name="Member[ToDate]" type="text" />                </div>
+            </div>
+
+
+        <div class="form-actions">
+        <button class="btn btn-primary btn-large" type="submit" name="yt0">Save</button>    </div>
+
+    </form>
+</div><!-- form --></div><!-- content -->
+
+	<div class="clear"></div>
+
+	<div id="footer">
+		&copy; 2014 by Luk - 	Starcode.<br/>
+		Powered by <a href="http://www.yiiframework.com/" rel="external">Yii Framework</a>.	</div><!-- footer -->
+
+</div><!-- page -->
+
+<script type="text/javascript" src="/entryservice/assets/fbb8e3e/js/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="/entryservice/assets/c79a20c8/js/bootstrap.js"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+jQuery('#Member_ToDate').datepicker({'format':'yyyy-mm-dd','autoclose':true});
+jQuery('body').popover({'selector':'a[rel=popover]'});
+jQuery('body').tooltip({'selector':'a[rel=tooltip]'});
+/*]]>*/
+</script>
+</body>
+</html>

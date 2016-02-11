@@ -1,0 +1,574 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="language" content="en" />
+
+	
+	<!-- blueprint CSS framework -->
+	<link rel="stylesheet" type="text/css" href="/entryservice/css/screen.css" media="screen, projection" />
+	<link rel="stylesheet" type="text/css" href="/entryservice/css/print.css" media="print" />
+	<!--[if lt IE 8]>
+	<link rel="stylesheet" type="text/css" href="/entryservice/css/ie.css" media="screen, projection" />
+	<![endif]-->
+
+	<link rel="stylesheet" type="text/css" href="/entryservice/css/main.css" />
+	<link rel="stylesheet" type="text/css" href="/entryservice/css/form.css" />
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" type="text/css" href="/entryservice/assets/fbb8e3e/css/datepicker.css" />
+<link rel="stylesheet" type="text/css" href="/entryservice/assets/63d8d1e3/css/box.css" />
+<link rel="stylesheet" type="text/css" href="/entryservice/assets/b875bb16/css/bootstrap-editable.css" />
+<link rel="stylesheet" type="text/css" href="/entryservice/assets/c79a20c8/css/bootstrap.css" />
+<link rel="stylesheet" type="text/css" href="/entryservice/assets/c79a20c8/css/bootstrap-responsive.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="/entryservice/assets/c79a20c8/css/yiistrap.css" />
+<style type="text/css">
+/*<![CDATA[*/
+@media
+	only screen and (max-width: 760px),
+	(min-device-width: 768px) and (max-device-width: 1024px)  {
+
+		/* Force table to not be like tables anymore */
+		#applicant-address-grid table,#applicant-address-grid thead,#applicant-address-grid tbody,#applicant-address-grid th,#applicant-address-grid td,#applicant-address-grid tr {
+			display: block;
+		}
+
+		/* Hide table headers (but not display: none;, for accessibility) */
+		#applicant-address-grid thead tr {
+			position: absolute;
+			top: -9999px;
+			left: -9999px;
+		}
+
+		#applicant-address-grid tr { border: 1px solid #ccc; }
+
+		#applicant-address-grid td {
+			/* Behave  like a "row" */
+			border: none;
+			border-bottom: 1px solid #eee;
+			position: relative;
+			padding-left: 50%;
+		}
+
+		#applicant-address-grid td:before {
+			/* Now like a table header */
+			position: absolute;
+			/* Top/left values mimic padding */
+			top: 6px;
+			left: 6px;
+			width: 45%;
+			padding-right: 10px;
+			white-space: nowrap;
+		}
+		.grid-view .button-column {
+			text-align: left;
+			width:auto;
+		}
+		/*
+		Label the data
+		*/
+		#applicant-address-grid td:nth-of-type(1):before { content: 'Community'; }
+#applicant-address-grid td:nth-of-type(2):before { content: 'From'; }
+#applicant-address-grid td:nth-of-type(3):before { content: 'To'; }
+#applicant-address-grid td:nth-of-type(4):before { content: '&nbsp;'; }
+
+	}
+/*]]>*/
+</style>
+<script type="text/javascript" src="/entryservice/assets/9d0d91a4/jquery.js"></script>
+<script type="text/javascript" src="/entryservice/assets/9d0d91a4/jquery.ba-bbq.js"></script>
+<title>Auroville Entry Service - Update Applicant</title>
+</head>
+
+<body>
+
+<div class="container" id="page">
+
+	<div id="header">
+		<div id="logo">Auroville Entry Service</div>
+	</div><!-- header -->
+	
+	<div id="tbnav">
+		<div class="navbar"><div class="navbar-inner"><div class="container"><a class="brand" href="/entryservice/index.php">Home</a><ul id="yw9" class="nav" role="menu"><li visible="1" class="active dropdown" role="menuitem"><a class="dropdown-toggle" data-toggle="dropdown" href="/entryservice/index.php?r=applicant/admin"><i class="icon-user"></i> Applicants <b class="caret"></b></a><ul class="dropdown-menu" id="yt7" aria-labelledby="yt7" role="menu"><li role="menuitem"><a tabindex="-1" href="/entryservice/index.php?r=applicant/admin">Manage</a></li><li role="menuitem"><a tabindex="-1" href="#">Details</a></li><li role="menuitem"><a tabindex="-1" href="#">Status</a></li><li role="menuitem"><a tabindex="-1" href="#">Interviews</a></li></ul></li><li visible="1" role="menuitem"><a tabindex="-1" href="#"><i class="icon-list-alt"></i> Lists</a></li><li visible="1" role="menuitem"><a tabindex="-1" href="#"><i class="icon-signal"></i> Statistics</a></li><li visible="1" role="menuitem"><a tabindex="-1" href="/entryservice/index.php?r=Meeting/admin"><i class="icon-briefcase"></i> Meetings</a></li><li visible="1" class="dropdown" role="menuitem"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-flag"></i> Settings <b class="caret"></b></a><ul class="dropdown-menu" id="yt8" aria-labelledby="yt8" role="menu"><li role="menuitem"><a tabindex="-1" href="/entryservice/index.php?r=milestone/admin">Milestones</a></li><li role="menuitem"><a tabindex="-1" href="/entryservice/index.php?r=milestoneCategory/admin">Milestone Categories</a></li><li role="menuitem"><a tabindex="-1" href="/entryservice/index.php?r=status/admin">Status</a></li></ul></li><li visible="1" class="dropdown" role="menuitem"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-cog"></i> Admin <b class="caret"></b></a><ul class="dropdown-menu" id="yt9" aria-labelledby="yt9" role="menu"><li role="menuitem"><a tabindex="-1" href="/entryservice/index.php?r=user/profile">Users</a></li><li role="menuitem"><a tabindex="-1" href="/entryservice/index.php?r=Member/admin">Members</a></li></ul></li></ul><ul class="pull-right nav" id="yw10" role="menu"><li visible="1" role="menuitem"><a tabindex="-1" href="/entryservice/index.php?r=user/logout">Logout (luk)</a></li></ul></div></div></div>	</div>
+
+	
+	
+	<div id="content">
+	
+
+<div>
+	<div style="float: left;">
+		<h1>Luk Gastmans</h1>
+	</div>
+	<div style="float: right;">
+		<div class="btn-group"><a class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" href="#">Action <b class="caret"></b></a><ul role="menu" class="dropdown-menu"><li role="menuitem"><a tabindex="-1" href="/entryservice/index.php?r=applicant/create">Create</a></li><li role="menuitem"><a tabindex="-1" href="/entryservice/index.php?r=applicant/view&amp;id=5">View</a></li><li role="menuitem"><a tabindex="-1" href="/entryservice/index.php?r=applicant/admin">Manage</a></li></ul></div>	</div>
+</div>
+<div style="clear:both;"></div>
+
+<div class="progress"><div class="bar bar-success" style="width: 35%"></div></div>
+<div id="yw8" class="tabbable"><ul class="nav nav-tabs" role="menu"><li class="active" role="menuitem"><a data-toggle="tab" tabindex="-1" href="#tab_1">Applicant</a></li><li role="menuitem"><a data-toggle="tab" tabindex="-1" href="#tab_2">Details</a></li><li role="menuitem"><a data-toggle="tab" tabindex="-1" href="#tab_3">Status</a></li><li role="menuitem"><a data-toggle="tab" tabindex="-1" href="#tab_4">Interviews</a></li></ul><div class="tab-content"><div id="tab_1" class="tab-pane fade active in">
+
+<div class="form">
+
+<form id="applicant-form" action="/entryservice/index.php?r=applicant/update&amp;id=5" method="post">
+<div style="width: 100%; display: table;">
+    <div style="display: table-row">
+
+<div style="width: 500px; display: table-cell;">
+    
+
+    <p class="help-block">Fields with <span class="required">*</span> are required.</p>
+
+    
+            <div class="control-group"><label class="control-label required" for="Applicant_Name">Name <span class="required">*</span></label><div class="controls"><input maxlength="64" name="Applicant[Name]" id="Applicant_Name" class="span5" type="text" value="Luk" /></div></div>
+            <div class="control-group"><label class="control-label required" for="Applicant_Surname">Surname <span class="required">*</span></label><div class="controls"><input maxlength="64" name="Applicant[Surname]" id="Applicant_Surname" class="span5" type="text" value="Gastmans" /></div></div>
+            <div class="control-group"><label class="control-label required" for="Applicant_BirthPlace">Birth Place <span class="required">*</span></label><div class="controls"><input maxlength="64" name="Applicant[BirthPlace]" id="Applicant_BirthPlace" class="span5" type="text" value="Schoten" /></div></div>
+            <div class="control-group"><label class="control-label required" for="Applicant_BirthDate">Birth Date <span class="required">*</span></label><div class="controls"><input name="Applicant[BirthDate]" id="Applicant_BirthDate" class="span2" type="date" value="1969-05-24" /></div></div>            
+            <div class="control-group ">
+                <label class="control-label" for="Meeting_BirthDate">Date of birth</label>
+                <div class="controls">
+                    <input autocomplete="off" class="grd-white" id="Applicant_BirthDate" name="Applicant[BirthDate]" type="text" value="1969-05-24" />                </div>
+            </div>
+            
+
+            <div class="control-group"><label class="control-label" for="Applicant_Photo">Photo</label><div class="controls"><input maxlength="128" name="Applicant[Photo]" id="Applicant_Photo" class="span5" type="text" value="none" /></div></div>
+            <div class="control-group"><label class="control-label required" for="Applicant_Sex">Sex <span class="required">*</span></label><div class="controls"><select name="Applicant[Sex]" id="Applicant_Sex">
+<option value="M" selected="selected">Male</option>
+<option value="F">Female</option>
+</select></div></div>
+
+            <div class="control-group"><label class="control-label required" for="Applicant_MaritalStatus">Marital Status <span class="required">*</span></label><div class="controls"><select name="Applicant[MaritalStatus]" id="Applicant_MaritalStatus">
+<option value="Single">Single</option>
+<option value="Married" selected="selected">Married</option>
+<option value="Separated">Separated</option>
+<option value="Divorced">Divorced</option>
+<option value="Widowed">Widowed</option>
+<option value="Bachelor">Bachelor</option>
+</select></div></div>
+            <div class="control-group"><label class="control-label" for="Applicant_Spouse">Spouse</label><div class="controls"><input maxlength="64" name="Applicant[Spouse]" id="Applicant_Spouse" class="span5" type="text" value="" /></div></div>
+            <div class="control-group"><label class="control-label required" for="Applicant_ResServiceNum">RS No. <span class="required">*</span></label><div class="controls"><input name="Applicant[ResServiceNum]" id="Applicant_ResServiceNum" class="span5" type="text" value="1234567" /></div></div>
+            <div class="control-group"><label class="control-label" for="Applicant_Notes">Notes</label><div class="controls"><textarea rows="6" class="span5" name="Applicant[Notes]" id="Applicant_Notes"></textarea></div></div>
+            <div class="control-group"><label class="control-label required" for="Applicant_NationalityID">Nationality <span class="required">*</span></label><div class="controls"><select id="selNationality" name="Applicant[NationalityID]">
+<option value="">Select nationality...</option>
+<option value="1">Andorra</option>
+<option value="2">United Arab Emirates</option>
+<option value="3">Afghanistan</option>
+<option value="4">Antigua and Barbuda</option>
+<option value="5">Anguilla</option>
+<option value="6">Albania</option>
+<option value="7">Armenia</option>
+<option value="8">Angola</option>
+<option value="9">Antarctica</option>
+<option value="10">Argentina</option>
+<option value="11">American Samoa</option>
+<option value="12">Austria</option>
+<option value="13">Australia</option>
+<option value="14">Aruba</option>
+<option value="15">Åland</option>
+<option value="16">Azerbaijan</option>
+<option value="17">Bosnia and Herzegovina</option>
+<option value="18">Barbados</option>
+<option value="19">Bangladesh</option>
+<option value="20" selected="selected">Belgium</option>
+<option value="21">Burkina Faso</option>
+<option value="22">Bulgaria</option>
+<option value="23">Bahrain</option>
+<option value="24">Burundi</option>
+<option value="25">Benin</option>
+<option value="26">Saint Barthélemy</option>
+<option value="27">Bermuda</option>
+<option value="28">Brunei</option>
+<option value="29">Bolivia</option>
+<option value="30">Bonaire</option>
+<option value="31">Brazil</option>
+<option value="32">Bahamas</option>
+<option value="33">Bhutan</option>
+<option value="34">Bouvet Island</option>
+<option value="35">Botswana</option>
+<option value="36">Belarus</option>
+<option value="37">Belize</option>
+<option value="38">Canada</option>
+<option value="39">Cocos [Keeling] Islands</option>
+<option value="40">Democratic Republic of the Congo</option>
+<option value="41">Central African Republic</option>
+<option value="42">Republic of the Congo</option>
+<option value="43">Switzerland</option>
+<option value="44">Ivory Coast</option>
+<option value="45">Cook Islands</option>
+<option value="46">Chile</option>
+<option value="47">Cameroon</option>
+<option value="48">China</option>
+<option value="49">Colombia</option>
+<option value="50">Costa Rica</option>
+<option value="51">Cuba</option>
+<option value="52">Cape Verde</option>
+<option value="53">Curacao</option>
+<option value="54">Christmas Island</option>
+<option value="55">Cyprus</option>
+<option value="56">Czechia</option>
+<option value="57">Germany</option>
+<option value="58">Djibouti</option>
+<option value="59">Denmark</option>
+<option value="60">Dominica</option>
+<option value="61">Dominican Republic</option>
+<option value="62">Algeria</option>
+<option value="63">Ecuador</option>
+<option value="64">Estonia</option>
+<option value="65">Egypt</option>
+<option value="66">Western Sahara</option>
+<option value="67">Eritrea</option>
+<option value="68">Spain</option>
+<option value="69">Ethiopia</option>
+<option value="70">Finland</option>
+<option value="71">Fiji</option>
+<option value="72">Falkland Islands</option>
+<option value="73">Micronesia</option>
+<option value="74">Faroe Islands</option>
+<option value="75">France</option>
+<option value="76">Gabon</option>
+<option value="77">United Kingdom</option>
+<option value="78">Grenada</option>
+<option value="79">Georgia</option>
+<option value="80">French Guiana</option>
+<option value="81">Guernsey</option>
+<option value="82">Ghana</option>
+<option value="83">Gibraltar</option>
+<option value="84">Greenland</option>
+<option value="85">Gambia</option>
+<option value="86">Guinea</option>
+<option value="87">Guadeloupe</option>
+<option value="88">Equatorial Guinea</option>
+<option value="89">Greece</option>
+<option value="90">South Georgia and the South Sandwich Islands</option>
+<option value="91">Guatemala</option>
+<option value="92">Guam</option>
+<option value="93">Guinea-Bissau</option>
+<option value="94">Guyana</option>
+<option value="95">Hong Kong</option>
+<option value="96">Heard Island and McDonald Islands</option>
+<option value="97">Honduras</option>
+<option value="98">Croatia</option>
+<option value="99">Haiti</option>
+<option value="100">Hungary</option>
+<option value="101">Indonesia</option>
+<option value="102">Ireland</option>
+<option value="103">Israel</option>
+<option value="104">Isle of Man</option>
+<option value="105">India</option>
+<option value="106">British Indian Ocean Territory</option>
+<option value="107">Iraq</option>
+<option value="108">Iran</option>
+<option value="109">Iceland</option>
+<option value="110">Italy</option>
+<option value="111">Jersey</option>
+<option value="112">Jamaica</option>
+<option value="113">Jordan</option>
+<option value="114">Japan</option>
+<option value="115">Kenya</option>
+<option value="116">Kyrgyzstan</option>
+<option value="117">Cambodia</option>
+<option value="118">Kiribati</option>
+<option value="119">Comoros</option>
+<option value="120">Saint Kitts and Nevis</option>
+<option value="121">North Korea</option>
+<option value="122">South Korea</option>
+<option value="123">Kuwait</option>
+<option value="124">Cayman Islands</option>
+<option value="125">Kazakhstan</option>
+<option value="126">Laos</option>
+<option value="127">Lebanon</option>
+<option value="128">Saint Lucia</option>
+<option value="129">Liechtenstein</option>
+<option value="130">Sri Lanka</option>
+<option value="131">Liberia</option>
+<option value="132">Lesotho</option>
+<option value="133">Lithuania</option>
+<option value="134">Luxembourg</option>
+<option value="135">Latvia</option>
+<option value="136">Libya</option>
+<option value="137">Morocco</option>
+<option value="138">Monaco</option>
+<option value="139">Moldova</option>
+<option value="140">Montenegro</option>
+<option value="141">Saint Martin</option>
+<option value="142">Madagascar</option>
+<option value="143">Marshall Islands</option>
+<option value="144">Macedonia</option>
+<option value="145">Mali</option>
+<option value="146">Myanmar [Burma]</option>
+<option value="147">Mongolia</option>
+<option value="148">Macao</option>
+<option value="149">Northern Mariana Islands</option>
+<option value="150">Martinique</option>
+<option value="151">Mauritania</option>
+<option value="152">Montserrat</option>
+<option value="153">Malta</option>
+<option value="154">Mauritius</option>
+<option value="155">Maldives</option>
+<option value="156">Malawi</option>
+<option value="157">Mexico</option>
+<option value="158">Malaysia</option>
+<option value="159">Mozambique</option>
+<option value="160">Namibia</option>
+<option value="161">New Caledonia</option>
+<option value="162">Niger</option>
+<option value="163">Norfolk Island</option>
+<option value="164">Nigeria</option>
+<option value="165">Nicaragua</option>
+<option value="166">Netherlands</option>
+<option value="167">Norway</option>
+<option value="168">Nepal</option>
+<option value="169">Nauru</option>
+<option value="170">Niue</option>
+<option value="171">New Zealand</option>
+<option value="172">Oman</option>
+<option value="173">Panama</option>
+<option value="174">Peru</option>
+<option value="175">French Polynesia</option>
+<option value="176">Papua New Guinea</option>
+<option value="177">Philippines</option>
+<option value="178">Pakistan</option>
+<option value="179">Poland</option>
+<option value="180">Saint Pierre and Miquelon</option>
+<option value="181">Pitcairn Islands</option>
+<option value="182">Puerto Rico</option>
+<option value="183">Palestine</option>
+<option value="184">Portugal</option>
+<option value="185">Palau</option>
+<option value="186">Paraguay</option>
+<option value="187">Qatar</option>
+<option value="188">Réunion</option>
+<option value="189">Romania</option>
+<option value="190">Serbia</option>
+<option value="191">Russia</option>
+<option value="192">Rwanda</option>
+<option value="193">Saudi Arabia</option>
+<option value="194">Solomon Islands</option>
+<option value="195">Seychelles</option>
+<option value="196">Sudan</option>
+<option value="197">Sweden</option>
+<option value="198">Singapore</option>
+<option value="199">Saint Helena</option>
+<option value="200">Slovenia</option>
+<option value="201">Svalbard and Jan Mayen</option>
+<option value="202">Slovakia</option>
+<option value="203">Sierra Leone</option>
+<option value="204">San Marino</option>
+<option value="205">Senegal</option>
+<option value="206">Somalia</option>
+<option value="207">Suriname</option>
+<option value="208">South Sudan</option>
+<option value="209">São Tomé and Príncipe</option>
+<option value="210">El Salvador</option>
+<option value="211">Sint Maarten</option>
+<option value="212">Syria</option>
+<option value="213">Swaziland</option>
+<option value="214">Turks and Caicos Islands</option>
+<option value="215">Chad</option>
+<option value="216">French Southern Territories</option>
+<option value="217">Togo</option>
+<option value="218">Thailand</option>
+<option value="219">Tajikistan</option>
+<option value="220">Tokelau</option>
+<option value="221">East Timor</option>
+<option value="222">Turkmenistan</option>
+<option value="223">Tunisia</option>
+<option value="224">Tonga</option>
+<option value="225">Turkey</option>
+<option value="226">Trinidad and Tobago</option>
+<option value="227">Tuvalu</option>
+<option value="228">Taiwan</option>
+<option value="229">Tanzania</option>
+<option value="230">Ukraine</option>
+<option value="231">Uganda</option>
+<option value="232">U.S. Minor Outlying Islands</option>
+<option value="233">United States</option>
+<option value="234">Uruguay</option>
+<option value="235">Uzbekistan</option>
+<option value="236">Vatican City</option>
+<option value="237">Saint Vincent and the Grenadines</option>
+<option value="238">Venezuela</option>
+<option value="239">British Virgin Islands</option>
+<option value="240">U.S. Virgin Islands</option>
+<option value="241">Vietnam</option>
+<option value="242">Vanuatu</option>
+<option value="243">Wallis and Futuna</option>
+<option value="244">Samoa</option>
+<option value="245">Kosovo</option>
+<option value="246">Yemen</option>
+<option value="247">Mayotte</option>
+<option value="248">South Africa</option>
+<option value="249">Zambia</option>
+<option value="250">Zimbabwe</option>
+</select></div></div>
+            <!-- INDIAN ID DETAILS -->
+
+            <div class="india-form" style="display:none">
+                <div style="width:470px;" class="bootstrap-widget"><div class="bootstrap-widget-header"><i class="icon-info-sign"></i><h3>Indian ID Details</h3></div><div class="bootstrap-widget-content" id="yw1"><div class='indian-detailview'><input id="showApplicantIndianDialog" name="yt0" type="button" value="Add Indian ID Details" /></div><div id="applicantIndianDialog"></div></div></div>
+            </div>
+            <input name="Applicant[IndiaID]" id="Applicant_IndiaID" type="hidden" />
+            <!-- FOREIGNER PASSPORT & VISA DETAILS -->
+            
+            <div class="foreign-form" style="display:visible">
+                <div style="width:470px;" class="bootstrap-widget"><div class="bootstrap-widget-header"><i class="icon-info-sign"></i><h3>Passport Details</h3></div><div class="bootstrap-widget-content" id="yw3"><div class='passport-buttons'><input id="delApplicantPassport" name="yt1" type="button" value="Delete" /><input id="showApplicantPassportDialog" name="yt2" type="button" value="Update" /></div><div class='passport-detailview'><table style="width:450px;" id="yw2" class="table table-striped table-condensed"><tr class="odd"><th>Passport Number</th><td>EH600123</td></tr>
+<tr class="even"><th>Issued Date</th><td>2014-01-01</td></tr>
+<tr class="odd"><th>Valid Till</th><td>2014-01-02</td></tr>
+<tr class="even"><th>Issued By</th><td>Mumbai</td></tr>
+</table></div><div id="applicantPassportDialog"></div></div></div>
+<div style="width:470px;" class="bootstrap-widget"><div class="bootstrap-widget-header"><i class="icon-info-sign"></i><h3>Visa Details</h3></div><div class="bootstrap-widget-content" id="yw5"><div class='visa-buttons'><input id="delApplicantVisa" name="yt3" type="button" value="Delete" /><input id="showApplicantVisaDialog" name="yt4" type="button" value="Update" /></div><div class='visa-detailview'><table style="width:450px;" id="yw4" class="table table-striped table-condensed"><tr class="odd"><th>Visa Type</th><td>PIO</td></tr>
+<tr class="even"><th>Number</th><td>12345</td></tr>
+<tr class="odd"><th>Issued Date</th><td>2014-01-01</td></tr>
+<tr class="even"><th>Valid Till</th><td>2014-01-01</td></tr>
+</table></div><div id="applicantVisaDialog"></div></div></div>
+            </div>
+            <input name="Applicant[PassportID]" id="Applicant_PassportID" type="hidden" value="61" />            <input name="Applicant[VisaID]" id="Applicant_VisaID" type="hidden" value="2" />
+</div>
+
+<div style="display: table-cell; padding-left:35px;">
+    <div>
+
+        <div style="width:400px;" class="bootstrap-widget"><div class="bootstrap-widget-header"><i class="icon-info-sign"></i><h3>Address</h3></div><div class="bootstrap-widget-content" id="yw6"><input id="showApplicantAddressDialog" name="yt5" type="button" value="Add" />
+<div id="applicantAddressDialog"></div>
+
+<div id="applicant-address-grid" class="grid-view">
+<table class="items table table-condensed">
+<thead>
+<tr>
+<th style="width: 100px" id="applicant-address-grid_c0">Community</th><th id="applicant-address-grid_c1"><a class="sort-link" href="/entryservice/index.php?r=applicant/update&amp;id=5&amp;Address_sort=FromDate">From<span class="caret"></span></a></th><th id="applicant-address-grid_c2"><a class="sort-link" href="/entryservice/index.php?r=applicant/update&amp;id=5&amp;Address_sort=ToDate">To<span class="caret"></span></a></th><th class="button-column" id="applicant-address-grid_c3">&nbsp;</th></tr>
+</thead>
+<tbody>
+<tr class="odd"><td><a data-value="14" href="#" rel="Address_CommunityID" data-pk="8"></a></td><td><a data-value="1982-02-04" href="#" rel="Address_FromDate" data-pk="8"></a></td><td><a data-value="1987-02-04" href="#" rel="Address_ToDate" data-pk="8"></a></td><td class="button-column"><a class="btn btn-small" title="delete child" rel="tooltip" href="/entryservice/index.php?r=address/delete&amp;id=8"><i class="icon-remove"></i></a></td></tr><tr class="even"><td><a data-value="32" href="#" rel="Address_CommunityID" data-pk="7"></a></td><td><a data-value="1990-01-01" href="#" rel="Address_FromDate" data-pk="7"></a></td><td><a data-value="1990-01-01" href="#" rel="Address_ToDate" data-pk="7"></a></td><td class="button-column"><a class="btn btn-small" title="delete child" rel="tooltip" href="/entryservice/index.php?r=address/delete&amp;id=7"><i class="icon-remove"></i></a></td></tr><tr class="odd"><td><a data-value="31" href="#" rel="Address_CommunityID" data-pk="6"></a></td><td><a data-value="2010-01-01" href="#" rel="Address_FromDate" data-pk="6"></a></td><td><a data-value="2010-01-01" href="#" rel="Address_ToDate" data-pk="6"></a></td><td class="button-column"><a class="btn btn-small" title="delete child" rel="tooltip" href="/entryservice/index.php?r=address/delete&amp;id=6"><i class="icon-remove"></i></a></td></tr><tr class="even"><td><a data-value="89" href="#" rel="Address_CommunityID" data-pk="1"></a></td><td><a data-value="2014-01-01" href="#" rel="Address_FromDate" data-pk="1"></a></td><td><a data-value="0000-00-00" href="#" rel="Address_ToDate" data-pk="1"></a></td><td class="button-column"><a class="btn btn-small" title="delete child" rel="tooltip" href="/entryservice/index.php?r=address/delete&amp;id=1"><i class="icon-remove"></i></a></td></tr></tbody>
+</table><div class="keys" style="display:none" title="/entryservice/index.php?r=applicant/update&amp;id=5"><span>8</span><span>7</span><span>6</span><span>1</span></div>
+</div></div></div>
+<div style="width:400px;" class="bootstrap-widget"><div class="bootstrap-widget-header"><i class="icon-info-sign"></i><h3>Children</h3></div><div class="bootstrap-widget-content" id="yw7">children</div></div>
+
+    </div>
+</div>
+
+
+    </div>  <!-- display: table-row -->
+</div>  <!-- display: table -->
+
+
+        <div class="form-actions">
+        <button class="btn btn-primary btn-large" type="submit" name="yt6">Save</button>    </div>
+
+    </form>
+</div><!-- form --></div><div id="tab_2" class="tab-pane fade">Details</div><div id="tab_3" class="tab-pane fade">Status (Milestones)</div><div id="tab_4" class="tab-pane fade">Interviews</div></div></div>
+</div><!-- content -->
+
+	<div class="clear"></div>
+
+	<div id="footer">
+		&copy; 2014 by Luk - 	Starcode.<br/>
+		Powered by <a href="http://www.yiiframework.com/" rel="external">Yii Framework</a>.	</div><!-- footer -->
+
+</div><!-- page -->
+
+<script type="text/javascript" src="/entryservice/assets/fbb8e3e/js/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="/entryservice/assets/afd5af55/gridview/jquery.yiigridview.js"></script>
+<script type="text/javascript" src="/entryservice/assets/b875bb16/js/bootstrap-editable.js"></script>
+<script type="text/javascript" src="/entryservice/assets/c79a20c8/js/bootstrap.js"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+jQuery('#Applicant_BirthDate').datepicker({'format':'yyyy-mm-dd','autoclose':true});
+jQuery('body').popover({'selector':'a[rel=popover]'});
+jQuery('body').tooltip({'selector':'a[rel=tooltip]'});
+jQuery(function($) {
+
+        $('#selNationality').change(function() {
+            //$('.india-form').toggle();
+            //$('.foreign-form').toggle();
+
+            if (this.value==105) // India
+            {
+                $('.india-form').show();
+                $('.foreign-form').hide();
+            }
+            else {
+                $('.india-form').hide();
+                $('.foreign-form').show();
+            }
+
+            return false;
+        });
+    
+$('body').on('click','#showApplicantIndianDialog',function(){jQuery.ajax({'url':'/entryservice/index.php?r=applicant/addIndian&applicant_id=5','cache':false,'success':function(html){jQuery("#applicantIndianDialog").html(html)}});return false;});
+$('body').on('click','#delApplicantPassport',function(){jQuery.ajax({'success':function(data) { 
+	            	$(".passport-buttons").empty();
+	            	$(".passport-detailview").empty();
+	            	$(".passport-detailview").html(data);
+	            },'url':'/entryservice/index.php?r=applicant/deletePassport&id=61','cache':false});return false;});
+$('body').on('click','#showApplicantPassportDialog',function(){jQuery.ajax({'url':'/entryservice/index.php?r=applicant/updatePassport&id=61','cache':false,'success':function(html){jQuery("#applicantPassportDialog").html(html)}});return false;});
+$('body').on('click','#delApplicantVisa',function(){jQuery.ajax({'success':function(data) { 
+	            	$(".visa-buttons").empty();
+	            	$(".visa-detailview").empty();
+	            	$(".visa-detailview").html(data);
+	            },'url':'/entryservice/index.php?r=applicant/deleteVisa&id=2','cache':false});return false;});
+$('body').on('click','#showApplicantVisaDialog',function(){jQuery.ajax({'url':'/entryservice/index.php?r=applicant/updateVisa&id=2','cache':false,'success':function(html){jQuery("#applicantVisaDialog").html(html)}});return false;});
+$('body').on('click','#showApplicantAddressDialog',function(){jQuery.ajax({'url':'/entryservice/index.php?r=address/addnew&applicant_id=5','cache':false,'success':function(html){jQuery("#applicantAddressDialog").html(html)}});return false;});
+jQuery('#applicant-address-grid').yiiGridView({'ajaxUpdate':['applicant-address-grid'],'ajaxVar':'ajax','pagerClass':'pagination','loadingClass':'grid-view-loading','filterClass':'filters','tableClass':'items table table-condensed','selectableRows':1,'enableHistory':false,'updateSelector':'{page}, {sort}','pageVar':'Address_page','afterAjaxUpdate': function(id, data) {
+            $("#applicant-address-grid").trigger("ajaxUpdate.editable"); 
+        }});
+$(document).on('click','#applicant-address-grid a.btn.btn-small',function() {
+	if(!confirm('Are you sure you want to delete this item?')) return false;
+	var th=this;
+	var afterDelete=function(){};
+	$.fn.yiiGridView.update('applicant-address-grid', {
+		type:'POST',
+		url:$(this).attr('href'),
+		success:function(data) {
+			$.fn.yiiGridView.update('applicant-address-grid');
+			afterDelete(th,true,data);
+		},
+		error:function(XHR) {
+			return afterDelete(th,false,XHR);
+		}
+	});
+	return false;
+});
+(function yiiEditable() {
+ $('#applicant-address-grid a[rel="Address_CommunityID"]').editable({'name':'CommunityID','title':'Select Community','url':'/entryservice/index.php?r=address/editable','type':'select','params':{'scenario':'update'},'source':[{'value':1,'text':'Acceptance'},{'value':2,'text':'Adventure '},{'value':3,'text':'Agni Jata'},{'value':4,'text':'Akashwa'},{'value':5,'text':'Ami'},{'value':6,'text':'Annapurna '},{'value':7,'text':'Antakarana'},{'value':8,'text':'Anusuya'},{'value':9,'text':'Aranya'},{'value':10,'text':'Arati'},{'value':11,'text':'Arc en Ciel'},{'value':12,'text':'Arka '},{'value':13,'text':'Arya'},{'value':14,'text':'Aspiration'},{'value':15,'text':'Auro-Orchard'},{'value':16,'text':'AuroAnnam'},{'value':17,'text':'Aurobrindavan'},{'value':18,'text':'Aurodam'},{'value':19,'text':'Aurogreen '},{'value':20,'text':'Auromodele'},{'value':21,'text':'Bliss'},{'value':22,'text':'Buddha Garden '},{'value':23,'text':'Celebration'},{'value':24,'text':'Center Field'},{'value':25,'text':'Certitude'},{'value':26,'text':'Courage'},{'value':27,'text':'Creativity '},{'value':28,'text':'Dana'},{'value':29,'text':'Darkali'},{'value':30,'text':'Discipline'},{'value':31,'text':'Djaima'},{'value':32,'text':'Douceur'},{'value':33,'text':'Eternity'},{'value':34,'text':'Evergreen'},{'value':35,'text':'Existence'},{'value':36,'text':'Felicity'},{'value':37,'text':'Fertile'},{'value':38,'text':'Fertile East'},{'value':39,'text':'Fertile Forest '},{'value':40,'text':'Fertile Windmill'},{'value':41,'text':'Forecomers'},{'value':42,'text':'Fraternity '},{'value':43,'text':'Gaia'},{'value':44,'text':'Gaia\'s Garden'},{'value':45,'text':'Gokulam'},{'value':46,'text':'Grace '},{'value':47,'text':'Gratitude'},{'value':48,'text':'Halcyon'},{'value':49,'text':'Hermitage'},{'value':50,'text':'Hope '},{'value':51,'text':'Horizon'},{'value':52,'text':'Invocation'},{'value':53,'text':'Isaiambalam'},{'value':54,'text':'Jardin De Mere'},{'value':55,'text':'Kalabhumi'},{'value':56,'text':'Kottakarai Farm'},{'value':57,'text':'Kottakarai Orchard Pony Farm'},{'value':58,'text':'La Ferme'},{'value':59,'text':'Light'},{'value':60,'text':'Line of Force'},{'value':61,'text':'Madhuca'},{'value':62,'text':'Matrimandir Nursery'},{'value':63,'text':'Meadow'},{'value':64,'text':'Minati'},{'value':65,'text':'New Creation'},{'value':66,'text':'New Lands '},{'value':67,'text':'Nilatangham'},{'value':68,'text':'Nine Palms'},{'value':69,'text':'Petite Ferme'},{'value':70,'text':'Pitchandikulam'},{'value':71,'text':'Prarthna'},{'value':72,'text':'Prayatna'},{'value':73,'text':'Promesse'},{'value':74,'text':'Protection'},{'value':75,'text':'Pump House'},{'value':76,'text':'Quiet '},{'value':77,'text':'Ravena'},{'value':78,'text':'Recueillement'},{'value':79,'text':'Repos'},{'value':80,'text':'Reve'},{'value':81,'text':'Revelation'},{'value':82,'text':'Sadhana Forest '},{'value':83,'text':'Samarpan  '},{'value':84,'text':'Samasti'},{'value':85,'text':'Samriddhi '},{'value':86,'text':'Sangha'},{'value':87,'text':'Service Farm'},{'value':88,'text':'Shailam'},{'value':89,'text':'Shakti'},{'value':90,'text':'Shakti Loka'},{'value':91,'text':'Shanti'},{'value':92,'text':'Sharnga'},{'value':93,'text':'Siddhartha Farm '},{'value':94,'text':'Silence'},{'value':95,'text':'Simplicity'},{'value':96,'text':'Sincerity'},{'value':97,'text':'Slancio'},{'value':98,'text':'Solitude '},{'value':99,'text':'Sri Ma'},{'value':100,'text':'Success'},{'value':101,'text':'Sukhavati '},{'value':102,'text':'Surrender'},{'value':103,'text':'Sve Dame '},{'value':104,'text':'Transformation'},{'value':105,'text':'Two Banyan'},{'value':106,'text':'Utility'},{'value':107,'text':'Vérité'},{'value':108,'text':'Victory'},{'value':109,'text':'Vikas'},{'value':110,'text':'Windarra '},{'value':111,'text':'Yantra'},{'value':112,'text':'Youth Camp'}]});
+ $('body').on('ajaxUpdate.editable', function(e){ if(e.target.id == 'applicant-address-grid'){yiiEditable();}});
+}());
+(function yiiEditable() {
+ $('#applicant-address-grid a[rel="Address_FromDate"]').editable({'name':'FromDate','title':'Select From','url':'/entryservice/index.php?r=address/editable','type':'date','placement':'bottom','params':{'scenario':'update'},'inputclass':'span3','format':'yyyy-mm-dd','viewformat':'dd-mm-yyyy','clear':'x clear'});
+ $('body').on('ajaxUpdate.editable', function(e){ if(e.target.id == 'applicant-address-grid'){yiiEditable();}});
+}());
+(function yiiEditable() {
+ $('#applicant-address-grid a[rel="Address_ToDate"]').editable({'name':'ToDate','title':'Select To','url':'/entryservice/index.php?r=address/editable','type':'date','placement':'bottom','params':{'scenario':'update'},'inputclass':'span3','format':'yyyy-mm-dd','viewformat':'dd-mm-yyyy','clear':'x clear'});
+ $('body').on('ajaxUpdate.editable', function(e){ if(e.target.id == 'applicant-address-grid'){yiiEditable();}});
+}());
+$grid = $("#applicant-address-grid");
+			if ($(".extended-summary", $grid).length)
+			{
+				$(".extended-summary", $grid).html($("#applicant-address-grid-extended-summary", $grid).html());
+			}
+			
+			$.ajaxPrefilter(function (options, originalOptions, jqXHR) {
+				var qs = $.deparam.querystring(options.url);
+				if (qs.hasOwnProperty("ajax") && qs.ajax == "applicant-address-grid")
+				{
+					options.realsuccess = options.success;
+					options.success = function(data)
+					{
+						if (options.realsuccess) {
+							options.realsuccess(data);
+							var $data = $("<div>" + data + "</div>");
+							// we need to get the grid again... as it has been updated
+							if ($(".extended-summary", $("#applicant-address-grid")))
+							{
+								$(".extended-summary", $("#applicant-address-grid")).html($("#applicant-address-grid-extended-summary", $data).html());
+		}
+		
+		}
+	}
+}
+});
+jQuery('#yw8').tab('show');
+});
+/*]]>*/
+</script>
+</body>
+</html>
+

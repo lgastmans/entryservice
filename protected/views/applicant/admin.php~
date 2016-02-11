@@ -1,0 +1,232 @@
+<?php
+/* @var $this ApplicantController */
+/* @var $model Applicant */
+
+
+$this->breadcrumbs=array(
+	'Applicants'=>array('index'),
+	'Manage',
+);
+
+$this->menu=array(
+	array('label' => 'actions'),
+	TbHtml::menuDivider(),
+//	array('label'=>'List Applicant', 'url'=>array('index')),
+	array('label'=>'Create', 'url'=>array('create')),
+);
+
+Yii::app()->clientScript->registerScript('search', "
+$('.search-button').click(function(){
+	$('.search-form').toggle();
+	return false;
+});
+$('.search-form form').submit(function(){
+	$('#applicant-grid').yiiGridView('update', {
+		data: $(this).serialize()
+	});
+	return false;
+});
+");
+
+?>
+
+<div>
+	<div style="float: left;">
+		<h1>Manage Applicants</h1>
+	</div>
+	<div style="float: right;">
+		<?php
+		/*
+		echo TbHtml::buttonDropdown(
+			'Action',
+			array(
+				array('label' => 'Create', 'url' => array('create')),
+			),
+			array( 'color' => TbHtml::BUTTON_COLOR_INVERSE)
+		);
+		*/
+		?>
+	</div>
+</div>
+<div style="clear:both;"></div>
+
+<!--
+<p>
+    You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>
+        &lt;&gt;</b>
+or <b>=</b>) at the beginning of each of your search values to specify how the comparison should be done.
+</p>
+-->
+<?php //echo CHtml::link('Advanced Search','#',array('class'=>'search-button btn')); ?>
+<div class="search-form" style="display:none">
+<?php $this->renderPartial('_search',array(
+	'model'=>$model,
+)); ?>
+</div><!-- search-form -->
+
+<?php $this->widget('bootstrap.widgets.TbGridView',array(
+	'id'=>'applicant-grid',
+	'dataProvider'=>$model->search(),
+	'filter'=>$model,
+	'columns'=>array(
+		//'ID',
+		//'Name',
+		array(
+			'class' => 'yiiwheels.widgets.editable.WhEditableColumn',
+			'name' => 'Name',
+			'sortable'=>true,
+			'headerHtmlOptions' => array('class' => 'span2'),
+			'editable' => array(
+				'url' => $this->createUrl('applicant/editable'),
+				'placement' => 'bottom',
+				'inputclass' => 'span2'
+			)
+		),
+		//'Surname',
+		array(
+			'class' => 'yiiwheels.widgets.editable.WhEditableColumn',
+			'name' => 'Surname',
+			'sortable'=>true,
+			'headerHtmlOptions' => array('class' => 'span2'),
+			'editable' => array(
+				'url' => $this->createUrl('applicant/editable'),
+				'placement' => 'bottom',
+				'inputclass' => 'span2'
+			)
+		),
+        array(
+        	'name'=>'status_fs',
+        	'header'=>'Status',
+        	'type'=>'raw',
+        	'filter'=>false,
+        	//'filter'=>array('Newcomer'=>'Newcomer', 'Aurovilian'=>'Aurovilian'),
+            'value'=> 'ApplicantStatus::model()->getCurrentStatus($data->ID);',
+            //'value'=>'$data->status_fs',
+        ),
+		//'BirthPlace',
+		//'BirthDate',
+		array(
+			'class' => 'yiiwheels.widgets.editable.WhEditableColumn',
+			'name' => 'BirthDate',
+			'headerHtmlOptions' => array('style' => 'width: 100px'),
+			'editable' => array(
+				'type' => 'date',
+				'format' => 'yyyy-mm-dd',
+				'viewformat' => 'dd-mm-yyyy',
+				'url' => $this->createUrl('applicant/editable'),
+				'placement' => 'bottom',
+			)
+		),
+		//'Photo',
+		//'Sex',
+		array(
+			'class' => 'yiiwheels.widgets.editable.WhEditableColumn',
+			'name' => 'Sex',
+			'headerHtmlOptions' => array('style' => 'width: 100px'),
+			'filter'=>array('M'=>'Male', 'F'=>'Female'),
+			'editable' => array(
+				'type' => 'select',
+				'url' => $this->createUrl('applicant/editable'),
+				'source' => array('M'=>'Male','F'=>'Female'), //CHtml::listData(Group::model()->findAll(), 'group_id', 'group_name')
+				'placement' => 'bottom',
+			)
+		),
+		//'MaritalStatus',
+		array(
+			'class' => 'yiiwheels.widgets.editable.WhEditableColumn',
+			'name' => 'MaritalStatus',
+			'headerHtmlOptions' => array('style' => 'width: 100px'),
+			'filter' => array('Single'=>'Single','Married'=>'Married','Separated'=>'Separated',
+                    'Divorced'=>'Divorced','Widowed'=>'Widowed','Bachelor'=>'Bachelor'),
+			'editable' => array(
+				'placement' => 'bottom',
+				'type' => 'select',
+				'url' => $this->createUrl('applicant/editable'),
+				'source' => array('Single'=>'Single','Married'=>'Married','Separated'=>'Separated',
+                    'Divorced'=>'Divorced','Widowed'=>'Widowed','Bachelor'=>'Bachelor'),
+			)
+		),
+		//'ResServiceNum',
+		array(
+			'class' => 'yiiwheels.widgets.editable.WhEditableColumn',
+			'name' => 'ResServiceNum',
+			'sortable'=>true,
+			'headerHtmlOptions' => array('class' => 'span2'),
+			'editable' => array(
+				'placement' => 'bottom',
+				'url' => $this->createUrl('applicant/editable'),
+				'placement' => 'right',
+				'inputclass' => 'span2'
+			)
+		),
+		//'Notes',
+		//'NationalityID',
+		array(
+			'class' => 'yiiwheels.widgets.editable.WhEditableColumn',
+			'name' => 'nationality_fs',
+			'headerHtmlOptions' => array('style' => 'width: 100px'),
+			//'filter'=>false,
+			'editable' => array(
+				'placement' => 'bottom',
+				'type' => 'select',
+				//'model' => $model,
+				'attribute' => 'nationality.Nationality', //'NationalityID',
+				'url' => $this->createUrl('applicant/editable'),
+				'source' => CHtml::listData(Nationality::model()->findAll(), 'ID', 'Nationality')
+			)
+		),
+		/*
+		array(
+			'class' => 'yiiwheels.widgets.editable.WhEditableColumn',
+			'name' => 'nationality.Nationality',
+			'headerHtmlOptions' => array('style' => 'width: 100px'),
+			'editable' => array(
+				'type' => 'select',
+				//'model' => $model,
+				'attribute' => 'NationalityID',
+				'url' => $this->createUrl('applicant/editable'),
+				'source' => CHtml::listData(Nationality::model()->findAll(), 'ID', 'Nationality')
+			)
+		),
+		*/
+		
+		array(
+			'class'=>'bootstrap.widgets.TbButtonColumn',
+            'template'=>'{view} {update} {delete}',
+            'buttons'=>array(
+                'view'=> array(
+                    'label'=>'View applicant details',
+                    'url'=>'Yii::app()->createUrl("applicant/viewApplicant", array("id"=>$data->ID,"asDialog"=>1))',
+                    'options'=>array(  
+                        'ajax'=>array(
+                            'type'=>'POST',
+                            // ajax post will use 'url' specified above 
+                            'url'=>"js:$(this).attr('href')", 
+                            'update'=>'#id_view',
+                        ),
+                    ),
+                ),
+            ),
+		),
+	),
+)); 
+
+/*
+    the VIEW dialog
+*/
+$this->beginWidget('zii.widgets.jui.CJuiDialog', array( 
+    'id'=>'dlg-applicant-view',
+    'options'=>array(
+        'title'=>'Applicant Details',
+        'autoOpen'=>false, //important!
+        'modal'=>false,
+        'width'=>750,
+        'height'=>600,
+    ),
+));
+
+?>
+
+<div id="id_view"></div>
+
+<?php $this->endWidget(); ?>
