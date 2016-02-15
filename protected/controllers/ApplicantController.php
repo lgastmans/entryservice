@@ -527,6 +527,55 @@ class ApplicantController extends Controller
 		return $res;
 	}
 
+
+	/**
+	 * Manages all models.
+	 */
+	public function actionAdmin()
+	{
+		$model=new Applicant('search');
+		
+		$model->unsetAttributes();  // clear any default values
+		if (isset($_GET['Applicant'])) {
+		 	//$model->attributes=$_GET['Applicant'];
+		 	$_SESSION['adminFilterData']=$_GET['Applicant'];
+		}
+
+		$this->render('admin',array(
+			//$this->layout = 'applicant',
+			'model'=>$model,
+		));
+	}
+
+	/**
+	 * Returns the data model based on the primary key given in the GET variable.
+	 * If the data model is not found, an HTTP exception will be raised.
+	 * @param integer $id the ID of the model to be loaded
+	 * @return Applicant the loaded model
+	 * @throws CHttpException
+	 */
+	public function loadModel($id)
+	{
+		$model=Applicant::model()->findByPk($id);
+		if ($model===null) {
+			throw new CHttpException(404,'The requested page does not exist.');
+		}
+		return $model;
+	}
+
+	/**
+	 * Performs the AJAX validation.
+	 * @param Applicant $model the model to be validated
+	 */
+	protected function performAjaxValidation($model)
+	{
+		if (isset($_POST['ajax']) && $_POST['ajax']==='applicant-form') {
+			echo CActiveForm::validate($model);
+			Yii::app()->end();
+		}
+	}
+
+
 	public function actionImport() {
 
 		$model=new Applicant;
@@ -732,51 +781,5 @@ class ApplicantController extends Controller
 		$this->render('import',array('model'=>$model,'result'=>$result));
 
 	}
-
-	/**
-	 * Manages all models.
-	 */
-	public function actionAdmin()
-	{
-		$model=new Applicant('search');
-		
-		$model->unsetAttributes();  // clear any default values
-		if (isset($_GET['Applicant'])) {
-		 	//$model->attributes=$_GET['Applicant'];
-		 	$_SESSION['adminFilterData']=$_GET['Applicant'];
-		}
-
-		$this->render('admin',array(
-			//$this->layout = 'applicant',
-			'model'=>$model,
-		));
-	}
-
-	/**
-	 * Returns the data model based on the primary key given in the GET variable.
-	 * If the data model is not found, an HTTP exception will be raised.
-	 * @param integer $id the ID of the model to be loaded
-	 * @return Applicant the loaded model
-	 * @throws CHttpException
-	 */
-	public function loadModel($id)
-	{
-		$model=Applicant::model()->findByPk($id);
-		if ($model===null) {
-			throw new CHttpException(404,'The requested page does not exist.');
-		}
-		return $model;
-	}
-
-	/**
-	 * Performs the AJAX validation.
-	 * @param Applicant $model the model to be validated
-	 */
-	protected function performAjaxValidation($model)
-	{
-		if (isset($_POST['ajax']) && $_POST['ajax']==='applicant-form') {
-			echo CActiveForm::validate($model);
-			Yii::app()->end();
-		}
-	}
+	
 }

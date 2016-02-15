@@ -182,18 +182,18 @@ class Applicant extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		if (isset($_SESSION['adminFilterData'])) {
-			$this->full_name=$_SESSION['adminFilterData']['full_name'];
-			//$this->status_fs=
-			$this->BirthDate=$_SESSION['adminFilterData']['BirthDate'];
-			//$this->Sex=
-			//$this->MaritalStatus=
-			//$this->ResServiceNum=
-			//$this->nationality_fs=
+			$this->full_name 		=$_SESSION['adminFilterData']['full_name'];
+			$this->status_fs 		=$_SESSION['adminFilterData']['status_fs'];
+			$this->BirthDate  		=$_SESSION['adminFilterData']['BirthDate'];
+			$this->Sex 				=$_SESSION['adminFilterData']['Sex'];
+			$this->MaritalStatus	=$_SESSION['adminFilterData']['MaritalStatus'];
+			$this->ResServiceNum	=$_SESSION['adminFilterData']['ResServiceNum'];
+			$this->nationality_fs	=$_SESSION['adminFilterData']['nationality_fs'];
 		}
 
 		$srchBirthDate='';
 		if (isset($this->BirthDate)) {
-			$arr = explode('/', $this->BirthDate);
+			$arr = explode('-', $this->BirthDate);
 			if ((isset($arr)) && (count($arr)==3))
 				$srchBirthDate = $arr[2]."-".$arr[1]."-".$arr[0];
 			else
@@ -228,8 +228,8 @@ class Applicant extends CActiveRecord
 		$criteria->with = array( 'applicantStatus', 'nationality' );
 		$criteria->compare( 'nationality.Nationality', $this->nationality_fs, true );
 
-		if (isset($_GET['Applicant']['status_fs']) && ($_GET['Applicant']['status_fs']!='')) {
-			$criteria->compare('applicantStatus.StatusID', $_GET['Applicant']['status_fs']);
+		if (isset($this->status_fs)) {
+			$criteria->compare('applicantStatus.StatusID', $this->status_fs);
 			$criteria->together=true;
 		}
 
