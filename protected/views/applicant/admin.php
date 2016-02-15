@@ -76,73 +76,18 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 			'type'=>'raw',
 			'value' => 'CHtml::link(CHtml::encode($data["FullName"]), array("applicant/update","id"=>$data["ID"]))',
 		),
-		/*
-		array(
-			'name'=>'FullName',
-			'type'=>'raw',
-			'value' => 'CHtml::link(CHtml::encode($data["FullName"]), array("applicant/update","id"=>$data["ID"]))',
-		),
-		*/
-		/*
-		array(
-			'class' => 'yiiwheels.widgets.editable.WhEditableColumn',
-			'name' => 'Name',
-			'sortable'=>true,
-			'headerHtmlOptions' => array('class' => 'span2'),
-			'editable' => array(
-				'url' => $this->createUrl('applicant/editable'),
-				'placement' => 'bottom',
-				'inputclass' => 'span2'
-			)
-		),
-		//'Surname',
-		array(
-			'class' => 'yiiwheels.widgets.editable.WhEditableColumn',
-			'name' => 'Surname',
-			'sortable'=>true,
-			'headerHtmlOptions' => array('class' => 'span2'),
-			'editable' => array(
-				'url' => $this->createUrl('applicant/editable'),
-				'placement' => 'bottom',
-				'inputclass' => 'span2'
-			)
-		),
-		*/
-		// array(
-		// 	'name'=>'CurrentStatus',
-		// 	'value'=>'$data->CurrentStatus',
-		// 	'filter'=>false,
-		// ),
     array(
     	'name'=>'status_fs',
     	'header'=>'Status',
-    	// 'type'=>'raw',
-    	//'filter'=>true,
     	'filter'=>CHtml::listData(Status::model()->findAll(), 'ID', 'Description'),
         'value'=> 'ApplicantStatus::model()->getCurrentStatus($data->ID);',
-      //'value'=>'$data->status_fs',
     ),
 		//'BirthPlace',
 		array(
 			'name'=>'BirthDate',
 			//'value'=>'Yii::app()->dateFormatter->formatDateTime($data->BirthDate, "long", null)',
-			'value'=>'Yii::app()->dateFormatter->format("dd/MM/yyyy", $data->BirthDate)',
+			'value'=>'Yii::app()->dateFormatter->format("dd-MM-yyyy", $data->BirthDate)',
 		),
-		/*
-		array(
-			'class' => 'yiiwheels.widgets.editable.WhEditableColumn',
-			'name' => 'BirthDate',
-			'headerHtmlOptions' => array('style' => 'width: 100px'),
-			'editable' => array(
-				'type' => 'date',
-				'format' => 'yyyy-mm-dd',
-				'viewformat' => 'd M yyyy',
-				//'value' => 'Yii::app()->dateFormatter->formatDateTime($data->BirthDate, "long", null)',
-				'url' => $this->createUrl('applicant/editable'),
-				'placement' => 'bottom',
-			)
-		),
-		*/
 		array(
 			'header'=>'Age',
 			'value'=> '$data->DOB',
@@ -153,21 +98,6 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 			'value'=>'($data->Sex=="M")?"Male":"Female"',
 			'filter'=>array('M'=>'Male', 'F'=>'Female'),
 		),
-		/*
-		array(
-			'class' => 'yiiwheels.widgets.editable.WhEditableColumn',
-			'name' => 'Sex',
-			'headerHtmlOptions' => array('style' => 'width: 100px'),
-			'filter'=>array('M'=>'Male', 'F'=>'Female'),
-			'editable' => array(
-				'type' => 'select',
-				'url' => $this->createUrl('applicant/editable'),
-				'source' => array('M'=>'Male','F'=>'Female'), //CHtml::listData(Group::model()->findAll(), 'group_id', 'group_name')
-				'placement' => 'bottom',
-			)
-		),
-		*/
-		//'MaritalStatus',
 		array(
 			'class' => 'yiiwheels.widgets.editable.WhEditableColumn',
 			'name' => 'MaritalStatus',

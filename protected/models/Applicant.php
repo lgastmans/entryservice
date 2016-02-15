@@ -153,15 +153,23 @@ class Applicant extends CActiveRecord
 		);
 	}
     
-/*
+
     protected function afterFind()
     {
         // convert to display format
-		$this->BirthDate = Yii::app()->dateFormatter->format("dd/MM/yyyy", strtotime("1969-05-24"));
+        $this->BirthDate = Yii::app()->dateFormatter->format('dd-MM-yyyy', $this->BirthDate);
 
         parent::afterFind();
     }
-*/
+
+    protected function beforeSave()
+    {
+        $this->BirthDate = date('Y-m-d', CDateTimeParser::parse($this->BirthDate, 'dd-MM-yyyy'));
+
+        return parent::beforeSave();
+    }
+
+
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
