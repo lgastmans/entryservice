@@ -228,8 +228,9 @@ class Applicant extends CActiveRecord
 		$criteria->with = array( 'applicantStatus', 'nationality' );
 		$criteria->compare( 'nationality.Nationality', $this->nationality_fs, true );
 
-		if (isset($this->status_fs)) {
-			$criteria->compare('applicantStatus.StatusID', $this->status_fs);
+		if (isset($this->status_fs) && ($this->status_fs <> '')) {
+			// $criteria->compare('applicantStatus.StatusID', $this->status_fs);
+			$criteria->addCondition("(applicantStatus.StatusID=".$this->status_fs.") AND (applicantStatus.CompletedOn IS NULL)");
 			$criteria->together=true;
 		}
 

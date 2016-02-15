@@ -178,7 +178,6 @@ class ApplicantStatus extends CActiveRecord
 		$criteria=new CDbCriteria;
 		$criteria->select='*';
 		$criteria->condition='(applicantID=:applicantID) AND ((CompletedOn IS NULL) OR (YEAR(CompletedOn) = 0))';
-		//$criteria->condition='(applicantID=:applicantID) AND (IsCompleted = 0)';
 		$criteria->params=array(':applicantID'=>$applicant_id);
 		$criteria->with=array('status');
 
