@@ -125,7 +125,8 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		//'BirthPlace',
 		array(
 			'name'=>'BirthDate',
-			'value'=>'Yii::app()->dateFormatter->formatDateTime($data->BirthDate, "long", null)',
+			//'value'=>'Yii::app()->dateFormatter->formatDateTime($data->BirthDate, "long", null)',
+			'value'=>'Yii::app()->dateFormatter->format("dd/MM/yyyy", $data->BirthDate)',
 		),
 		/*
 		array(

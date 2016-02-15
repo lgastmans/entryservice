@@ -71,19 +71,21 @@
                 <label class="control-label" for="Applicant_BirthDate">Date of Birth</label>
                 <div class="controls">
                     <?php
+
                     $this->widget('yiiwheels.widgets.datepicker.WhDatePicker',
                         array(
                           'model'     => $model,
                           'attribute' => 'BirthDate',
                           'pluginOptions' => array(
                             'format' => 'yyyy-mm-dd'
+                            //'format' => 'dd/mm/yyyy',
                           )
                         )
                     );
+
                     ?>
                 </div>
             </div>
-
 
             <?php //echo $form->textFieldControlGroup($model,'Photo',array('span'=>5,'maxlength'=>128)); ?>
             <?php

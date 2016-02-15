@@ -152,7 +152,16 @@ class Applicant extends CActiveRecord
 			'SpouseStatusID' => 'Spouse Status',
 		);
 	}
+    
+/*
+    protected function afterFind()
+    {
+        // convert to display format
+		$this->BirthDate = Yii::app()->dateFormatter->format("dd/MM/yyyy", strtotime("1969-05-24"));
 
+        parent::afterFind();
+    }
+*/
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
@@ -164,11 +173,33 @@ class Applicant extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
+		if (isset($_SESSION['adminFilterData'])) {
+			$this->full_name=$_SESSION['adminFilterData']['full_name'];
+			//$this->status_fs=
+			$this->BirthDate=$_SESSION['adminFilterData']['BirthDate'];
+			//$this->Sex=
+			//$this->MaritalStatus=
+			//$this->ResServiceNum=
+			//$this->nationality_fs=
+		}
+
+		$srchBirthDate='';
+		if (isset($this->BirthDate)) {
+			$arr = explode('/', $this->BirthDate);
+			if ((isset($arr)) && (count($arr)==3))
+				$srchBirthDate = $arr[2]."-".$arr[1]."-".$arr[0];
+			else
+				$srchBirthDate='';
+		}
+
+
+
 		$criteria->compare('ID',$this->ID);
-		$criteria->compare('Name',$this->Name,true);
-		$criteria->compare('Surname',$this->Surname,true);
+//		$criteria->compare('Name',$this->Name,true);
+//		$criteria->compare('Surname',$this->Surname,true);
 		$criteria->compare('BirthPlace',$this->BirthPlace,true);
-		$criteria->compare('BirthDate',$this->BirthDate,true);
+		//$criteria->compare('BirthDate',$this->BirthDate,true);
+		$criteria->compare('BirthDate',$srchBirthDate,true);
 		//$criteria->compare('Photo',$this->Photo,true);
 		$criteria->compare('Sex',$this->Sex,true);
 		$criteria->compare('MaritalStatus',$this->MaritalStatus,true);
@@ -182,8 +213,8 @@ class Applicant extends CActiveRecord
 		$criteria->compare('Spouse',$this->Spouse,true);
 		$criteria->compare('SpouseStatusID',$this->SpouseStatusID,true);
 
-		if (isset($_GET['Applicant']['full_name']) && ($_GET['Applicant']['full_name']!=' ')) {
-			$criteria->addCondition('((Name LIKE "%'.$_GET['Applicant']['full_name'].'%") OR (Surname LIKE "%'.$_GET['Applicant']['full_name'].'%"))');
+		if (isset($this->full_name)) {
+			$criteria->addCondition('((Name LIKE "%'.$this->full_name.'%") OR (Surname LIKE "%'.$this->full_name.'%"))');
 		}
 
 		$criteria->with = array( 'applicantStatus', 'nationality' );

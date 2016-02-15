@@ -740,10 +740,11 @@ class ApplicantController extends Controller
 	{
 		$model=new Applicant('search');
 		
-		// $model->unsetAttributes();  // clear any default values
-		// if (isset($_GET['Applicant'])) {
-		// 	$model->attributes=$_GET['Applicant'];
-		// }
+		$model->unsetAttributes();  // clear any default values
+		if (isset($_GET['Applicant'])) {
+		 	//$model->attributes=$_GET['Applicant'];
+		 	$_SESSION['adminFilterData']=$_GET['Applicant'];
+		}
 
 		$this->render('admin',array(
 			//$this->layout = 'applicant',
