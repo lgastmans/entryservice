@@ -148,7 +148,7 @@ class Applicant extends CActiveRecord
 			'PassportID' => 'Passport',
 			'VisaID' => 'Visa',
 			'IndiaID' => 'India',
-			'Spouse' => 'Spouse',
+			'Spouse' => 'Partner/Spouse Name',
 			'SpouseStatusID' => 'Spouse Status',
 		);
 	}

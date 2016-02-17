@@ -109,7 +109,7 @@
 
 
             <?php echo $form->dropDownListControlGroup($model,'MaritalStatus',
-                array('Single'=>'Single','Couple'=>'Couple')
+                array('Single'=>'Single','Partner'=>'Partner','Married'=>'Married','Couple'=>'Couple')
                 );
             ?>
 
@@ -117,7 +117,7 @@
 
             <?php
                 echo $form->dropDownListControlGroup($model, 'SpouseStatusID',
-                    CHtml::listData(Status::model()->findAll(), 'ID', 'Description'),
+                    CHtml::listData(Status::model()->findAll(array('order'=>'Description')), 'ID', 'Description'),
                     array('empty' => 'Select Status...')
                 );
             ?>

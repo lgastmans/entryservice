@@ -102,12 +102,12 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 			'class' => 'yiiwheels.widgets.editable.WhEditableColumn',
 			'name' => 'MaritalStatus',
 			'headerHtmlOptions' => array('style' => 'width: 100px'),
-			'filter' => array('Single'=>'Single','Couple'=>'Couple'),
+			'filter' => array('Single'=>'Single','Partner'=>'Partner','Married'=>'Married','Couple'=>'Couple'),
 			'editable' => array(
 				'placement' => 'bottom',
 				'type' => 'select',
 				'url' => $this->createUrl('applicant/editable'),
-				'source' => array('Single'=>'Single','Couple'=>'Couple'),
+				'source' => array('Single'=>'Single','Partner'=>'Partner','Married'=>'Married','Couple'=>'Couple'),
 			)
 		),
 		//'ResServiceNum',
