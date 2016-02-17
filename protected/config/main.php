@@ -67,6 +67,15 @@ return array(
 
 	// application components
 	'components'=>array(
+		'clientScript'=>array(
+		  'packages'=>array(
+		    'jquery'=>array(
+		      'baseUrl'=>'http://ajax.googleapis.com/ajax/libs/jquery/',
+		        'js'=>array('1.8.0/jquery.min.js'),
+		      )
+		    ),
+		  ),
+		
 		'user'=>array(
 			// enable cookie-based authentication
             'class' => 'WebUser',
