@@ -42,10 +42,11 @@ class Interview extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('ApplicantID, DateInterviewed, Present, Interview', 'required'),
+			array('ApplicantID, DateInterviewed, Present', 'required'),
 			array('ApplicantID', 'numerical', 'integerOnly'=>true),
 			array('Present', 'length', 'max'=>128),
 			array('Title', 'length', 'max'=>128),
+			array('Interview', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('ID, ApplicantID, DateInterviewed, Title, Present, Interview', 'safe', 'on'=>'search'),
