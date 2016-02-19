@@ -47,8 +47,8 @@
 						    			array('label'=>'New','url'=>array('applicant/create')),
 						    			array('label'=>'Manage','url'=>array('applicant/admin')),
 						    			//array('label'=>'Search','url'=>'#'),
-						    			TbHtml::menuDivider(),
-						    			array('label'=>'Import','url'=>array('applicant/import')),
+						    			//TbHtml::menuDivider(),
+						    			//array('label'=>'Import','url'=>array('applicant/import')),
 						    		),
 						    ),
 						    array(
