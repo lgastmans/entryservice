@@ -97,7 +97,7 @@ class WhDatePicker extends CInputWidget
         /* initialize plugin */
         $selector = '#' . TbArray::getValue('id', $this->htmlOptions, $this->getId());
 
-        $this->getApi()->registerPlugin('datepicker', $selector, $this->pluginOptions);
+        $this->getApi()->registerPlugin('bdatepicker', $selector, $this->pluginOptions);
         $this->getApi()->registerEvents($selector, $this->events);
 
     }
