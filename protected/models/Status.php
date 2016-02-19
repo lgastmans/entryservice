@@ -43,7 +43,7 @@ class Status extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Description, IsProcess, ProcessPosition', 'required'),
+			array('Description, IsProcess', 'required'),
 			array('Duration, IsProcess, ProcessPosition', 'numerical', 'integerOnly'=>true),
 			array('Description', 'length', 'max'=>64),
 			array('DurationPeriod', 'length', 'max'=>6),
@@ -108,6 +108,9 @@ class Status extends CActiveRecord
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
+			'sort'=>array(
+				'defaultOrder'=>'Description ASC',
+			),
 		));
 	}
 

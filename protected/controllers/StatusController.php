@@ -70,7 +70,8 @@ class StatusController extends Controller
 		if (isset($_POST['Status'])) {
 			$model->attributes=$_POST['Status'];
 			if ($model->save()) {
-				$this->redirect(array('view','id'=>$model->ID));
+				//$this->redirect(array('view','id'=>$model->ID));
+				$this->redirect(array('admin'));
 			}
 		}
 

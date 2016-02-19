@@ -372,7 +372,7 @@ class ApplicantController extends Controller
 
 			$model->attributes=$_POST['Applicant'];
 
-			$model->Password = sha1($model->Password);
+			//$model->Password = sha1($model->Password);
 
 			if ($model->save()) {
 				//$this->redirect(array('view','id'=>$model->ID));

@@ -77,9 +77,15 @@
                           'model'     => $model,
                           'attribute' => 'BirthDate',
                           'pluginOptions' => array(
-                            'format' => 'yyyy-mm-dd'
-                            //'format' => 'dd/mm/yyyy',
+                            //'format' => 'yyyy-mm-dd'
+                            'format' => 'dd-MM-yyyy',
+                            'dateFormat' => 'dd-MM-yyyy',
+                          ),
+                          'htmlOptions' => array(
+                            //'format' => 'yyyy-mm-dd'
+                            'format' => 'dd-MM-yyyy',
                           )
+
                         )
                     );
 

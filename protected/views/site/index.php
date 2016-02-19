@@ -1,9 +1,9 @@
 <?php
 /* @var $this SiteController */
 
-$this->pageTitle=Yii::app()->name;
+	$this->pageTitle=Yii::app()->name;
 
-$today = new DateTime();
+	$today = new DateTime();
 ?>
 
 <h3><?php echo $today->format('d M Y');?></h3>

@@ -169,6 +169,14 @@ class Applicant extends CActiveRecord
         return parent::beforeSave();
     }
 
+    protected function beforeValidate ()
+    {
+        $this->BirthDate = strtotime($this->BirthDate);
+        $this->BirthDate = date('Y-m-d', $this->BirthDate);
+
+        return parent::beforeValidate ();
+    }
+
 
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
@@ -222,7 +230,7 @@ class Applicant extends CActiveRecord
 		$criteria->compare('SpouseStatusID',$this->SpouseStatusID,true);
 
 		if (isset($this->full_name)) {
-			$criteria->addCondition('((Name LIKE "%'.$this->full_name.'%") OR (Surname LIKE "%'.$this->full_name.'%"))');
+			$criteria->addCondition('((Name LIKE "%'.$this->full_name.'%") OR (Surname LIKE "%'.$this->full_name.'%") OR (CONCAT(Name," ",Surname) LIKE "%'.$this->full_name.'%"))');
 		}
 
 		$criteria->with = array( 'applicantStatus', 'nationality' );
