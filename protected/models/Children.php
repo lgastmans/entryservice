@@ -13,6 +13,9 @@
  * @property string $IssuedDate
  * @property string $ValidTill
  * @property string $BirthDate
+ * @property string $Sex
+ * @property integer $NationalityID
+ * @property integer $ResServiceNum
  *
  * The followings are the available model relations:
  * @property Applicant $applicant
@@ -49,11 +52,11 @@ class Children extends CActiveRecord
 			array('ApplicantID, SchoolID', 'numerical', 'integerOnly'=>true),
 			array('Name, Surname', 'length', 'max'=>64),
 			array('PassportNumber', 'length', 'max'=>32),
-			array('IssuedDate, ValidTill, BirthDate', 'default', 'setOnEmpty' => true, 'value' => null),
+			array('IssuedDate, ValidTill, BirthDate, Sex, NationalityID, ResServiceNum', 'default', 'setOnEmpty' => true, 'value' => null),
 
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('ID, ApplicantID, SchoolID, Name, Surname, PassportNumber, IssuedDate, ValidTill, BirthDate, School', 'safe', 'on'=>'search'),
+			array('ID, ApplicantID, SchoolID, Name, Surname, PassportNumber, IssuedDate, ValidTill, BirthDate, School, Sex, NationalityID, ResServiceNum', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -84,6 +87,9 @@ class Children extends CActiveRecord
 			'ValidTill' => 'Valid Till',
 			'BirthDate' => 'Birth Date',
 			'SchoolID' => 'School',
+			'Sex' => 'Gender',
+			'NationalityID' => 'Nationality',
+			'ResServiceNum' => 'RS Number',
 		);
 	}
 
@@ -112,6 +118,9 @@ class Children extends CActiveRecord
 		$criteria->compare('ValidTill',$this->ValidTill,true);
 		$criteria->compare('BirthDate',$this->BirthDate,true);
 		$criteria->compare('SchoolID',$this->SchoolID,true);
+		$criteria->compare('Sex',$this->Sex,true);
+		$criteria->compare('NationalityID',$this->NationalityID,true);
+		$criteria->compare('ResServiceNum',$this->ResServiceNum,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
