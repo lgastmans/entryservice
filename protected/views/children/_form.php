@@ -27,6 +27,22 @@
             <?php echo $form->textFieldControlGroup($model,'Name',array('span'=>4,'maxlength'=>64)); ?>
 
             <?php echo $form->textFieldControlGroup($model,'Surname',array('span'=>4,'maxlength'=>64)); ?>
+            
+            <?php echo $form->dropDownListControlGroup($model,'Sex',
+                array('M'=>'Male','F'=>'Female'));
+            ?>
+
+            <?php echo $form->textFieldControlGroup($model,'ResServiceNum',array('span'=>2)); ?>
+
+            <?php
+                echo $form->dropDownListControlGroup($model, 'NationalityID',
+                    CHtml::listData(Nationality::model()->findAll(array('order'=>'Nationality')), 'ID', 'Nationality'),
+                    array(
+                        'empty' => 'Select nationality...',
+                        'id'=>'selNationalityChildren',
+                    )
+                );
+            ?>
 
             <?php
                 echo $form->dropDownListControlGroup($model, 'SchoolID',
