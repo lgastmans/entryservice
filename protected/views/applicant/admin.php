@@ -89,8 +89,11 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 			'value'=>'Yii::app()->dateFormatter->format("dd-MM-yyyy", $data->BirthDate)',
 		),
 		array(
-			'header'=>'Age',
-			'value'=> '$data->DOB',
+			//'header'=>'Age',
+			'name'=>'DOB',
+			'header'=> CHtml::encode($model->getAttributeLabel('DOB')),
+			'value'=> '$data->Age',
+		    'filter' => CHtml::activeTextField($model, 'DOB'),			
 		),
 		//'Photo',
 		array(
