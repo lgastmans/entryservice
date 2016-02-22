@@ -48,7 +48,7 @@ class ApplicantController extends Controller
 					'addPassport', 'deletePassport', 'updatePassport',
 					'addVisa', 'deleteVisa', 'updateVisa',
 					'addIndian', 'deleteIndian', 'updateIndian',
-					'viewApplicant',),
+					'viewApplicant','archiveApplicant',),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -60,6 +60,26 @@ class ApplicantController extends Controller
 				'users'=>array('*'),
 			),
 		);
+	}
+
+	public function actionArchiveApplicant($id){
+
+		$model=$this->loadModel($id);
+
+		// Uncomment the following line if AJAX validation is needed
+		// $this->performAjaxValidation($model);
+
+		if ($model) {
+
+			$model->IsArchived=!$model->IsArchived;
+			
+			if ($model->save()) {
+				//$this->redirect(array('view','id'=>$model->ID));
+				$this->redirect(array('admin'));
+			}
+		}
+
+		return false;
 	}
 
 	public function actionViewApplicant($id,$asDialog) {
@@ -86,7 +106,7 @@ class ApplicantController extends Controller
 
 			$id = $_POST['pk'];
 
-			$model = new Member;
+			//$model = new Member;
 
 			$model=$this->loadModel($id);
 

@@ -21,6 +21,7 @@
  * @property integer $IndiaID
  * @property string $Spouse
  * @property integer $SpouseStatusID
+ * @property integer $IsArchived
  *
  * The followings are the available model relations:
  * @property Absence[] $absences
@@ -85,7 +86,7 @@ class Applicant extends CActiveRecord
 
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('nationality_fs, status_fs, full_name, DOB, ID, Name, Surname, BirthPlace, BirthDate, Photo, Sex, MaritalStatus, ResServiceNum, Notes, HomeAddress, NationalityID, PassportID, VisaID, IndiaID, Spouse, SpouseStatusID', 'safe', 'on'=>'search'),
+			array('nationality_fs, status_fs, full_name, DOB, ID, Name, Surname, BirthPlace, BirthDate, Photo, Sex, MaritalStatus, ResServiceNum, Notes, HomeAddress, NationalityID, PassportID, VisaID, IndiaID, Spouse, SpouseStatusID, IsArchived', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -152,6 +153,7 @@ class Applicant extends CActiveRecord
 			'IndiaID' => 'India',
 			'Spouse' => 'Partner/Spouse Name',
 			'SpouseStatusID' => 'Spouse Status',
+			'IsArchived' => 'Archived',
 		);
 	}
     
@@ -184,7 +186,7 @@ class Applicant extends CActiveRecord
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
 	 */
-	public function search()
+	public function search($showArchived=false)
 	{
 		// Warning: Please modify the following code to remove attributes that
 		// should not be searched.
@@ -230,6 +232,15 @@ class Applicant extends CActiveRecord
 		$criteria->compare('IndiaID',$this->IndiaID);
 		$criteria->compare('Spouse',$this->Spouse,true);
 		$criteria->compare('SpouseStatusID',$this->SpouseStatusID,true);
+
+		if (isset($_GET['showArchived'])) {
+			if ($_GET['showArchived']=='Active')
+				$criteria->addCondition('IsArchived=false');
+			elseif ($_GET['showArchived']=='Archived')
+				$criteria->addCondition('IsArchived=true');
+		}
+		else
+			$criteria->addCondition('IsArchived=false');
 
 		if (isset($this->full_name)) {
 			$criteria->addCondition('((Name LIKE "%'.$this->full_name.'%") OR (Surname LIKE "%'.$this->full_name.'%") OR (CONCAT(Name," ",Surname) LIKE "%'.$this->full_name.'%"))');
@@ -321,4 +332,5 @@ class Applicant extends CActiveRecord
 
 		return $str;
 	}
+
 }

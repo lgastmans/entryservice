@@ -28,23 +28,45 @@ $('.search-form form').submit(function(){
 });
 ");
 
-?>
+Yii::app()->clientScript->registerScript("jsfuncs", "
+	function toggleArchived(str) {
+		$('#applicant-grid').yiiGridView('update', {
+			data: $(this).serialize()+'&showArchived='+str
+		});
+	}
+", CClientScript::POS_END);
 
+?>
+<style>
+	.white{
+		background-color:#FFFFFF;
+	}
+	.yellow{
+		background-color:#fff39f;
+	}
+
+</style>
 <div>
 	<div style="float: left;">
 		<h1>Manage Applicants</h1>
 	</div>
 	<div style="float: right;">
+		
 		<?php
-		/*
-		echo TbHtml::buttonDropdown(
-			'Action',
-			array(
-				array('label' => 'Create', 'url' => array('create')),
-			),
-			array( 'color' => TbHtml::BUTTON_COLOR_INVERSE)
-		);
-		*/
+			
+			echo TbHtml::buttonGroup(
+				array(
+			    	array('label' => 'All', 'onclick'=>'toggleArchived("All")'),
+			    	array('label' => 'Active', 'onclick'=>'toggleArchived("Active")', 'class'=>'active'),
+			    	array('label' => 'Archived', 'onclick'=>'toggleArchived("Archived")'),
+				), 
+				array(
+					'id' => 'toggle-archived',
+					'toggle' => TbHtml::BUTTON_TOGGLE_RADIO, 
+					'color' => TbHtml::BUTTON_COLOR_PRIMARY
+				)
+			);
+			
 		?>
 	</div>
 </div>
@@ -68,6 +90,8 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 	'id'=>'applicant-grid',
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
+	//'rowCssClassExpression'=>'$data->color',
+	'rowCssClassExpression'=>'$data->IsArchived == 0 ? "white" : "yellow"',
 	'columns'=>array(
 		//'ID',
 		//'Name',
@@ -174,20 +198,9 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
                     ),
                 ),
                 'archive'=>array(
-                	'label'=>'Archive this applicant',
+                	'label'=>'(Un)Archive this applicant',
                 	'icon'=>(TbHtml::ICON_INBOX),
-					'url'=>'Yii::app()->createUrl("applicant/archive", array("masterID"=>$data->ID, "asDialog"=>0))',
-					'options'=>array("target"=>"_blank"),
-					/*
-					'options'=>array(
-							'ajax'=>array(
-									'type'=>'POST',
-									// ajax post will use 'url' specified above
-									'url'=>"js:$(this).attr('href')",
-									'update'=>'#id_view',
-							),
-					),
-					*/
+					'url'=>'Yii::app()->createUrl("applicant/archiveApplicant", array("id"=>$data->ID))',
                 ),
             ),
 		),
