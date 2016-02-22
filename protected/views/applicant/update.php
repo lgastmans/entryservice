@@ -157,6 +157,15 @@ $this->menu=array(
 	            	),
 	            true),
 	        ),
+	        array(
+	            'label'=>'Delete',
+	            'content'=>$this->renderPartial("_applicantDelete",
+	            	array(
+	            		'applicant_id'=>$model->ID,
+	            		'model' => $model,
+	            	),
+	            true),
+	        ),
 	    ),
 	));
 

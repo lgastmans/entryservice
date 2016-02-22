@@ -159,7 +159,7 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 
 		array(
 			'class'=>'bootstrap.widgets.TbButtonColumn',
-            'template'=>'{view} {update} {delete}',
+            'template'=>'{view} {update} {archive}',
             'buttons'=>array(
                 'view'=> array(
                     'label'=>'View applicant details',
@@ -172,6 +172,22 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
                             'update'=>'#id_view',
                         ),
                     ),
+                ),
+                'archive'=>array(
+                	'label'=>'Archive this applicant',
+                	'icon'=>(TbHtml::ICON_INBOX),
+					'url'=>'Yii::app()->createUrl("applicant/archive", array("masterID"=>$data->ID, "asDialog"=>0))',
+					'options'=>array("target"=>"_blank"),
+					/*
+					'options'=>array(
+							'ajax'=>array(
+									'type'=>'POST',
+									// ajax post will use 'url' specified above
+									'url'=>"js:$(this).attr('href')",
+									'update'=>'#id_view',
+							),
+					),
+					*/
                 ),
             ),
 		),
