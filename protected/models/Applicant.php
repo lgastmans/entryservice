@@ -41,6 +41,7 @@ class Applicant extends CActiveRecord
 	public $nationality_fs; // fs - filter & sort
 	public $status_fs;
 	public $full_name;
+	public $DOB;
 
 	/**
 	 * Returns the static model of the specified AR class.
@@ -84,7 +85,7 @@ class Applicant extends CActiveRecord
 
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('nationality_fs, status_fs, full_name, ID, Name, Surname, BirthPlace, BirthDate, Photo, Sex, MaritalStatus, ResServiceNum, Notes, HomeAddress, NationalityID, PassportID, VisaID, IndiaID, Spouse, SpouseStatusID', 'safe', 'on'=>'search'),
+			array('nationality_fs, status_fs, full_name, DOB, ID, Name, Surname, BirthPlace, BirthDate, Photo, Sex, MaritalStatus, ResServiceNum, Notes, HomeAddress, NationalityID, PassportID, VisaID, IndiaID, Spouse, SpouseStatusID', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -133,6 +134,7 @@ class Applicant extends CActiveRecord
 			'nationality_fs' => 'Nationality',
 			'status_fs' => 'Status',
 			'full_name' => 'Name',
+			'DOB' => 'Age',
 			'ID' => 'ID',
 			'Name' => 'Name',
 			'Surname' => 'Surname',
@@ -233,6 +235,21 @@ class Applicant extends CActiveRecord
 			$criteria->addCondition('((Name LIKE "%'.$this->full_name.'%") OR (Surname LIKE "%'.$this->full_name.'%") OR (CONCAT(Name," ",Surname) LIKE "%'.$this->full_name.'%"))');
 		}
 
+		if (isset($this->DOB) && (!empty(trim($this->DOB)))) {
+			if (strpos($this->DOB,'<')!==false) {
+				$var = preg_replace("/[^0-9,.]/", "", $this->DOB);
+				$criteria->addCondition("TIMESTAMPDIFF(YEAR,BirthDate,CURDATE()) <= ".$var);
+			}
+			elseif (strpos($this->DOB,'>')!==false) {
+				$var = preg_replace("/[^0-9,.]/", "", $this->DOB);
+				$criteria->addCondition("TIMESTAMPDIFF(YEAR,BirthDate,CURDATE()) >= ".$var);
+			}
+			else {
+				$var = preg_replace("/[^0-9,.]/", "", $this->DOB);
+				$criteria->addCondition("TIMESTAMPDIFF(YEAR,BirthDate,CURDATE()) = ".$var);
+			}
+		}
+
 		$criteria->with = array( 'applicantStatus', 'nationality' );
 		$criteria->compare( 'nationality.Nationality', $this->nationality_fs, true );
 
@@ -267,7 +284,7 @@ class Applicant extends CActiveRecord
 		));
 	}
 
-	public function getDOB()
+	public function getAge()
 	{
 		$from = new DateTime($this->BirthDate);
 		$to   = new DateTime('today');
