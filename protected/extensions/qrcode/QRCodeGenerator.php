@@ -68,8 +68,8 @@ class QRCodeGenerator extends CWidget {
 		}
 			
         if (!$this->filePath){
-            //$this->filePath = realpath(Yii::app()->getBasePath().'/../uploads');
-            $this->filePath = realpath(Yii::app()->getBasePath().'/uploads');
+            $this->filePath = realpath(Yii::app()->getBasePath().'/../uploads');
+            //$this->filePath = realpath(Yii::app()->getBasePath().'/uploads');
             //$this->filePath = realpath('protected/uploads');
         }
         
