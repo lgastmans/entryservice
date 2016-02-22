@@ -32,11 +32,13 @@ $this->widget('bootstrap.widgets.TbGridView',array(
     ),
     array(
       'name'=>'FromDate',
-      'value' => 'Yii::app()->dateFormatter->formatDateTime($data->FromDate, "long", null)',
+      'value'=>'Yii::app()->dateFormatter->format("dd-MM-yyyy", $data->FromDate)',
+      //'value' => 'Yii::app()->dateFormatter->formatDateTime($data->FromDate, "long", null)',
     ),
     array(
       'name'=>'ToDate',
-      'value'=>'Yii::app()->dateFormatter->formatDateTime($data->ToDate, "long", null)',
+      'value'=>'Yii::app()->dateFormatter->format("dd-MM-yyyy", $data->ToDate)',
+      //'value'=>'Yii::app()->dateFormatter->formatDateTime($data->ToDate, "long", null)',
     ),
     'Status',
 
