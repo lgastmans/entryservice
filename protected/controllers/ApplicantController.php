@@ -66,17 +66,16 @@ class ApplicantController extends Controller
 
 		$model=$this->loadModel($id);
 
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
 		if ($model) {
 
 			$model->IsArchived=!$model->IsArchived;
-			
+			if ($model->save())
+				echo "saved";
+			/*
 			if ($model->save()) {
-				//$this->redirect(array('view','id'=>$model->ID));
 				$this->redirect(array('admin'));
 			}
+			*/
 		}
 
 		return false;
