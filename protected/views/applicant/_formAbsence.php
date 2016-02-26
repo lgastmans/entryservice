@@ -13,6 +13,23 @@ $this->widget('yiiwheels.widgets.grid.WhGridView',array(
 	'columns'=>array(
 		//'community.Name',
 		array(
+			'name'=>'StatusID',
+			'header'=>'Status',
+			'value'=>'$data->StatusID',
+		),
+		array(
+			'name'=>'AbsentOn',
+			'header' => 'From',
+			'value'=>'Yii::app()->dateFormatter->format("dd-MM-yyyy", $data->AbsentOn)',
+		),
+		array(
+			'name'=>'AbsentTill',
+			'header' => 'To',
+			'value'=>'Yii::app()->dateFormatter->format("dd-MM-yyyy", $data->AbsentTill)',
+		),
+
+		/*
+		array(
 			'class' => 'yiiwheels.widgets.editable.WhEditableColumn',
 			'name' => 'StatusID',
 			'headerHtmlOptions' => array('style' => 'width: 100px'),
@@ -50,7 +67,7 @@ $this->widget('yiiwheels.widgets.grid.WhGridView',array(
 				'inputclass' => 'span3'
 			)
 		),
-		
+		*/
 		array(
 			'class'=>'bootstrap.widgets.TbButtonColumn',
 			'template'=>'{delete}',
