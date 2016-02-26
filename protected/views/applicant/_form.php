@@ -71,7 +71,23 @@
                 <label class="control-label" for="Applicant_BirthDate">Date of Birth</label>
                 <div class="controls">
                     <?php
-
+                      $this->widget('zii.widgets.jui.CJuiDatePicker',array(
+                          'model'=> $model,
+                          'attribute'=>'BirthDate',
+                          'name'=>'datepicker-birthdate',    
+                          //'value'=>date('d-m-Y'),
+                          'options'=>array(
+                              'showButtonPanel'=>true,
+                              'changeMonth'=>true,
+                              'changeYear'=>true,
+                              'dateFormat'=>'dd-mm-yy',
+                              'showAnim'=>'fadeIn',//'slide','fold','slideDown','fadeIn','blind','bounce','clip','drop'
+                          ),
+                          'htmlOptions'=>array(
+                              'style'=>''
+                          ),
+                      ));
+                    /*
                     $this->widget('yiiwheels.widgets.datepicker.WhDatePicker',
                         array(
                           'model'     => $model,
@@ -88,7 +104,7 @@
 
                         )
                     );
-
+                    */
                     ?>
                 </div>
             </div>

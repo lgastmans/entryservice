@@ -32,7 +32,7 @@ class StatusController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('admin','create','update','position','sort'),
+				'actions'=>array('admin','create','update','position','sort','statusInfo'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -43,6 +43,22 @@ class StatusController extends Controller
 				'users'=>array('*'),
 			),
 		);
+	}
+
+	public function actionStatusInfo() {
+		$arr = array();
+
+		if (isset($_POST['status_id'])) {
+			$model=Status::model()->findByPk($_POST['status_id']);
+		
+			if ($model)
+				$arr = array(
+					"Duration"=>$model->Duration,
+					"DurationPeriod"=>$model->DurationPeriod
+				);
+		}
+
+		echo json_encode($arr);
 	}
 
 	/**

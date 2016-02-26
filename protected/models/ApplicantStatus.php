@@ -94,6 +94,26 @@ class ApplicantStatus extends CActiveRecord
 			'NewsAndNotes' => 'N&N No.'
 		);
 	}
+    
+    protected function afterFind()
+    {
+        // convert to display format
+        $this->StartedOn = Yii::app()->dateFormatter->format('dd-MM-yyyy', $this->StartedOn);
+        $this->CompletedOn = Yii::app()->dateFormatter->format('dd-MM-yyyy', $this->CompletedOn);
+
+        parent::afterFind();
+    }
+
+    protected function beforeValidate ()
+    {
+        $this->StartedOn = strtotime($this->StartedOn);
+        $this->StartedOn = date('Y-m-d', $this->StartedOn);
+
+        $this->CompletedOn = strtotime($this->CompletedOn);
+        $this->CompletedOn = date('Y-m-d', $this->CompletedOn);
+
+        return parent::beforeValidate ();
+    }
 
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.

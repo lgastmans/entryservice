@@ -3,6 +3,30 @@
 /* @var $model ApplicantStatus */
 /* @var $form TbActiveForm */
 ?>
+<?php
+
+    Yii::app()->clientScript->registerScript('statusJSFuncs', "
+        $('#selectStatusID').change(function() {
+            
+            
+
+            $.ajax({
+                type: 'POST',
+                url: '".Yii::app()->createUrl('status/statusInfo')."',
+                data: { status_id: this.value }
+            })
+            .done(function( msg ) {
+                var obj = JSON.parse(msg);
+                $('#fieldDuration').val(obj.Duration);
+                $('#fieldPeriod').val(obj.DurationPeriod);
+            });
+
+            $('#fieldDuration').val(this.value);
+
+        });
+    ", CClientScript::POS_END);
+
+?>
 
 <div class="form">
 
@@ -17,7 +41,7 @@
     )); 
 
 ?>
-
+here
     <p class="help-block">Fields with <span class="required">*</span> are required.</p>
 
     <?php echo $form->errorSummary($model); ?>
@@ -33,14 +57,13 @@
                     CHtml::listData(
                         Status::model()->findAll(array(
                             'select'=>'*',
-                            //'join'=>'LEFT JOIN objetivo_indicador oi ON (t.id_indicador = oi.id_indicador)',
                             'condition'=>'t.ID NOT IN ( SELECT StatusID FROM applicant_status WHERE applicantID = :applicantID )',
                             'params'=>array(':applicantID'=>$_GET['applicant_id']),
                             )
                         ),
                         'ID', 'Description'),
                     array(
-                        'id' => 'selStatus',
+                        'id' => 'selectStatusID',
                         'empty' => 'Select Status...',
                     )
                 );
@@ -50,6 +73,24 @@
                 <label class="control-label" for="ApplicantStatus_StartedOn">Started On</label>
                 <div class="controls">
                     <?php
+                      $this->widget('zii.widgets.jui.CJuiDatePicker',array(
+                          'model'=> $model,
+                          'attribute'=>'StartedOn',
+                          'name'=>'datepicker-StartedOn',    
+                          //'value'=>date('d-m-Y'),
+                          'options'=>array(
+                              'showButtonPanel'=>true,
+                              'changeMonth'=>true,
+                              'changeYear'=>true,
+                              'dateFormat'=>'dd-mm-yy',
+                              'showAnim'=>'fadeIn',//'slide','fold','slideDown','fadeIn','blind','bounce','clip','drop'
+                          ),
+                          'htmlOptions'=>array(
+                              'style'=>''
+                          ),
+                      ));
+
+                    /*
                     $this->widget('yiiwheels.widgets.datepicker.WhDatePicker',
                         array(
                             'model'     => $model,
@@ -59,6 +100,7 @@
                             )
                         )
                     );
+                    */
                     ?>
                 </div>
             </div>
@@ -66,6 +108,23 @@
                 <label class="control-label" for="ApplicantStatus_CompletedOn">Completed On</label>
                 <div class="controls">
                     <?php
+                      $this->widget('zii.widgets.jui.CJuiDatePicker',array(
+                          'model'=> $model,
+                          'attribute'=>'CompletedOn',
+                          'name'=>'datepicker-CompletedOn',    
+                          //'value'=>date('d-m-Y'),
+                          'options'=>array(
+                              'showButtonPanel'=>true,
+                              'changeMonth'=>true,
+                              'changeYear'=>true,
+                              'dateFormat'=>'dd-mm-yy',
+                              'showAnim'=>'fadeIn',//'slide','fold','slideDown','fadeIn','blind','bounce','clip','drop'
+                          ),
+                          'htmlOptions'=>array(
+                              'style'=>''
+                          ),
+                      ));
+                    /*
                     $this->widget('yiiwheels.widgets.datepicker.WhDatePicker',
                         array(
                             'model'     => $model,
@@ -75,20 +134,32 @@
                             )
                         )
                     );
+                    */
                     ?>
                 </div>
             </div>
+
             <?php echo $form->textFieldControlGroup($model,'NewsAndNotes',array('span'=>2)); ?>
 
             <?php //echo $form->textFieldControlGroup($model,'Color',array('span'=>5,'maxlength'=>10)); ?>
 
-            <?php echo $form->textFieldControlGroup($model,'Duration',array('span'=>2)); ?>
+            <?php 
+                echo $form->textFieldControlGroup($model,'Duration',
+                    array(
+                        'id'=>'fieldDuration',
+                        'span'=>2
+                    )
+                ); 
+            ?>
 
             <?php //echo $form->textFieldControlGroup($model,'DurationPeriod',array('span'=>5,'maxlength'=>6)); ?>
             <?php 
                 echo $form->dropDownListControlGroup($model, 'DurationPeriod',
                     array('None'=>'None', 'Days'=>'Days', 'Weeks'=>'Weeks', 'Months'=>'Months', 'Years'=>'Years'),
-                    array('empty' => 'Select Duration...')
+                    array(
+                        'id'=>'fieldPeriod',
+                        'empty' => 'Select Duration...'
+                    )
                 ); 
             ?>
 

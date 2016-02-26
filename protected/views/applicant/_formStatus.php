@@ -42,12 +42,14 @@ $this->widget('bootstrap.widgets.TbGridView',array(
 		array(
 			'name'=>'StartedOn',
 			'header' => 'Started',
-			'value'=>'Yii::app()->dateFormatter->formatDateTime($data->StartedOn, "long", null)',
+			//'value'=>'Yii::app()->dateFormatter->formatDateTime($data->StartedOn, "long", null)',
+			'value'=>'Yii::app()->dateFormatter->format("dd-MM-yyyy", $data->StartedOn)',
 		),
 		array(
 			'name'=>'CompletedOn',
 			'header' => 'Completed',
-			'value'=>'Yii::app()->dateFormatter->formatDateTime($data->CompletedOn, "long", null)',
+			//'value'=>'Yii::app()->dateFormatter->formatDateTime($data->CompletedOn, "long", null)',
+			'value'=>'Yii::app()->dateFormatter->format("dd-MM-yyyy", $data->CompletedOn)',
 		),
 		'NewsAndNotes',
 		/*

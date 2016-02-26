@@ -168,7 +168,7 @@ class Applicant extends CActiveRecord
 
     protected function beforeSave()
     {
-        $this->BirthDate = date('Y-m-d', CDateTimeParser::parse($this->BirthDate, 'dd-MM-yyyy'));
+        //$this->BirthDate = date('Y-m-d', CDateTimeParser::parse($this->BirthDate, 'dd-mm-yy'));
 
         return parent::beforeSave();
     }

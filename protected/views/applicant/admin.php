@@ -201,6 +201,15 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
                 	'label'=>'(Un)Archive this applicant',
                 	'icon'=>(TbHtml::ICON_INBOX),
 					'url'=>'Yii::app()->createUrl("applicant/archiveApplicant", array("id"=>$data->ID))',
+                    'options'=>array(
+                        'ajax'=>array(
+                            'type'=>'POST',
+                            // ajax post will use 'url' specified above
+                            'url'=>"js:$(this).attr('href')",
+                            //'update'=>'#id_view',
+                            'success'=>"function(){ $.fn.yiiGridView.update('applicant-grid'); }",
+                        ),
+                    ),
                 ),
             ),
 		),
