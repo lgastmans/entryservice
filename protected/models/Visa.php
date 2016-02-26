@@ -76,6 +76,35 @@ class Visa extends CActiveRecord
 		);
 	}
 
+    protected function afterFind()
+    {
+        // convert to display format
+        $this->IssuedDate = Yii::app()->dateFormatter->format('dd-MM-yyyy', $this->IssuedDate);
+        $this->ValidTill = Yii::app()->dateFormatter->format('dd-MM-yyyy', $this->ValidTill);
+
+        parent::afterFind();
+    }
+
+    protected function afterSave()
+    {
+        // convert to display format
+        $this->IssuedDate = Yii::app()->dateFormatter->format('dd-MM-yyyy', $this->IssuedDate);
+        $this->ValidTill = Yii::app()->dateFormatter->format('dd-MM-yyyy', $this->ValidTill);
+
+        parent::afterSave();
+    }
+
+    protected function beforeValidate ()
+    {
+        $this->IssuedDate = strtotime($this->IssuedDate);
+        $this->IssuedDate = date('Y-m-d', $this->IssuedDate);
+
+        $this->ValidTill = strtotime($this->ValidTill);
+        $this->ValidTill = date('Y-m-d', $this->ValidTill);
+
+        return parent::beforeValidate();
+    }
+
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.

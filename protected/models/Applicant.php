@@ -152,7 +152,7 @@ class Applicant extends CActiveRecord
 			'VisaID' => 'Visa',
 			'IndiaID' => 'India',
 			'Spouse' => 'Partner/Spouse Name',
-			'SpouseStatusID' => 'Spouse Status',
+			'SpouseStatusID' => 'Partner/Spouse Status',
 			'IsArchived' => 'Archived',
 		);
 	}

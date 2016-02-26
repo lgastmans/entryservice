@@ -29,15 +29,34 @@
                 <label class="control-label" for="Applicant_IssuedDate">Date of issue</label>
                 <div class="controls">
                     <?php
-                    $this->widget('yiiwheels.widgets.datepicker.WhDatePicker',
-                        array(
-                            'model'     => $model,
-                            'attribute' => 'IssuedDate',
-                            'pluginOptions' => array(
-                                'format' => 'yyyy-mm-dd'
+                      $this->widget('zii.widgets.jui.CJuiDatePicker',array(
+                          'model'=> $model,
+                          'attribute'=>'IssuedDate',
+                          'name'=>'datepicker-ppIssuedDate',    
+                          //'value'=>date('d-m-Y'),
+                          'options'=>array(
+                              'showButtonPanel'=>true,
+                              'changeMonth'=>true,
+                              'changeYear'=>true,
+                              'dateFormat'=>'dd-mm-yy',
+                              'showAnim'=>'fadeIn',//'slide','fold','slideDown','fadeIn','blind','bounce','clip','drop'
+                          ),
+                          'htmlOptions'=>array(
+                              'style'=>''
+                          ),
+                      ));
+
+                      /*
+                        $this->widget('yiiwheels.widgets.datepicker.WhDatePicker',
+                            array(
+                                'model'     => $model,
+                                'attribute' => 'IssuedDate',
+                                'pluginOptions' => array(
+                                    'format' => 'yyyy-mm-dd'
+                                )
                             )
-                        )
-                    );
+                        );
+                        */
                     ?>
                 </div>
             </div>
@@ -47,7 +66,25 @@
                 <label class="control-label" for="Applicant_ValidTill">Valid till</label>
                 <div class="controls">
                     <?php
-                    $this->widget('yiiwheels.widgets.datepicker.WhDatePicker',
+                      $this->widget('zii.widgets.jui.CJuiDatePicker',array(
+                          'model'=> $model,
+                          'attribute'=>'ValidTill',
+                          'name'=>'datepicker-ppValidTill',    
+                          //'value'=>date('d-m-Y'),
+                          'options'=>array(
+                              'showButtonPanel'=>true,
+                              'changeMonth'=>true,
+                              'changeYear'=>true,
+                              'dateFormat'=>'dd-mm-yy',
+                              'showAnim'=>'fadeIn',//'slide','fold','slideDown','fadeIn','blind','bounce','clip','drop'
+                          ),
+                          'htmlOptions'=>array(
+                              'style'=>''
+                          ),
+                      ));
+
+                        /*
+                        $this->widget('yiiwheels.widgets.datepicker.WhDatePicker',
                         array(
                             'model'     => $model,
                             'attribute' => 'ValidTill',
@@ -55,7 +92,8 @@
                                 'format' => 'yyyy-mm-dd'
                             )
                         )
-                    );
+                        );
+                        */
                     ?>
                 </div>
             </div>
