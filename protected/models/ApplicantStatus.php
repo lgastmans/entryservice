@@ -156,7 +156,7 @@ class ApplicantStatus extends CActiveRecord
 		            ),
 		            '*',
 		        ),
-			    'defaultOrder'=>'status.Description ASC',
+			    'defaultOrder'=>'CompletedOn ASC',
 		    ),
 		));
 	}
