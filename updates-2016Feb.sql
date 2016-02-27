@@ -19,6 +19,8 @@ ALTER TABLE `children` ADD FOREIGN KEY ( `NationalityID` ) REFERENCES `entryserv
 ) ON DELETE RESTRICT ON UPDATE RESTRICT ;
 ALTER TABLE `children` ADD `ResServiceNum` INT NULL ;
 ALTER TABLE `applicant` ADD `IsArchived` BOOLEAN NULL DEFAULT FALSE ;
+ALTER TABLE `applicant` ADD `AVName` VARCHAR( 64 ) NULL AFTER `Surname` ,
+ADD INDEX ( `AVName` ) ;
 
 ===
 

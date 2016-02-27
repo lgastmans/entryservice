@@ -64,6 +64,8 @@
 
             <?php echo $form->textFieldControlGroup($model,'Surname',array('span'=>4,'maxlength'=>64)); ?>
 
+            <?php echo $form->textFieldControlGroup($model,'AVName',array('span'=>4,'maxlength'=>64)); ?>
+
             <?php echo $form->textFieldControlGroup($model,'BirthPlace',array('span'=>4,'maxlength'=>64)); ?>
 
             <?php //echo $form->dateFieldControlGroup($model,'BirthDate',array('span'=>2)); ?>

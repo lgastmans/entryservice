@@ -67,7 +67,13 @@ $this->menu=array(
 
 <div>
 	<div style="float: left;">
-		<h1><?php echo $model->FullName; ?></h1>
+		<h1>
+			<?php 
+				echo $model->FullName; 
+				if (!empty($model->AVName))
+					echo " ( $model->AVName )";
+			?>
+		</h1>
 		<br>
 		<?php echo TbHtml::well($info); ?>
 	</div>

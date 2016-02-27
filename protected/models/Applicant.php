@@ -7,6 +7,7 @@
  * @property integer $ID
  * @property string $Name
  * @property string $Surname
+ * @property string $AVName
  * @property string $BirthPlace
  * @property string $BirthDate
  * @property string $Photo
@@ -76,8 +77,9 @@ class Applicant extends CActiveRecord
 			array('PassportID', 'default', 'setOnEmpty' => true, 'value' => null),
 			array('VisaID', 'default', 'setOnEmpty' => true, 'value' => null),
 			array('IndiaID', 'default', 'setOnEmpty' => true, 'value' => null),
+			array('AVName', 'default', 'setOnEmpty' => true, 'value' => null),
 
-			array('Name, Surname, BirthPlace, Spouse', 'length', 'max'=>64),
+			array('Name, Surname, AVName, BirthPlace, Spouse', 'length', 'max'=>64),
 			array('Photo', 'length', 'max'=>128),
 			array('Sex', 'length', 'max'=>1),
 			array('MaritalStatus', 'length', 'max'=>8),
@@ -86,7 +88,7 @@ class Applicant extends CActiveRecord
 
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('nationality_fs, status_fs, full_name, DOB, ID, Name, Surname, BirthPlace, BirthDate, Photo, Sex, MaritalStatus, ResServiceNum, Notes, HomeAddress, NationalityID, PassportID, VisaID, IndiaID, Spouse, SpouseStatusID, IsArchived', 'safe', 'on'=>'search'),
+			array('nationality_fs, status_fs, full_name, DOB, ID, Name, Surname, AVName,BirthPlace, BirthDate, Photo, Sex, MaritalStatus, ResServiceNum, Notes, HomeAddress, NationalityID, PassportID, VisaID, IndiaID, Spouse, SpouseStatusID, IsArchived', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -139,6 +141,7 @@ class Applicant extends CActiveRecord
 			'ID' => 'ID',
 			'Name' => 'Name',
 			'Surname' => 'Surname',
+			'AVName' => 'AV Name',
 			'BirthPlace' => 'Birth Place',
 			'BirthDate' => 'Birth Date',
 			'Photo' => 'Photo',
@@ -217,6 +220,7 @@ class Applicant extends CActiveRecord
 		$criteria->compare('ID',$this->ID);
 //		$criteria->compare('Name',$this->Name,true);
 //		$criteria->compare('Surname',$this->Surname,true);
+		$criteria->compare('AVName',$this->AVName,true);
 		$criteria->compare('BirthPlace',$this->BirthPlace,true);
 		//$criteria->compare('BirthDate',$this->BirthDate,true);
 		$criteria->compare('BirthDate',$srchBirthDate,true);
