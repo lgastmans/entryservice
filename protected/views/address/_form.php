@@ -42,6 +42,23 @@
                 <label class="control-label" for="Address_FromDate">From</label>
                 <div class="controls">
                     <?php
+                      $this->widget('zii.widgets.jui.CJuiDatePicker',array(
+                          'model'=> $model,
+                          'attribute'=>'FromDate',
+                          'name'=>'datepicker-addressFromDate',    
+                          //'value'=>date('d-m-Y'),
+                          'options'=>array(
+                              'showButtonPanel'=>true,
+                              'changeMonth'=>true,
+                              'changeYear'=>true,
+                              'dateFormat'=>'dd-mm-yy',
+                              'showAnim'=>'fadeIn',//'slide','fold','slideDown','fadeIn','blind','bounce','clip','drop'
+                          ),
+                          'htmlOptions'=>array(
+                              'style'=>''
+                          ),
+                      ));
+                    /*
                     $this->widget('yiiwheels.widgets.datepicker.WhDatePicker',
                         array(
                             'model'     => $model,
@@ -51,13 +68,31 @@
                             )
                         )
                     );
+                    */
                     ?>
                 </div>
             </div>
             <div class="control-group ">
-                <label class="control-label" for="Address_ToDate">From</label>
+                <label class="control-label" for="Address_ToDate">To</label>
                 <div class="controls">
                     <?php
+                       $this->widget('zii.widgets.jui.CJuiDatePicker',array(
+                          'model'=> $model,
+                          'attribute'=>'ToDate',
+                          'name'=>'datepicker-addressToDate',    
+                          //'value'=>date('d-m-Y'),
+                          'options'=>array(
+                              'showButtonPanel'=>true,
+                              'changeMonth'=>true,
+                              'changeYear'=>true,
+                              'dateFormat'=>'dd-mm-yy',
+                              'showAnim'=>'fadeIn',//'slide','fold','slideDown','fadeIn','blind','bounce','clip','drop'
+                          ),
+                          'htmlOptions'=>array(
+                              'style'=>''
+                          ),
+                      ));
+                    /*
                     $this->widget('yiiwheels.widgets.datepicker.WhDatePicker',
                         array(
                             'model'     => $model,
@@ -67,6 +102,7 @@
                             )
                         )
                     );
+                    */
                     ?>
                 </div>
             </div>

@@ -79,6 +79,35 @@ class Address extends CActiveRecord
 			'Status' => 'Status',
 		);
 	}
+	
+    protected function afterFind()
+    {
+        // convert to display format
+        $this->FromDate = Yii::app()->dateFormatter->format('dd-MM-yyyy', $this->FromDate);
+        $this->ToDate = Yii::app()->dateFormatter->format('dd-MM-yyyy', $this->ToDate);
+
+        parent::afterFind();
+    }
+
+    protected function afterSave()
+    {
+        // convert to display format
+        $this->FromDate = Yii::app()->dateFormatter->format('dd-MM-yyyy', $this->FromDate);
+        $this->ToDate = Yii::app()->dateFormatter->format('dd-MM-yyyy', $this->ToDate);
+
+        parent::afterSave();
+    }
+
+    protected function beforeValidate ()
+    {
+        $this->FromDate = strtotime($this->FromDate);
+        $this->FromDate = date('Y-m-d', $this->FromDate);
+
+        $this->ToDate = strtotime($this->ToDate);
+        $this->ToDate = date('Y-m-d', $this->ToDate);
+
+        return parent::beforeValidate();
+    }
 
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
