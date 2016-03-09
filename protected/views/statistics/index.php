@@ -38,7 +38,7 @@ $this->breadcrumbs=array(
 			'url' => CController::createUrl('statistics/processData'),
 			'data' => 'js:{"status": $("#inputStatus").val(), "year": $("#inputYear").val() }',
 			'success'=>"js:function(data){
-
+				console.log('data: '+data);
 				if (data.length>1) {
 					if ($('#inputChart').val()=='B')
 		        		var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
@@ -78,6 +78,13 @@ $this->breadcrumbs=array(
 		WHERE (a.NationalityID = n.ID) AND ((YEAR(apps.StartedOn)=".date('Y').") AND (apps.StatusID=".key($statuses)."))
 		GROUP BY a.NationalityID
 		ORDER BY n.Nationality";
+	$sql= "
+SELECT n.Nationality, COUNT( a.ID ) AS total
+		FROM (applicant a, nationality n)
+		LEFT JOIN applicant_status apps ON (apps.ApplicantID = a.ID) 
+		WHERE (a.NationalityID = n.ID) AND ((YEAR(apps.StartedOn)=2013) AND (apps.StatusID=7))
+		GROUP BY a.NationalityID
+		ORDER BY n.Nationality";
 
 	$connection=Yii::app()->db;
 	$command=$connection->createCommand($sql);
@@ -90,6 +97,7 @@ $this->breadcrumbs=array(
 	while(($row=$dataReader->read())!==false) {
 		$data[] = array($row['Nationality']." (".$row['total'].")", intval($row['total']), 'stroke-color: #0050FF; stroke-opacity: 0.6; stroke-width: 2; fill-color: #76A7FA; fill-opacity: 0.2');
 	}
+
 ?>
 
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
@@ -101,23 +109,24 @@ $this->breadcrumbs=array(
 	google.setOnLoadCallback(drawChart);
 
 	function drawChart(data) {
-		if (typeof data !== 'undefined' && data !== null)
+		//if (typeof data !== 'undefined' && data !== null)
+		//if (data.length>1) {
+			var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+
 			var data = google.visualization.arrayToDataTable(<?php echo json_encode($data); ?>);
 
-		var options = {
-			colorAxis: {colors: ['yellow', 'red']},
-			title: "",
-			legend: 'left',
-			is3D: true,
-		};
+			var options = {
+				colorAxis: {colors: ['yellow', 'red']},
+				title: "",
+				legend: 'left',
+				is3D: true,
+			};
 
-		if (data.length>1) {
-			var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
 			chart.draw(data, options);
-		}
-		else {
-			$('#chart_div').html('no data');
-		}
+		//}
+		//else {
+		//	$('#chart_div').html('no data');
+		//}
 	}
 
 </script>

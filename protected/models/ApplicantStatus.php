@@ -22,7 +22,7 @@
 class ApplicantStatus extends CActiveRecord
 {
 	public $current_status;
-
+	public $Total;
 
 	/**
 	 * Returns the static model of the specified AR class.
@@ -209,6 +209,93 @@ class ApplicantStatus extends CActiveRecord
 		}
 
 		return $res;
+	}
+
+	public function getStatusErrors()
+	{
+		// SELECT ApplicantID, COUNT( ID ) AS Total
+		// FROM `applicant_status`
+		// WHERE CompletedOn IS NULL
+		// GROUP BY ApplicantID
+		// HAVING Total >1
+		// LIMIT 0 , 30
+
+		$arr=array();
+
+		$sql = "
+			SELECT ast.ApplicantID, CONCAT(app.Name, ' ', app.Surname) AS Fullname, COUNT( ast.ID ) AS Total
+			FROM applicant_status ast
+			INNER JOIN applicant app ON (app.ID=ast.ApplicantID)
+			WHERE (ast.CompletedOn IS NULL) AND (app.IsArchived=FALSE)
+			GROUP BY ast.ApplicantID
+			HAVING Total > 1
+			ORDER BY Fullname";
+
+		$connection=Yii::app()->db;
+		$command=$connection->createCommand($sql);
+		$dataReader=$command->query();
+
+		while(($row=$dataReader->read())!==false) {
+			$arr[] = array(
+				'ApplicantID'=>$row['ApplicantID'],
+				'Fullname'=>$row['Fullname'],
+				'Total'=>$row['Total']
+			);
+		}
+
+
+		$dataProvider=new CArrayDataProvider($arr, array(
+		    'id'=>'applicant_status',
+		    'keyField'=>'ApplicantID',
+		    'sort'=>array(
+		        'attributes'=>array(
+		             'ApplicantID', 'Fullname', 'Total',
+		        ),
+		        'defaultOrder'=>array(
+ 				   'Status'=>CSort::SORT_DESC,
+				),
+		    ),
+		    'pagination'=>array(
+		        'pageSize'=>10,
+		    ),
+		));
+
+		return $dataProvider;
+
+		//return $arr;
+	}
+
+	public function getStatusTotals()
+	{
+		$arr=array();
+
+		//SELECT s.Description AS Status, apps.StatusID, COUNT(apps.ID) 
+		//FROM `applicant_status` apps
+		//INNER JOIN `status` s ON (s.ID = apps.StatusID)
+		//WHERE (CompletedOn IS NULL)
+		//GROUP BY StatusID
+
+		$sql= "
+			SELECT s.Description AS Status, apps.StatusID, COUNT(apps.ID) AS Total
+			FROM `applicant_status` apps
+			INNER JOIN `status` s ON (s.ID = apps.StatusID)
+			INNER JOIN `applicant` a ON (a.ID = apps.ApplicantID)
+			WHERE (CompletedOn IS NULL) AND (a.IsArchived=FALSE)
+			GROUP BY StatusID
+			ORDER BY s.Description";
+
+		$connection=Yii::app()->db;
+		$command=$connection->createCommand($sql);
+		$dataReader=$command->query();
+
+		while(($row=$dataReader->read())!==false) {
+			$arr[] = array(
+				'Status'=>$row['Status'],
+				'Total' =>$row['Total']
+			);
+		}
+
+		return $arr;
 	}
 
 	public function statusInformation($applicant_id, $status_id=NULL) {

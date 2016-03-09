@@ -146,7 +146,7 @@
 	<div class="clear"></div>
 
 	<div id="footer">
-		&copy; 2014 by Luk - 	Starcode.<br/>
+		&copy; 2014 by <a href="https://worktree.in" target="_blank">Luk Gastmans</a>.<br/>
 		<?php echo Yii::powered(); ?>
 	</div><!-- footer -->
 
