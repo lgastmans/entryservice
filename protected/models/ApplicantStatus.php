@@ -115,6 +115,15 @@ class ApplicantStatus extends CActiveRecord
         return parent::beforeValidate ();
     }
 
+    protected function beforeSave()
+    {
+    	if (($this->CompletedOn == "") || ($this->CompletedOn == '1970-01-01')) {
+    	    $this->CompletedOn = null;
+	    }
+
+	    return parent::beforeSave();
+    }
+
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
