@@ -20,6 +20,27 @@ $this->menu=array(
 
 <h1>Settings</h1>
 
+<?php
+	echo TbHtml::ajaxButton(
+        'Check for Updates',
+        array('settings/checkUpdates'),
+        array(
+	        'dataType'=>'json',
+	        'type'=>'post',
+					'url' => CController::createUrl('settings/checkUpdates'),
+					//'data' => '',
+			'success'=>"js:function(data) {
+				console.log('updates complete ' + data);
+			}",
+        ),
+        array(
+	        'id'=>'btn-update',
+	        'color'=>TbHtml::BUTTON_COLOR_DEFAULT,
+	        'size'=>TbHtml::BUTTON_SIZE_DEFAULT,
+        )
+    );
+?>
+<br><br>
 <?php $this->widget('zii.widgets.CDetailView',array(
     'htmlOptions' => array(
         'class' => 'table table-striped table-condensed table-hover',

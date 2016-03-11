@@ -36,7 +36,7 @@ class SettingsController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
+				'actions'=>array('admin','delete','checkUpdates'),
 				'users'=>Yii::app()->getModule('user')->getAdmins(), //array('admin'),
 			),
 			array('deny',  // deny all users
@@ -148,6 +148,16 @@ class SettingsController extends Controller
 		$this->render('admin',array(
 			'model'=>$model,
 		));
+	}
+
+	public function actionCheckUpdates()
+	{
+		$arr = array();
+
+		$arr[] = exec('cd /home/luk/Desktop');
+		$arr[] = exec('git pull https://github.com/lgastmans/entryservice.git');
+
+		echo json_encode($arr);
 	}
 
 	/**
