@@ -104,7 +104,7 @@
 								'items'=>array(
 									array('label'=>'Users','url'=>Yii::app()->getModule('user')->profileUrl),
 									array('label'=>'Members','url'=>array('Member/admin')),
-									array('label'=>'Settings', 'url'=>array('settings/view&id=1')),
+									array('label'=>'Settings', 'url'=>array('settings/1')),
 								)
 							),
 
