@@ -153,15 +153,17 @@ class SettingsController extends Controller
 	public function actionCheckUpdates()
 	{
 		$arr = array();
+		
+		$output = array();
+		$result = array();
 
 		//exec('cd /home/luk/Desktop/', $output, $result);
-		//exec('git pull https://github.com/lgastmans/entryservice.git', $output2, $result2);
-		exec('/home/luk/Desktop/entryservice/git status', $output2, $result2);
+		//exec('git pull https://github.com/lgastmans/entryservice.git', $output, $result);
+		//exec('cd /home/luk/Desktop/entryservice; git pull 2->&1;', $output, $result);
+		exec('cd /home/luk/Desktop/entryservice; git status 2->&1;', $output, $result);
 
-		//$arr[] = $output;
-		//$arr[] = $result;
-		$arr[] = $output2;
-		$arr[] = $result2;
+		$arr[] = $output;
+		$arr[] = $result;
 
 		echo json_encode($arr);
 	}

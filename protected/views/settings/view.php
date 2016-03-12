@@ -30,7 +30,7 @@ $this->menu=array(
 					'url' => CController::createUrl('settings/checkUpdates'),
 					//'data' => '',
 			'success'=>"js:function(data) {
-				$('#update-output').html(data);
+				$('#update-output').text(data);
 				console.log(data);
 			}",
         ),
