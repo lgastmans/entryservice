@@ -154,8 +154,14 @@ class SettingsController extends Controller
 	{
 		$arr = array();
 
-		$arr[] = exec('cd /home/luk/Desktop');
-		$arr[] = exec('git pull https://github.com/lgastmans/entryservice.git');
+		//exec('cd /home/luk/Desktop/', $output, $result);
+		//exec('git pull https://github.com/lgastmans/entryservice.git', $output2, $result2);
+		exec('/home/luk/Desktop/entryservice/git status', $output2, $result2);
+
+		//$arr[] = $output;
+		//$arr[] = $result;
+		$arr[] = $output2;
+		$arr[] = $result2;
 
 		echo json_encode($arr);
 	}

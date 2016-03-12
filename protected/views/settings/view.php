@@ -30,7 +30,8 @@ $this->menu=array(
 					'url' => CController::createUrl('settings/checkUpdates'),
 					//'data' => '',
 			'success'=>"js:function(data) {
-				console.log('updates complete ' + data);
+				$('#update-output').html(data);
+				console.log(data);
 			}",
         ),
         array(
@@ -40,7 +41,10 @@ $this->menu=array(
         )
     );
 ?>
+
+<span id="update-output"></span>
 <br><br>
+
 <?php $this->widget('zii.widgets.CDetailView',array(
     'htmlOptions' => array(
         'class' => 'table table-striped table-condensed table-hover',

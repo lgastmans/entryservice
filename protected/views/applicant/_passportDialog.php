@@ -36,6 +36,7 @@
                           //'value'=>date('d-m-Y'),
                           'options'=>array(
                               'showButtonPanel'=>true,
+                              'yearRange'=>'-50:+0',
                               'changeMonth'=>true,
                               'changeYear'=>true,
                               'dateFormat'=>'dd-mm-yy',
@@ -73,6 +74,7 @@
                           //'value'=>date('d-m-Y'),
                           'options'=>array(
                               'showButtonPanel'=>true,
+                              'yearRange'=>'-0:+50',
                               'changeMonth'=>true,
                               'changeYear'=>true,
                               'dateFormat'=>'dd-mm-yy',

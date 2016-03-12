@@ -80,6 +80,7 @@
                           //'value'=>date('d-m-Y'),
                           'options'=>array(
                               'showButtonPanel'=>true,
+                              'yearRange'=>'-100:+0',
                               'changeMonth'=>true,
                               'changeYear'=>true,
                               'dateFormat'=>'dd-mm-yy',
