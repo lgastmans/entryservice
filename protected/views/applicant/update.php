@@ -142,7 +142,6 @@ $this->menu=array(
 	            	),
 	            true),
 	        ),
-					/*
 	        array(
 	            'label'=>'Milestones',
 	            'content'=>$this->renderPartial("_applicantMilestones",
@@ -153,8 +152,7 @@ $this->menu=array(
 	            	),
 	            true),
 	        ),
-					*/
-	        array(
+			array(
 	            'label'=>'Interviews',
 	            'content'=>$this->renderPartial("_applicantInterviews",
 	            	array(

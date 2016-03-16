@@ -20,6 +20,10 @@
         ));
 
       ?>
+</div>
+
+<div style="display: table-cell; padding-left:35px;">
+    <div>
 
       <?php 
 
@@ -50,15 +54,8 @@
               )),
             ),
         ));
-      ?>
 
-</div>
-
-<div style="display: table-cell; padding-left:35px;">
-    <div>
-
-      <?php 
-
+        /*
         $this->widget('yiiwheels.widgets.box.WhBox', array(
             'title' => 'Milestones',
             'headerIcon' => TbHtml::ICON_INFO_SIGN,
@@ -72,7 +69,7 @@
               )),
             ),
         ));
-
+        */
       ?>
 
     </div>
