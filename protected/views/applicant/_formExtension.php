@@ -12,64 +12,45 @@ $this->widget('bootstrap.widgets.TbGridView',array(
 	'template' => "{items}",
 	//'filter'=>$model,
 	'columns'=>array(
-		//'community.Name',
+
 		array(
-			'class' => 'yiiwheels.widgets.editable.WhEditableColumn',
-			'name' => 'StatusID',
-			'headerHtmlOptions' => array('style' => 'width: 100px'),
-			'editable' => array(
-				'type' => 'select',
-				//'model' => $model,
-				'attribute' => 'StatusID',
-				'url' => $this->createUrl('extension/editable'),
-				'source' => CHtml::listData(Status::model()->findAll(), 'ID', 'Description')
-			)
+			//'name'=>'current_status',
+			'name'=>'StatusID',
+			'header'=>'Status',
+			'value'=>'$data->status->Description',
 		),
 		array(
-			'class' => 'yiiwheels.widgets.editable.WhEditableColumn',
-			'name' => 'ExtendedOn',
-			'sortable'=>true,
-			'editable' => array(
-				'type' => 'date',
-				'format' => 'yyyy-mm-dd',
-				'viewformat' => 'd M yyyy', //dd-mm-yyyy',
-				'url' => $this->createUrl('extension/editable'),
-				'placement' => 'bottom',
-				'inputclass' => 'span3'
-			)
+			'name'=>'ExtendedOn',
+			'header' => 'Started',
+			'value'=>'Yii::app()->dateFormatter->format("dd-MM-yyyy", $data->ExtendedOn)',
 		),
 		array(
-			'class' => 'yiiwheels.widgets.editable.WhEditableColumn',
-			'name' => 'ExtendedFor',
-			'headerHtmlOptions' => array('style' => 'width: 40px'),
-			'editable' => array(
-				'attribute' => 'ExtendedFor',
-				'url' => $this->createUrl('extension/editable'),
-			)
-		),
-		array(
-			'class' => 'yiiwheels.widgets.editable.WhEditableColumn',
-			'name' => 'ExtendedPeriod',
-			'headerHtmlOptions' => array('style' => 'width: 100px'),
-			'editable' => array(
-				'type' => 'select',
-				'url' => $this->createUrl('extension/editable'),
-				'source' => array('Days'=>'Days','Weeks'=>'Weeks','Months'=>'Months','Years'=>'Years'), 
-				'placement' => 'bottom',
-			)
+			'name'=>'ExtendedPeriod',
+			'header'=>'Period',
+			'value'=>'$data->ExtendedFor." ".$data->ExtendedPeriod',
 		),
 		
 		array(
 			'class'=>'bootstrap.widgets.TbButtonColumn',
-			'template'=>'{delete}',
+			'template'=>'{update}{delete}',
 			'buttons'=>array(
+		        'update' => array(
+                    'label'=>'Edit',
+                    'icon'=>'icon-edit',
+                    'url'=>'Yii::app()->createUrl("extension/editExtension", array("applicant_id"=>$data->primaryKey,"asDialog"=>1,"gridId"=>$this->grid->id))',
+                    'click'=>'function(){
+                        $("#extension-cru-frame").attr("src",$(this).attr("href"));
+                        $("#extension-cru-dialog").dialog("open");
+                        return false;
+                    }',
+		        ),
 				'delete' => array(
-						'label'=>'delete extension',
-						'icon'=>'remove',
-						'url'=>'Yii::app()->createUrl("extension/delete", array("id"=>$data->ID))',
-						'options'=>array(
-							'class'=>'btn btn-small',
-					),
+					'label'=>'delete extension',
+					'icon'=>'remove',
+					'url'=>'Yii::app()->createUrl("extension/delete", array("id"=>$data->ID))',
+					// 'options'=>array(
+					// 	'class'=>'btn btn-small',
+					// ),
 				),
 			),
 		),
@@ -78,3 +59,22 @@ $this->widget('bootstrap.widgets.TbGridView',array(
 )); 
 
 ?>
+
+<?php
+/*
+    the EDIT dialog
+*/
+// add the (closed) dialog for the iframe
+$this->beginWidget('zii.widgets.jui.CJuiDialog', array(
+    'id'=>'extension-cru-dialog',
+    'options'=>array(
+        'title'=>'Extension Details',
+        'autoOpen'=>false,
+        'modal'=>false,
+        'width'=>600,
+        'height'=>650,
+    ),
+));
+?>
+<iframe id="extension-cru-frame" width="100%" height="100%"></iframe>
+<?php $this->endWidget(); ?>

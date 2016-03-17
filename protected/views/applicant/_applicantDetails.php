@@ -96,33 +96,19 @@
     return false;
   }
 
-  function addMilestone()
-  {
-    $.ajax({
-      type: "get",
-      url: '<?php echo $this->createUrl('applicantMilestones/AddMilestone');?>',
-      data: { applicant_id: <?php echo $model->ID;?>, asDialog: 1, gridId: 'applicant-milestones-grid' }
-    })
-    .done(function( msg ) {
-      $("#milestone-cru-frame").attr("src",'<?php echo $this->createUrl('applicantMilestones/AddMilestone',array('applicant_id'=>$model->ID, 'asDialog'=>1, 'gridId'=>'applicant-status-grid'));?>');
-      $("#milestone-cru-dialog").dialog("open");
-    });
-    return false;
-  }
-
   function addExtension()
   {
-    alert('under development');
-    // $.ajax({
-    //   type: "get",
-    //   url: '<?php echo $this->createUrl('applicantStatus/addnew');?>',
-    //   data: { applicant_id: <?php echo $model->ID;?>, asDialog: 1, gridId: 'applicant-status-grid' }
-    // })
-    // .done(function( msg ) {
-    //   $("#status-cru-frame").attr("src",'<?php echo $this->createUrl('applicantStatus/addnew',array('applicant_id'=>$model->ID, 'asDialog'=>1, 'gridId'=>'applicant-status-grid'));?>');
-    //   $("#status-cru-dialog").dialog("open");
-    // });
-    // return false;
+    
+    $.ajax({
+      type: "get",
+      url: '<?php echo $this->createUrl('extension/addnew');?>',
+      data: { applicant_id: <?php echo $model->ID;?>, asDialog: 1, gridId: 'applicant-extension-grid' }
+    })
+    .done(function( msg ) {
+      $("#extension-cru-frame").attr("src",'<?php echo $this->createUrl('extension/addnew',array('applicant_id'=>$model->ID, 'asDialog'=>1, 'gridId'=>'applicant-extension-grid'));?>');
+      $("#extension-cru-dialog").dialog("open");
+    });
+    return false;
   }
 
   function addAbsence()

@@ -60,6 +60,7 @@ class Extension extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'applicant' => array(self::BELONGS_TO, 'Applicant', 'ApplicantID'),
+			'status' => array(self::BELONGS_TO, 'Status', 'StatusID'),
 		);
 	}
 
@@ -105,6 +106,31 @@ class Extension extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+
+    protected function afterFind()
+    {
+        // convert to display format
+        $this->ExtendedOn = Yii::app()->dateFormatter->format('dd-MM-yyyy', $this->ExtendedOn);
+
+        parent::afterFind();
+    }
+
+    protected function beforeValidate ()
+    {
+        $this->ExtendedOn = strtotime($this->ExtendedOn);
+        $this->ExtendedOn = date('Y-m-d', $this->ExtendedOn);
+
+        return parent::beforeValidate ();
+    }
+
+    protected function beforeSave()
+    {
+    	if (($this->ExtendedOn == "") || ($this->ExtendedOn == '1970-01-01')) {
+    	    $this->ExtendedOn = null;
+	    }
+
+	    return parent::beforeSave();
+    }
 
 	public function statusExtensions($applicant_id, $status_id) {
 		$info = array();

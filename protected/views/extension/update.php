@@ -18,6 +18,6 @@ $this->menu=array(
 );
 ?>
 
-    <h1>Update Extension <?php echo $model->ID; ?></h1>
+    
 
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>

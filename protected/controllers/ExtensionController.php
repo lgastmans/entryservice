@@ -36,7 +36,7 @@ class ExtensionController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete','editable','addnew'),
+				'actions'=>array('admin','delete','editable','addnew','editExtension'),
 				'users'=>Yii::app()->getModule('user')->getAdmins(), //array('admin'),
 			),
 			array('deny',  // deny all users
@@ -74,30 +74,57 @@ class ExtensionController extends Controller
 
         $model=new Extension;
         
-        // Ajax Validation enabled
-        $this->performAjaxValidation($model);
-
-        // Flag to know if we will render the form 
-        // or try to add new 
-		$flag=true;
 
         if(isset($_POST['Extension']))
         {
-            $flag=false;
             $model->attributes=$_POST['Extension'];
 
             if($model->save()) {
-				//print_r($model->attributes);
-				echo "Applicant extension saved";
+				if (!empty($_GET['asDialog']))
+				{
+					//Close the dialog, reset the iframe and update the grid
+					echo CHtml::script("window.parent.$('#extension-cru-dialog').dialog('close');window.parent.$('#extension-cru-frame').attr('src','');window.parent.$.fn.yiiGridView.update('{$_GET['gridId']}');");
+					Yii::app()->end();
+				}
             }
         }
 
-        if($flag) {
-            Yii::app()->clientScript->scriptMap['jquery.js'] = false;
-            Yii::app()->clientScript->scriptMap['jquery.min.js'] = false;
-            $this->renderPartial('createExtensionDialog', array('model'=>$model,), false, true);
-        }
+		if (!empty($_GET['asDialog']))
+			$this->layout = '//layouts/iframe';
+
+		$this->render('create',array(
+			'model'=>$model,
+		));
     }
+
+	public function actionEditExtension($applicant_id,$asDialog)
+	{
+	    $model=$this->loadModel($applicant_id);
+
+	    // Uncomment the following line if AJAX validation is needed
+	    // $this->performAjaxValidation($model);
+
+	    if(isset($_POST['Extension']))
+	    {
+	        $model->attributes=$_POST['Extension'];
+	        if($model->save())
+	            if (!empty($_GET['asDialog']))
+	            {
+	                //Close the dialog, reset the iframe and update the grid
+	                echo CHtml::script("window.parent.$('#extension-cru-dialog').dialog('close');window.parent.$('#extension-cru-frame').attr('src','');window.parent.$.fn.yiiGridView.update('{$_GET['gridId']}');");
+	                Yii::app()->end();
+	            }
+	            else
+		            $this->redirect(array('view','_id'=>$model->ID));
+	    }
+
+	    if (!empty($_GET['asDialog']))
+	        $this->layout = '//layouts/iframe';
+
+	    $this->render('update',array(
+	        'model'=>$model,
+	    ));
+	}    
 
 	/**
 	 * Displays a particular model.

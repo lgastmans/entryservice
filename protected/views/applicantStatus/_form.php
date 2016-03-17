@@ -7,9 +7,6 @@
 
     Yii::app()->clientScript->registerScript('statusJSFuncs', "
         $('#selectStatusID').change(function() {
-            
-            
-
             $.ajax({
                 type: 'POST',
                 url: '".Yii::app()->createUrl('status/statusInfo')."',
@@ -41,7 +38,7 @@
     )); 
 
 ?>
-here
+
     <p class="help-block">Fields with <span class="required">*</span> are required.</p>
 
     <?php echo $form->errorSummary($model); ?>
@@ -80,6 +77,7 @@ here
                           //'value'=>date('d-m-Y'),
                           'options'=>array(
                               'showButtonPanel'=>true,
+                              'yearRange'=>'-50:+25',
                               'changeMonth'=>true,
                               'changeYear'=>true,
                               'dateFormat'=>'dd-mm-yy',
