@@ -37,7 +37,7 @@ $this->widget('bootstrap.widgets.TbGridView',array(
 		        'update' => array(
                     'label'=>'Edit',
                     'icon'=>'icon-edit',
-                    'url'=>'Yii::app()->createUrl("extension/editExtension", array("applicant_id"=>$data->primaryKey,"asDialog"=>1,"gridId"=>$this->grid->id))',
+                    'url'=>'Yii::app()->createUrl("extension/editExtension", array("extension_id"=>$data->primaryKey,"asDialog"=>1,"gridId"=>$this->grid->id))',
                     'click'=>'function(){
                         $("#extension-cru-frame").attr("src",$(this).attr("href"));
                         $("#extension-cru-dialog").dialog("open");

@@ -97,9 +97,9 @@ class ExtensionController extends Controller
 		));
     }
 
-	public function actionEditExtension($applicant_id,$asDialog)
+	public function actionEditExtension($extension_id,$asDialog)
 	{
-	    $model=$this->loadModel($applicant_id);
+	    $model=$this->loadModel($extension_id);
 
 	    // Uncomment the following line if AJAX validation is needed
 	    // $this->performAjaxValidation($model);

@@ -15,6 +15,5 @@ $this->menu=array(
 );
 ?>
 
-<h1>Create Extension</h1>
 
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>

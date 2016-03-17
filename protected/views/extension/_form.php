@@ -19,72 +19,73 @@
 
     <?php echo $form->errorSummary($model); ?>
 
-            <?php 
-                echo $model->StatusID.":".$_GET['applicant_id'];
+      <?php
+        if ($model->isNewRecord)
+          echo $form->hiddenField($model,'ApplicantID',array('value'=>$_GET['applicant_id']));
+      ?>
 
-                echo $form->dropDownListControlGroup($model, 'StatusID',
-                    CHtml::listData(
-                        Status::model()->findAll(
-                          array(
-                            'select'=>'*',
-                            //'condition'=>'t.ID IN ( SELECT StatusID FROM extension WHERE applicantID = :applicantID)',
-                            //'params'=>array(':applicantID'=>$_GET['applicant_id']),
-                            )
-                        ),
-                        'ID', 'Description'),
+      <?php 
+          echo $form->dropDownListControlGroup($model, 'StatusID',
+              CHtml::listData(
+                  Status::model()->findAll(
                     array(
-                        'id' => 'selExtension',
-                        'empty' => 'Select Extension...',
-                    )
-                ); 
+                      'select'=>'*',
+                      // 'condition'=>'t.ID IN ( SELECT StatusID FROM extension WHERE ID = :applicantID)',
+                      // 'params'=>array(':applicantID'=>$_GET['extension_id']),
+                      )
+                  ),
+                  'ID', 'Description'),
+              array(
+                  'id' => 'selExtension',
+                  'empty' => 'Select Extension...',
+              )
+          ); 
 
-            ?>
+      ?>
 
 
-            <div class="control-group ">
-                <label class="control-label" for="Extension_ExtendedOn">Extended On</label>
-                <div class="controls">
-                    <?php
-                      $this->widget('zii.widgets.jui.CJuiDatePicker',array(
-                          'model'=> $model,
-                          'attribute'=>'ExtendedOn',
-                          'name'=>'datepicker-ExtendedOn',    
-                          //'value'=>date('d-m-Y'),
-                          'options'=>array(
-                              'showButtonPanel'=>true,
-                              'yearRange'=>'-50:+25',
-                              'changeMonth'=>true,
-                              'changeYear'=>true,
-                              'dateFormat'=>'dd-mm-yy',
-                              'showAnim'=>'fadeIn',//'slide','fold','slideDown','fadeIn','blind','bounce','clip','drop'
-                          ),
-                          'htmlOptions'=>array(
-                              'style'=>''
-                          ),
-                      ));
-                    ?>
-                </div>
+        <div class="control-group ">
+            <label class="control-label" for="Extension_ExtendedOn">Extended On</label>
+            <div class="controls">
+                <?php
+                  $this->widget('zii.widgets.jui.CJuiDatePicker',array(
+                      'model'=> $model,
+                      'attribute'=>'ExtendedOn',
+                      'name'=>'datepicker-ExtendedOn',    
+                      //'value'=>date('d-m-Y'),
+                      'options'=>array(
+                          'showButtonPanel'=>true,
+                          'yearRange'=>'-50:+25',
+                          'changeMonth'=>true,
+                          'changeYear'=>true,
+                          'dateFormat'=>'dd-mm-yy',
+                          'showAnim'=>'fadeIn',//'slide','fold','slideDown','fadeIn','blind','bounce','clip','drop'
+                      ),
+                      'htmlOptions'=>array(
+                          'style'=>''
+                      ),
+                  ));
+                ?>
             </div>
+        </div>
 
-            <?php echo $form->textFieldControlGroup($model,'ExtendedFor',array('span'=>2)); ?>
+        <?php echo $form->textFieldControlGroup($model,'ExtendedFor',array('span'=>2)); ?>
 
-            <?php 
-                echo $form->dropDownListControlGroup($model, 'ExtendedPeriod',
-                    array('Days'=>'Days', 'Weeks'=>'Weeks', 'Months'=>'Months', 'Years'=>'Years'),
-                    array('empty' => 'Select Period...')
-                ); 
-            ?>
-
-
-            <?php echo $form->hiddenField($model,'ApplicantID',array('value'=>$_GET['applicant_id'])); ?>
+        <?php 
+            echo $form->dropDownListControlGroup($model, 'ExtendedPeriod',
+                array('Days'=>'Days', 'Weeks'=>'Weeks', 'Months'=>'Months', 'Years'=>'Years'),
+                array('empty' => 'Select Period...')
+            ); 
+        ?>
 
         <div class="form-actions">
-        
-        <?php echo TbHtml::submitButton($model->isNewRecord ? 'Create' : 'Save',array(
-		    'color'=>TbHtml::BUTTON_COLOR_PRIMARY,
-		    'size'=>TbHtml::BUTTON_SIZE_LARGE,
-		)); ?>
-    </div>
+          <?php 
+            echo TbHtml::submitButton($model->isNewRecord ? 'Create' : 'Save',array(
+  		        'color'=>TbHtml::BUTTON_COLOR_PRIMARY,
+  		        'size'=>TbHtml::BUTTON_SIZE_LARGE,
+  		      )); 
+          ?>
+        </div>
 
     <?php $this->endWidget(); ?>
 
