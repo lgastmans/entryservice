@@ -45,17 +45,36 @@
             ?>
             
             <?php 
+                /*
                 if (isset($_GET['applicant_id']))
                     echo $form->textFieldControlGroup($model,'DateCreated',array('span'=>4, 'value'=>$today, 'readonly'=>true)); 
                 else
                     echo $form->textFieldControlGroup($model,'DateCreated',array('span'=>4, 'readonly'=>true)); 
+                */
             ?>
 
-            <?php //echo $form->textFieldControlGroup($model,'DateStarted',array('span'=>5)); ?>
             <div class="control-group ">
                 <label class="control-label" for="ApplicantMilestones_DateStarted">Started</label>
                 <div class="controls">
                     <?php
+                    $this->widget('zii.widgets.jui.CJuiDatePicker',array(
+                        'model'=> $model,
+                        'attribute'=>'DateStarted',
+                        'name'=>'datepicker-DateStarted',    
+                        //'value'=>date('d-m-Y'),
+                        'options'=>array(
+                            'showButtonPanel'=>true,
+                            'yearRange'=>'-50:+25',
+                            'changeMonth'=>true,
+                            'changeYear'=>true,
+                            'dateFormat'=>'dd-mm-yy',
+                            //'showAnim'=>'fadeIn',//'slide','fold','slideDown','fadeIn','blind','bounce','clip','drop'
+                        ),
+                        'htmlOptions'=>array(
+                            'style'=>''
+                        ),
+                    ));
+                    /*
                     $this->widget(
                         'ext.jui.EJuiDateTimePicker',
                         array(
@@ -68,6 +87,7 @@
                             ),
                         )
                     );
+                    */
                     ?>
                 </div>
             </div>
@@ -77,6 +97,25 @@
                 <label class="control-label" for="ApplicantMilestones_DateCompleted">Completed</label>
                 <div class="controls">
                     <?php
+                    $this->widget('zii.widgets.jui.CJuiDatePicker',array(
+                        'model'=> $model,
+                        'attribute'=>'DateCompleted',
+                        'name'=>'datepicker-DateCompleted',    
+                        //'value'=>date('d-m-Y'),
+                        'options'=>array(
+                            'showButtonPanel'=>true,
+                            'yearRange'=>'-50:+25',
+                            'changeMonth'=>true,
+                            'changeYear'=>true,
+                            'dateFormat'=>'dd-mm-yy',
+                            //'showAnim'=>'fadeIn',//'slide','fold','slideDown','fadeIn','blind','bounce','clip','drop'
+                        ),
+                        'htmlOptions'=>array(
+                            'style'=>''
+                        ),
+                    ));
+
+                    /*
                     $this->widget(
                         'ext.jui.EJuiDateTimePicker',
                         array(
@@ -89,6 +128,7 @@
                             ),
                         )
                     );
+                    */
                     ?>
                 </div>
             </div>

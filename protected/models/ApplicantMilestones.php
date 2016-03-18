@@ -177,7 +177,7 @@ class ApplicantMilestones extends CActiveRecord
 			$params2=array('StatusID'=>$initStatus);
 		}
 
-  	$criteria->condition=implode(' AND ', $conditions);
+  		$criteria->condition=implode(' AND ', $conditions);
 		$criteria->params=array_merge($params1, $params2);
 
 		$criteria->compare('ID',$this->ID);
@@ -208,6 +208,38 @@ class ApplicantMilestones extends CActiveRecord
 		));
 	}
 
+    protected function afterFind()
+    {
+        // convert to display format
+        $this->DateStarted = Yii::app()->dateFormatter->format('dd-MM-yyyy', $this->DateStarted);
+        $this->DateCompleted = Yii::app()->dateFormatter->format('dd-MM-yyyy', $this->DateCompleted);
+
+        parent::afterFind();
+    }
+
+    protected function beforeValidate ()
+    {
+        $this->DateStarted = strtotime($this->DateStarted);
+        $this->DateStarted = date('Y-m-d', $this->DateStarted);
+
+        $this->DateCompleted = strtotime($this->DateCompleted);
+        $this->DateCompleted = date('Y-m-d', $this->DateCompleted);
+
+        return parent::beforeValidate ();
+    }
+
+    protected function beforeSave()
+    {
+    	if (($this->DateStarted == "") || ($this->DateStarted == '1970-01-01')) {
+    	    $this->DateStarted = null;
+	    }
+    	if (($this->DateCompleted == "") || ($this->DateCompleted == '1970-01-01')) {
+    	    $this->DateCompleted = null;
+	    }
+
+	    return parent::beforeSave();
+    }	
+    
 	public function overdueMilestones() {
 		$info = array();
 

@@ -83,12 +83,13 @@ $this->widget('bootstrap.widgets.TbGridView',array(
         array(
             'name' => 'DateStarted',
             'type' => 'raw',
-            'value' => 'Yii::app()->dateFormatter->formatDateTime($data->DateStarted, "long", null)'
+            'value'=>'Yii::app()->dateFormatter->format("dd-MM-yyyy", $data->DateStarted)'
         ),
         array(
             'name' => 'DateCompleted',
             'type' => 'raw',
-            'value' => '($data->DateCompleted!=="0000-00-00")?Yii::app()->dateFormatter->formatDateTime($data->DateCompleted, "long", null):""'
+            //'value' => '($data->DateCompleted!=="0000-00-00")?Yii::app()->dateFormatter->formatDateTime($data->DateCompleted, "long", null):""'
+            'value'=>'Yii::app()->dateFormatter->format("dd-MM-yyyy", $data->DateCompleted)'
         ),
         array(
             'name'=>'Timeline',
