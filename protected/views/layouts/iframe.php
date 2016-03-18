@@ -4,6 +4,11 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="language" content="en" />
 
+    <?php 
+    //Yii::app()->clientScript->registerCoreScript('jquery');     
+    //Yii::app()->clientScript->registerCoreScript('jquery.ui'); 
+    ?>
+
     <?php Yii::app()->bootstrap->register(); ?>
  
     <!-- blueprint CSS framework -->

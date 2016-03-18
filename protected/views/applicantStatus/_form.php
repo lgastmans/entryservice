@@ -73,7 +73,7 @@
                       $this->widget('zii.widgets.jui.CJuiDatePicker',array(
                           'model'=> $model,
                           'attribute'=>'StartedOn',
-                          'name'=>'datepicker-StartedOn',    
+                          'name'=>'dpStatus-StartedOn',    
                           //'value'=>date('d-m-Y'),
                           'options'=>array(
                               'showButtonPanel'=>true,

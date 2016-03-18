@@ -59,7 +59,7 @@
                           'changeMonth'=>true,
                           'changeYear'=>true,
                           'dateFormat'=>'dd-mm-yy',
-                          'showAnim'=>'fadeIn',//'slide','fold','slideDown','fadeIn','blind','bounce','clip','drop'
+                          //'showAnim'=>'fadeIn',//'slide','fold','slideDown','fadeIn','blind','bounce','clip','drop'
                       ),
                       'htmlOptions'=>array(
                           'style'=>''

@@ -58,6 +58,7 @@ class Absence extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'applicant' => array(self::BELONGS_TO, 'Applicant', 'ApplicantID'),
+			'status' => array(self::BELONGS_TO, 'Status', 'StatusID'),
 		);
 	}
 
@@ -101,4 +102,36 @@ class Absence extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+
+    protected function afterFind()
+    {
+        // convert to display format
+        $this->AbsentOn = Yii::app()->dateFormatter->format('dd-MM-yyyy', $this->AbsentOn);
+        $this->AbsentTill = Yii::app()->dateFormatter->format('dd-MM-yyyy', $this->AbsentTill);
+
+        parent::afterFind();
+    }
+
+    protected function beforeValidate ()
+    {
+        $this->AbsentOn = strtotime($this->AbsentOn);
+        $this->AbsentOn = date('Y-m-d', $this->AbsentOn);
+
+        $this->AbsentTill = strtotime($this->AbsentTill);
+        $this->AbsentTill = date('Y-m-d', $this->AbsentTill);
+
+        return parent::beforeValidate ();
+    }
+
+    protected function beforeSave()
+    {
+    	if (($this->AbsentOn == "") || ($this->AbsentOn == '1970-01-01')) {
+    	    $this->AbsentOn = null;
+	    }
+    	if (($this->AbsentTill == "") || ($this->AbsentTill == '1970-01-01')) {
+    	    $this->AbsentTill = null;
+	    }
+
+	    return parent::beforeSave();
+    }	
 }

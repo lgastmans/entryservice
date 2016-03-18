@@ -19,19 +19,87 @@
 
     <?php echo $form->errorSummary($model); ?>
 
-            <?php echo $form->textFieldControlGroup($model,'ApplicantID',array('span'=>5)); ?>
+      <?php
+        if ($model->isNewRecord)
+          echo $form->hiddenField($model,'ApplicantID',array('value'=>$_GET['applicant_id']));
+      ?>
 
-            <?php echo $form->textFieldControlGroup($model,'StatusID',array('span'=>5)); ?>
+      <?php 
+          echo $form->dropDownListControlGroup($model, 'StatusID',
+              CHtml::listData(
+                  Status::model()->findAll(array(
+                      'select'=>'*',
+                      // 'condition'=>'t.ID IN ( SELECT StatusID FROM applicant_status WHERE applicantID = :applicantID AND CompletedOn IS NULL)',
+                      //'params'=>array(':applicantID'=>$_GET['applicant_id']),
+                      )
+                  ),
+                  'ID', 'Description'),
+              array(
+                  'id' => 'selStatus',
+                  'empty' => 'Select Status...',
+              )
+          ); 
 
-            <?php echo $form->textFieldControlGroup($model,'AbsentOn',array('span'=>5)); ?>
+      ?>
 
-            <?php echo $form->textFieldControlGroup($model,'AbsentTill',array('span'=>5)); ?>
+      <div class="control-group ">
+          <label class="control-label" for="Absence_AbsentOn">Absent On</label>
+          <div class="controls">
+              <?php
+                $this->widget('zii.widgets.jui.CJuiDatePicker',array(
+                    'model'=> $model,
+                    'attribute'=>'AbsentOn',
+                    'name'=>'datepicker-AbsentOn',    
+                    //'value'=>date('d-m-Y'),
+                    'options'=>array(
+                        'showButtonPanel'=>true,
+                        'yearRange'=>'-50:+25',
+                        'changeMonth'=>true,
+                        'changeYear'=>true,
+                        'dateFormat'=>'dd-mm-yy',
+                        //'showAnim'=>'fadeIn',//'slide','fold','slideDown','fadeIn','blind','bounce','clip','drop'
+                    ),
+                    'htmlOptions'=>array(
+                        'style'=>''
+                    ),
+                ));
+              ?>
+          </div>
+      </div>
 
-        <div class="form-actions">
-        <?php echo TbHtml::submitButton($model->isNewRecord ? 'Create' : 'Save',array(
-		    'color'=>TbHtml::BUTTON_COLOR_PRIMARY,
-		    'size'=>TbHtml::BUTTON_SIZE_LARGE,
-		)); ?>
+      <div class="control-group ">
+          <label class="control-label" for="Absence_AbsentTill">Absent Till</label>
+          <div class="controls">
+              <?php
+                $this->widget('zii.widgets.jui.CJuiDatePicker',array(
+                    'model'=> $model,
+                    'attribute'=>'AbsentTill',
+                    'name'=>'datepicker-AbsentTill',    
+                    //'value'=>date('d-m-Y'),
+                    'options'=>array(
+                        'showButtonPanel'=>true,
+                        'yearRange'=>'-50:+25',
+                        'changeMonth'=>true,
+                        'changeYear'=>true,
+                        'dateFormat'=>'dd-mm-yy',
+                        //'showAnim'=>'fadeIn',//'slide','fold','slideDown','fadeIn','blind','bounce','clip','drop'
+                    ),
+                    'htmlOptions'=>array(
+                        'style'=>''
+                    ),
+                ));
+              ?>
+          </div>
+      </div>
+
+
+      <div class="form-actions">
+        <?php 
+          echo TbHtml::submitButton($model->isNewRecord ? 'Create' : 'Save', array(
+		        'color'=>TbHtml::BUTTON_COLOR_PRIMARY,
+		        'size'=>TbHtml::BUTTON_SIZE_LARGE,
+		      )); 
+        ?>
     </div>
 
     <?php $this->endWidget(); ?>

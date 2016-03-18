@@ -113,17 +113,16 @@
 
   function addAbsence()
   {
-    alert('under development');
-    // $.ajax({
-    //   type: "get",
-    //   url: '<?php echo $this->createUrl('applicantStatus/addnew');?>',
-    //   data: { applicant_id: <?php echo $model->ID;?>, asDialog: 1, gridId: 'applicant-status-grid' }
-    // })
-    // .done(function( msg ) {
-    //   $("#status-cru-frame").attr("src",'<?php echo $this->createUrl('applicantStatus/addnew',array('applicant_id'=>$model->ID, 'asDialog'=>1, 'gridId'=>'applicant-status-grid'));?>');
-    //   $("#status-cru-dialog").dialog("open");
-    // });
-    // return false;
+    $.ajax({
+      type: "get",
+      url: '<?php echo $this->createUrl('absence/addnew');?>',
+      data: { applicant_id: <?php echo $model->ID;?>, asDialog: 1, gridId: 'applicant-absence-grid' }
+    })
+    .done(function( msg ) {
+      $("#absence-cru-frame").attr("src",'<?php echo $this->createUrl('absence/addnew',array('applicant_id'=>$model->ID, 'asDialog'=>1, 'gridId'=>'applicant-absence-grid'));?>');
+      $("#absence-cru-dialog").dialog("open");
+    });
+    return false;
   }
 
 </script>

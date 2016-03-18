@@ -2,12 +2,13 @@
 
 <?php
 
-$this->widget('yiiwheels.widgets.grid.WhGridView',array(
+$this->widget('bootstrap.widgets.TbGridView',array(
+//$this->widget('yiiwheels.widgets.grid.WhGridView',array(
 	'id'=>'applicant-absence-grid',
-	'fixedHeader' => false,
+//	'fixedHeader' => false,
 	'type' => TbHtml::GRID_TYPE_CONDENSED, //'striped',
 	'dataProvider' => $model->search($applicant_id),
-	'responsiveTable' => true,
+//	'responsiveTable' => true,
 	'template' => "{items}",
 	//'filter'=>$model,
 	'columns'=>array(
@@ -15,7 +16,7 @@ $this->widget('yiiwheels.widgets.grid.WhGridView',array(
 		array(
 			'name'=>'StatusID',
 			'header'=>'Status',
-			'value'=>'$data->StatusID',
+			'value'=>'$data->status->Description',
 		),
 		array(
 			'name'=>'AbsentOn',
@@ -28,57 +29,24 @@ $this->widget('yiiwheels.widgets.grid.WhGridView',array(
 			'value'=>'Yii::app()->dateFormatter->format("dd-MM-yyyy", $data->AbsentTill)',
 		),
 
-		/*
-		array(
-			'class' => 'yiiwheels.widgets.editable.WhEditableColumn',
-			'name' => 'StatusID',
-			'headerHtmlOptions' => array('style' => 'width: 100px'),
-			'editable' => array(
-				'type' => 'select',
-				//'model' => $model,
-				'attribute' => 'StatusID',
-				'url' => $this->createUrl('extension/editable'),
-				'source' => CHtml::listData(Status::model()->findAll(), 'ID', 'Description')
-			)
-		),
-		array(
-			'class' => 'yiiwheels.widgets.editable.WhEditableColumn',
-			'name' => 'AbsentOn',
-			'sortable'=>true,
-			'editable' => array(
-				'type' => 'date',
-				'format' => 'yyyy-mm-dd',
-				'viewformat' => 'd M yyyy', //dd-mm-yyyy',
-				'url' => $this->createUrl('extension/editable'),
-				'placement' => 'bottom',
-				'inputclass' => 'span3'
-			)
-		),
-		array(
-			'class' => 'yiiwheels.widgets.editable.WhEditableColumn',
-			'name' => 'AbsentTill',
-			'sortable'=>true,
-			'editable' => array(
-				'type' => 'date',
-				'format' => 'yyyy-mm-dd',
-				'viewformat' => 'd M yyyy', //dd-mm-yyyy',
-				'url' => $this->createUrl('extension/editable'),
-				'placement' => 'bottom',
-				'inputclass' => 'span3'
-			)
-		),
-		*/
 		array(
 			'class'=>'bootstrap.widgets.TbButtonColumn',
-			'template'=>'{delete}',
+			'template'=>'{update}{delete}',
 			'buttons'=>array(
+		        'update' => array(
+                    'label'=>'Edit',
+                    'icon'=>'icon-edit',
+                    'url'=>'Yii::app()->createUrl("absence/editAbsence", array("absence_id"=>$data->primaryKey,"asDialog"=>1,"gridId"=>$this->grid->id))',
+                    'click'=>'function(){
+                        $("#absence-cru-frame").attr("src",$(this).attr("href"));
+                        $("#absence-cru-dialog").dialog("open");
+                        return false;
+                    }',
+		        ),
 				'delete' => array(
-						'label'=>'delete absence',
-						'icon'=>'remove',
-						'url'=>'Yii::app()->createUrl("absence/delete", array("id"=>$data->ID))',
-						'options'=>array(
-							'class'=>'btn btn-small',
-					),
+					'label'=>'delete absence',
+					'icon'=>'remove',
+					'url'=>'Yii::app()->createUrl("absence/delete", array("id"=>$data->ID))',
 				),
 			),
 		),
@@ -87,3 +55,22 @@ $this->widget('yiiwheels.widgets.grid.WhGridView',array(
 )); 
 
 ?>
+
+<?php
+/*
+    the EDIT dialog
+*/
+// add the (closed) dialog for the iframe
+$this->beginWidget('zii.widgets.jui.CJuiDialog', array(
+    'id'=>'absence-cru-dialog',
+    'options'=>array(
+        'title'=>'Absence Details',
+        'autoOpen'=>false,
+        'modal'=>false,
+        'width'=>600,
+        'height'=>650,
+    ),
+));
+?>
+<iframe id="absence-cru-frame" width="100%" height="100%"></iframe>
+<?php $this->endWidget(); ?>

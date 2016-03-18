@@ -36,7 +36,7 @@ class AbsenceController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete','editable','addnew'),
+				'actions'=>array('admin','delete','editable','addnew', 'editAbsence'),
 				'users'=>Yii::app()->getModule('user')->getAdmins(), //array('admin'),
 			),
 			array('deny',  // deny all users
@@ -72,29 +72,59 @@ class AbsenceController extends Controller
 
         $model=new Absence;
         
-        // Ajax Validation enabled
-        $this->performAjaxValidation($model);
-
-        // Flag to know if we will render the form 
-        // or try to add new 
-		$flag=true;
-
         if(isset($_POST['Absence']))
         {
-            $flag=false;
             $model->attributes=$_POST['Absence'];
 
             if($model->save()) {
-				echo "Applicant absence saved";
+				if (!empty($_GET['asDialog']))
+				{
+					//Close the dialog, reset the iframe and update the grid
+					echo CHtml::script("window.parent.$('#absence-cru-dialog').dialog('close');window.parent.$('#absence-cru-frame').attr('src','');window.parent.$.fn.yiiGridView.update('{$_GET['gridId']}');");
+					Yii::app()->end();
+				}
             }
         }
 
-        if($flag) {
-            Yii::app()->clientScript->scriptMap['jquery.js'] = false;
-            Yii::app()->clientScript->scriptMap['jquery.min.js'] = false;
-            $this->renderPartial('createAbsenceDialog', array('model'=>$model,), false, true);
-        }
+		if (!empty($_GET['asDialog']))
+			$this->layout = '//layouts/iframe';
+
+		$this->render('create',array(
+			'model'=>$model,
+		)); 
     }
+
+
+	public function actionEditAbsence($absence_id,$asDialog)
+	{
+	    $model=$this->loadModel($absence_id);
+
+	    // Uncomment the following line if AJAX validation is needed
+	    // $this->performAjaxValidation($model);
+
+	    if(isset($_POST['Absence']))
+	    {
+	        $model->attributes=$_POST['Absence'];
+	        if($model->save())
+	            if (!empty($_GET['asDialog']))
+	            {
+	                //Close the dialog, reset the iframe and update the grid
+	                echo CHtml::script("window.parent.$('#absence-cru-dialog').dialog('close');window.parent.$('#absence-cru-frame').attr('src','');window.parent.$.fn.yiiGridView.update('{$_GET['gridId']}');");
+	                Yii::app()->end();
+	            }
+	            else
+		            $this->redirect(array('view','_id'=>$model->ID));
+	    }
+
+	    if (!empty($_GET['asDialog']))
+	        $this->layout = '//layouts/iframe';
+
+	    $this->render('update',array(
+	        'model'=>$model,
+	    ));
+	}    
+
+
 
 	/**
 	 * Displays a particular model.
