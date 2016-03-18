@@ -197,7 +197,10 @@ class Applicant extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		if (isset($_SESSION['adminFilterData'])) {
-			$this->full_name 		=$_SESSION['adminFilterData']['full_name'];
+			//$this->full_name 		=$_SESSION['adminFilterData']['full_name'];
+			$this->Name 			=$_SESSION['adminFilterData']['Name'];
+			$this->Surname	 		=$_SESSION['adminFilterData']['Surname'];
+			$this->AVName 			=$_SESSION['adminFilterData']['AVName'];
 			$this->status_fs 		=$_SESSION['adminFilterData']['status_fs'];
 			$this->BirthDate  		=$_SESSION['adminFilterData']['BirthDate'];
 			$this->Sex 				=$_SESSION['adminFilterData']['Sex'];
@@ -218,8 +221,8 @@ class Applicant extends CActiveRecord
 
 
 		$criteria->compare('ID',$this->ID);
-//		$criteria->compare('Name',$this->Name,true);
-//		$criteria->compare('Surname',$this->Surname,true);
+		$criteria->compare('Name',$this->Name,true);
+		$criteria->compare('Surname',$this->Surname,true);
 		$criteria->compare('AVName',$this->AVName,true);
 		$criteria->compare('BirthPlace',$this->BirthPlace,true);
 		//$criteria->compare('BirthDate',$this->BirthDate,true);
@@ -246,9 +249,11 @@ class Applicant extends CActiveRecord
 		else
 			$criteria->addCondition('IsArchived=false');
 
+		/*
 		if (isset($this->full_name)) {
 			$criteria->addCondition('((Name LIKE "%'.$this->full_name.'%") OR (Surname LIKE "%'.$this->full_name.'%") OR (CONCAT(Name," ",Surname) LIKE "%'.$this->full_name.'%"))');
 		}
+		*/
 
         if (isset($this->DOB)) { 
             if (!empty($this->DOB)) {
@@ -286,10 +291,12 @@ class Applicant extends CActiveRecord
 		                'asc'=>'nationality.Nationality',
 		                'desc'=>'nationality.Nationality DESC',
 		            ),
+		            /*
 					'full_name'=>array(
 						'asc'=>'Name',
 						'desc'=>'Name DESC',
 					),
+					*/
 		            /*
 		            'status_fs'=>array(
 		                'asc'=>'CurrentStatus',

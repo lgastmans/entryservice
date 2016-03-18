@@ -95,17 +95,36 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 	'columns'=>array(
 		//'ID',
 		//'Name',
+		// The following works, but ES Team wanted name + surname separate
+		/*
 		array(
-			'name'=>'full_name',
-			'type'=>'raw',
-			'value' => 'CHtml::link(CHtml::encode($data["FullName"]), array("applicant/update","id"=>$data["ID"]))',
+		 	'name'=>'full_name',
+		 	'type'=>'raw',
+		 	'value' => 'CHtml::link(CHtml::encode($data["FullName"]), array("applicant/update","id"=>$data["ID"]))',
 		),
-    array(
-    	'name'=>'status_fs',
-    	'header'=>'Status',
-    	'filter'=>CHtml::listData(Status::model()->findAll(), 'ID', 'Description'),
-        'value'=> 'ApplicantStatus::model()->getCurrentStatus($data->ID);',
-    ),
+		*/
+		array(
+			'name'=>'Name',
+			'header'=>'Name',
+			'type'=>'raw',
+			'value'=>'CHtml::link(CHtml::encode($data["Name"]), array("applicant/update","id"=>$data["ID"]))',
+		),
+		array(
+			'name'=>'Surname',
+			'header'=>'Surname',
+			'value'=>'$data->Surname',
+		),
+		array(
+			'name'=>'AVName',
+			'header'=>'AVName',
+			'value'=>'$data->AVName',
+		),
+	    array(
+	    	'name'=>'status_fs',
+	    	'header'=>'Status',
+	    	'filter'=>CHtml::listData(Status::model()->findAll(), 'ID', 'Description'),
+	        'value'=> 'ApplicantStatus::model()->getCurrentStatus($data->ID);',
+	    ),
 		//'BirthPlace',
 		array(
 			'name'=>'BirthDate',
