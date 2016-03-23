@@ -19,15 +19,65 @@
 
     <?php echo $form->errorSummary($model); ?>
 
-            <?php echo $form->textFieldControlGroup($model,'ApplicantID',array('span'=>5)); ?>
+        <?php
+            if ($model->isNewRecord)
+                echo $form->hiddenField($model,'ApplicantID',array('value'=>$_GET['applicant_id']));
+        ?>
 
-            <?php echo $form->textFieldControlGroup($model,'Place',array('span'=>5,'maxlength'=>64)); ?>
+        <?php echo $form->textFieldControlGroup($model,'Place',array('span'=>5,'maxlength'=>64)); ?>
 
-            <?php echo $form->textFieldControlGroup($model,'FromDate',array('span'=>5)); ?>
+        <?php echo $form->textFieldControlGroup($model,'Notes',array('rows'=>5,'span'=>8)); ?>
 
-            <?php echo $form->textFieldControlGroup($model,'ToDate',array('span'=>5)); ?>
+            <div class="control-group ">
+                <label class="control-label" for="Work_FromDate">From</label>
+                <div class="controls">
+                    <?php
+                        $this->widget('zii.widgets.jui.CJuiDatePicker',array(
+                            'model'=> $model,
+                            'attribute'=>'FromDate',
+                            'name'=>'datepicker-FromDate',    
+                            //'value'=>date('d-m-Y'),
+                            'options'=>array(
+                                'showButtonPanel'=>true,
+                                'yearRange'=>'-50:+25',
+                                'changeMonth'=>true,
+                                'changeYear'=>true,
+                                'dateFormat'=>'dd-mm-yy',
+                                //'showAnim'=>'fadeIn',//'slide','fold','slideDown','fadeIn','blind','bounce','clip','drop'
+                            ),
+                            'htmlOptions'=>array(
+                                'style'=>''
+                            ),
+                        ));
+                    ?>
+                </div>
+            </div>
 
-            <?php echo $form->textAreaControlGroup($model,'Notes',array('rows'=>6,'span'=>8)); ?>
+            <div class="control-group ">
+                <label class="control-label" for="Work_ToDate">To</label>
+                <div class="controls">
+                    <?php
+                        $this->widget('zii.widgets.jui.CJuiDatePicker',array(
+                            'model'=> $model,
+                            'attribute'=>'ToDate',
+                            'name'=>'datepicker-ToDate',    
+                            //'value'=>date('d-m-Y'),
+                            'options'=>array(
+                                'showButtonPanel'=>true,
+                                'yearRange'=>'-50:+25',
+                                'changeMonth'=>true,
+                                'changeYear'=>true,
+                                'dateFormat'=>'dd-mm-yy',
+                                //'showAnim'=>'fadeIn',//'slide','fold','slideDown','fadeIn','blind','bounce','clip','drop'
+                            ),
+                            'htmlOptions'=>array(
+                                'style'=>''
+                            ),
+                        ));
+                    ?>
+                </div>
+            </div>
+
 
         <div class="form-actions">
         <?php echo TbHtml::submitButton($model->isNewRecord ? 'Create' : 'Save',array(

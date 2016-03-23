@@ -42,7 +42,7 @@ class Work extends CActiveRecord
 			array('ApplicantID, Place', 'required'),
 			array('ApplicantID', 'numerical', 'integerOnly'=>true),
 			array('Place', 'length', 'max'=>64),
-			array('FromDate, ToDate', 'safe'),
+			array('Notes, FromDate, ToDate', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('ID, ApplicantID, Place, FromDate, ToDate, Notes', 'safe', 'on'=>'search'),
@@ -108,4 +108,36 @@ class Work extends CActiveRecord
 		    ),
 		));
 	}
+
+    protected function afterFind()
+    {
+        // convert to display format
+        $this->FromDate = Yii::app()->dateFormatter->format('dd-MM-yyyy', $this->FromDate);
+        $this->ToDate = Yii::app()->dateFormatter->format('dd-MM-yyyy', $this->ToDate);
+
+        parent::afterFind();
+    }
+
+    protected function beforeValidate ()
+    {
+        $this->FromDate = strtotime($this->FromDate);
+        $this->FromDate = date('Y-m-d', $this->FromDate);
+
+        $this->ToDate = strtotime($this->ToDate);
+        $this->ToDate = date('Y-m-d', $this->ToDate);
+
+        return parent::beforeValidate ();
+    }
+
+    protected function beforeSave()
+    {
+    	if (($this->FromDate == "") || ($this->FromDate == '1970-01-01')) {
+    	    $this->FromDate = null;
+	    }
+    	if (($this->ToDate == "") || ($this->ToDate == '1970-01-01')) {
+    	    $this->ToDate = null;
+	    }
+
+	    return parent::beforeSave();
+    }	
 }

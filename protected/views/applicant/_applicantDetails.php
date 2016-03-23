@@ -55,21 +55,21 @@
             ),
         ));
 
-        /*
+        
         $this->widget('yiiwheels.widgets.box.WhBox', array(
-            'title' => 'Milestones',
+            'title' => 'Work',
             'headerIcon' => TbHtml::ICON_INFO_SIGN,
-            'content' => $this->renderPartial("_formMilestones", array('applicant_id'=>$model->ID, 'model' => $modelMilestones),true),
+            'content' => $this->renderPartial("_formWork", array('applicant_id'=>$model->ID, 'model' => $modelWork),true),
             'htmlOptions' => array('style'=>'width:500px;'),
             'headerButtons' => array(
               TbHtml::button('Add', array(
                 'color' => TbHtml::BUTTON_COLOR_INFO,
                 //'icon' => 'plus',
-                'onclick'=>"{addMilestone();}",
+                'onclick'=>"{addWork();}",
               )),
             ),
         ));
-        */
+        
       ?>
 
     </div>
@@ -125,4 +125,17 @@
     return false;
   }
 
+  function addWork()
+  {
+    $.ajax({
+      type: "get",
+      url: '<?php echo $this->createUrl('work/addnew');?>',
+      data: { applicant_id: <?php echo $model->ID;?>, asDialog: 1, gridId: 'applicant-work-grid' }
+    })
+    .done(function( msg ) {
+      $("#work-cru-frame").attr("src",'<?php echo $this->createUrl('work/addnew',array('applicant_id'=>$model->ID, 'asDialog'=>1, 'gridId'=>'applicant-work-grid'));?>');
+      $("#work-cru-dialog").dialog("open");
+    });
+    return false;
+  }
 </script>
