@@ -36,7 +36,7 @@ class School extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Name, Phone', 'required'),
+			array('Name', 'required'),
 			array('Name', 'length', 'max'=>64),
 			array('Phone', 'length', 'max'=>32),
 			// The following rule is used by search().

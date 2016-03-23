@@ -49,7 +49,7 @@ class Contact extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('ApplicantID, Category', 'required'),
+			array('ApplicantID', 'required'),
 			array('ApplicantID, CountryID', 'numerical', 'integerOnly'=>true),
 			array('Category', 'length', 'max'=>14),
 			array('Relationship', 'length', 'max'=>7),

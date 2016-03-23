@@ -41,7 +41,7 @@ class ApplicantPhone extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('ApplicantID, ContactType, Number, IsPrimary', 'required'),
+			array('ApplicantID, Number', 'required'),
 			array('ApplicantID', 'numerical', 'integerOnly'=>true),
 			array('ContactType', 'length', 'max'=>4),
 			array('Number', 'length', 'max'=>32),

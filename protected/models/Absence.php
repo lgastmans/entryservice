@@ -41,7 +41,7 @@ class Absence extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('ApplicantID, StatusID, AbsentOn, AbsentTill', 'required'),
+			array('ApplicantID, StatusID', 'required'),
 			array('ApplicantID, StatusID', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.

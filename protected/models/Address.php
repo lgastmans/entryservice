@@ -43,7 +43,7 @@ class Address extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('ApplicantID, CommunityID, Status', 'required'),
+			array('ApplicantID, CommunityID', 'required'),
 			array('ApplicantID, CommunityID', 'numerical', 'integerOnly'=>true),
 			array('ToDate, FromDate', 'default', 'setOnEmpty' => true, 'value' => null),
 			// The following rule is used by search().

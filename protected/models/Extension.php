@@ -42,7 +42,7 @@ class Extension extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('ApplicantID, StatusID, ExtendedOn, ExtendedFor, ExtendedPeriod', 'required'),
+			array('ApplicantID, StatusID', 'required'),
 			array('ApplicantID, StatusID, ExtendedFor', 'numerical', 'integerOnly'=>true),
 			array('ExtendedPeriod', 'length', 'max'=>6),
 			// The following rule is used by search().

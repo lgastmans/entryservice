@@ -41,7 +41,7 @@ class Visa extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('VisaType, Number, IssuedDate, ValidTill', 'required'),
+			array('VisaType', 'required'),
 			array('VisaType', 'length', 'max'=>9),
 			array('Number', 'length', 'max'=>16),
 			// The following rule is used by search().

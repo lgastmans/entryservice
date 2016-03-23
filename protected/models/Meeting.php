@@ -41,7 +41,7 @@ class Meeting extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Category, Title, MeetingDate, Content', 'required'),
+			array('Category', 'required'),
 			array('Category', 'length', 'max'=>8),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.

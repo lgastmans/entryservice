@@ -71,7 +71,7 @@ class Applicant extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Name, Surname, BirthDate, Sex, MaritalStatus, NationalityID', 'required'),
+			array('Name, Surname', 'required'),
 			array('ResServiceNum, NationalityID, PassportID, VisaID, IndiaID, SpouseStatusID', 'numerical', 'integerOnly'=>true),
 
 			array('PassportID', 'default', 'setOnEmpty' => true, 'value' => null),
