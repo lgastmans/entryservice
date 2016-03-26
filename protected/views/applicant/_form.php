@@ -25,14 +25,20 @@
             //$('.india-form').toggle();
             //$('.foreign-form').toggle();
 
-            if (this.value==105) // India
-            {
-                $('.india-form').show();
-                $('.foreign-form').hide();
-            }
-            else {
-                $('.india-form').hide();
-                $('.foreign-form').show();
+            var is_new = $('.is_new_record').val();
+
+            if (is_new=='yes') {
+
+              if (this.value==105) // India
+              {
+                  $('.india-form').show();
+                  $('.foreign-form').hide();
+              }
+              else {
+                  $('.india-form').hide();
+                  $('.foreign-form').show();
+              }
+              
             }
 
             return false;
@@ -66,7 +72,13 @@
 
             <?php echo $form->textFieldControlGroup($model,'AVName',array('span'=>4,'maxlength'=>64)); ?>
 
+            
+            <?php if (!$model->isNewRecord) { ?>
+
             <?php echo $form->textFieldControlGroup($model,'BirthPlace',array('span'=>4,'maxlength'=>64)); ?>
+
+            <?php } ?>
+
 
             <?php //echo $form->dateFieldControlGroup($model,'BirthDate',array('span'=>2)); ?>
             <div class="control-group ">
@@ -133,6 +145,9 @@
             ?>
 
 
+            <?php if (!$model->isNewRecord) { ?>
+
+
             <?php echo $form->dropDownListControlGroup($model,'MaritalStatus',
                 array('Single'=>'Single','Partner'=>'Partner','Married'=>'Married','Couple'=>'Couple')
                 );
@@ -153,6 +168,9 @@
 
             <?php echo $form->textAreaControlGroup($model,'HomeAddress',array('rows'=>3,'span'=>4)); ?>
 
+            <?php } ?>
+
+            <input type="hidden" id="is_new_record" value="<?php echo ($model->isNewRecord===true ? 'yes' : 'no'); ?>" />
             <?php
                 echo $form->dropDownListControlGroup($model, 'NationalityID',
                     CHtml::listData(Nationality::model()->findAll(array('order'=>'Nationality')), 'ID', 'Nationality'),

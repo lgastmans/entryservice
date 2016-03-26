@@ -71,7 +71,7 @@ class Applicant extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Name, Surname', 'required'),
+			array('Name, Surname, NationalityID', 'required'),
 			array('ResServiceNum, NationalityID, PassportID, VisaID, IndiaID, SpouseStatusID', 'numerical', 'integerOnly'=>true),
 
 			array('PassportID', 'default', 'setOnEmpty' => true, 'value' => null),
@@ -169,12 +169,30 @@ class Applicant extends CActiveRecord
         parent::afterFind();
     }
 
+    protected function afterSave()
+    {
+        // convert to display format
+        $this->BirthDate = Yii::app()->dateFormatter->format('dd-MM-yyyy', $this->BirthDate);
+
+        parent::afterFind();
+    }
+
     protected function beforeSave()
     {
     	if (($this->BirthDate == "") || ($this->BirthDate == '1970-01-01')) {
     	    $this->BirthDate = null;
-    	    
+    	}
+
         return parent::beforeSave();
+    }
+
+    protected function afterValidate ()
+    {
+    	if (($this->BirthDate == "") || ($this->BirthDate == '1970-01-01')) {
+    	    $this->BirthDate = null;
+    	}
+
+    	parent::afterValidate();
     }
 
     protected function beforeValidate ()
