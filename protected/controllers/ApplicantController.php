@@ -48,7 +48,7 @@ class ApplicantController extends Controller
 					'addPassport', 'deletePassport', 'updatePassport',
 					'addVisa', 'deleteVisa', 'updateVisa',
 					'addIndian', 'deleteIndian', 'updateIndian',
-					'viewApplicant','archiveApplicant',),
+					'viewApplicant','archiveApplicant','error'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -393,21 +393,54 @@ class ApplicantController extends Controller
 
 			//$model->Password = sha1($model->Password);
 
-			if ($model->save()) {
-				//$this->redirect(array('view','id'=>$model->ID));
+			try {
 
-				/*
-					add default milestones
-				*/
-				$this->insertDefaultMilestones($model->ID);
+				if ($model->save()) {
 
-				$this->redirect(array('update','id'=>$model->ID));
+					$this->insertDefaultMilestones($model->ID);
+
+					$this->redirect(array('update','id'=>$model->ID));
+				}
+
+			} catch(CDbException $e) {
+				//throw new CDbException($e->getMessage());
+		        $this->redirect(
+		        	array(
+		        		'error',
+		        		'message'=>$e->getMessage(), 
+		        		'name'=>$model->Name,
+		        		'surname'=>$model->Surname,
+		        	)
+		        );
 			}
 		}
 
 		$this->render('create',array(
 			'model'=>$model,
 		));
+	}
+
+	public function actionError($message)
+	{
+		$pos = strpos($message, 'Duplicate entry');
+
+		if ($pos!==false) {
+
+			$modelApplicant = Applicant::model()->find('Name = :name AND Surname = :surname', array('name'=>$_GET['name'],'surname'=>$_GET['surname']));
+
+			if (isset($modelApplicant)) {
+				$_SESSION['adminFilterData']['Name']	= $modelApplicant->Name;
+				$_SESSION['adminFilterData']['Surname'] = $modelApplicant->Surname;
+			}
+
+			$model=new Applicant('search');
+
+			$this->render('admin',array(
+				'model'=>$model,
+			));
+		}
+		else
+			$this->render('error',array('message'=>$message));
 	}
 
 	/**
