@@ -24,3 +24,4 @@ ADD INDEX ( `AVName` ) ;
 
 ===
 
+ALTER TABLE `applicant` CHANGE `NationalityID` `NationalityID` INT( 11 ) NULL ;
