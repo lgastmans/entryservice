@@ -84,7 +84,7 @@ class Applicant extends CActiveRecord
 			array('Sex', 'length', 'max'=>1),
 			array('MaritalStatus', 'length', 'max'=>8),
 
-			array('Notes, HomeAddress', 'safe'),
+			array('Notes, HomeAddress, BirthDate', 'safe'),
 
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
