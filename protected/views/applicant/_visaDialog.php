@@ -24,7 +24,7 @@
 
             <?php //echo $form->textFieldControlGroup($model,'VisaType',array('span'=>5,'maxlength'=>9)); ?>
             <?php echo $form->dropDownListControlGroup($model,'VisaType',
-                array('Visa'=>'Visa', 'Student'=>'Student', 'Entry'=>'Entry', 'Business'=>'Business', 'Tourist'=>'Tourist', 'PIO'=>'PIO', 'OCI'=>'OCI')
+                array('Visa'=>'Visa', 'Student'=>'Student', 'Entry'=>'Entry', 'Business'=>'Business', 'Tourist'=>'Tourist', 'PIO'=>'PIO', 'OCI'=>'OCI', 'RP'=>'Residential Permit', 'Other'=>'Other')
                 ); 
             ?>
 

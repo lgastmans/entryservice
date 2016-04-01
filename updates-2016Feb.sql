@@ -25,3 +25,7 @@ ADD INDEX ( `AVName` ) ;
 ===
 
 ALTER TABLE `applicant` CHANGE `NationalityID` `NationalityID` INT( 11 ) NULL ;
+
+===
+
+ALTER TABLE `visa` CHANGE `VisaType` `VisaType` ENUM( 'Visa', 'Bussiness', 'Tourist', 'PIO', 'OCI', 'Student', 'Entry', 'RP', 'Other' ) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL ;
