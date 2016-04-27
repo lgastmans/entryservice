@@ -44,6 +44,7 @@ class Visa extends CActiveRecord
 			array('VisaType', 'required'),
 			array('VisaType', 'length', 'max'=>9),
 			array('Number', 'length', 'max'=>16),
+			array('IssuedDate, ValidTill', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('ID, VisaType, Number, IssuedDate, ValidTill', 'safe', 'on'=>'search'),

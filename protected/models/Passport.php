@@ -43,6 +43,7 @@ class Passport extends CActiveRecord
 		return array(
 			array('PassportNumber', 'required'),
 			array('PassportNumber, IssuedBy', 'length', 'max'=>32),
+			array('IssuedDate, ValidTill', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('ID, PassportNumber, IssuedDate, ValidTill, IssuedBy', 'safe', 'on'=>'search'),
