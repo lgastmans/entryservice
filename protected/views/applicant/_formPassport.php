@@ -13,6 +13,7 @@
 	            	$(".passport-buttons").empty();
 	            	$(".passport-detailview").empty();
 	            	$(".passport-detailview").html(data);
+	            	$("#Applicant_PassportID").val(null);
 	            }'
 	        ),
 	        array('id'=>'delApplicantPassport')

@@ -13,6 +13,7 @@
 	            	$(".visa-buttons").empty();
 	            	$(".visa-detailview").empty();
 	            	$(".visa-detailview").html(data);
+	            	$("#Applicant_VisaID").val(null);
 	            }'
 	        ),
 	        array('id'=>'delApplicantVisa')
