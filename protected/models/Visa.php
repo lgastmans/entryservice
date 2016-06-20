@@ -45,6 +45,7 @@ class Visa extends CActiveRecord
 			array('VisaType', 'length', 'max'=>9),
 			array('Number', 'length', 'max'=>16),
 			array('IssuedDate, ValidTill', 'safe'),
+			array('IssuedDate, ValidTill', 'default', 'setOnEmpty'=>true, 'value'=>null ),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('ID, VisaType, Number, IssuedDate, ValidTill', 'safe', 'on'=>'search'),
@@ -97,11 +98,19 @@ class Visa extends CActiveRecord
 
     protected function beforeValidate ()
     {
-        $this->IssuedDate = strtotime($this->IssuedDate);
-        $this->IssuedDate = date('Y-m-d', $this->IssuedDate);
+        if (empty($this->IssuedDate)) {
+        	$this->IssuedDate = null;
+        } else {
+        	$this->IssuedDate = strtotime($this->IssuedDate);
+        	$this->IssuedDate = date('Y-m-d', $this->IssuedDate);
+        }
 
-        $this->ValidTill = strtotime($this->ValidTill);
-        $this->ValidTill = date('Y-m-d', $this->ValidTill);
+        if (empty($this->ValidTill)) {
+        	$this->ValidTill = null;
+        } else {
+            $this->ValidTill = strtotime($this->ValidTill);
+        	$this->ValidTill = date('Y-m-d', $this->ValidTill);
+        }
 
         return parent::beforeValidate();
     }

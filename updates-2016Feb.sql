@@ -29,3 +29,13 @@ ALTER TABLE `applicant` CHANGE `NationalityID` `NationalityID` INT( 11 ) NULL ;
 ===
 
 ALTER TABLE `visa` CHANGE `VisaType` `VisaType` ENUM( 'Visa', 'Bussiness', 'Tourist', 'PIO', 'OCI', 'Student', 'Entry', 'RP', 'Other' ) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL ;
+
+===
+
+ALTER TABLE `applicant` CHANGE `BirthDate` `BirthDate` DATE NULL DEFAULT NULL ;
+ALTER TABLE `passport` CHANGE `IssuedDate` `IssuedDate` DATE NULL DEFAULT NULL ;
+ALTER TABLE `passport` CHANGE `ValidTill` `ValidTill` DATE NULL DEFAULT NULL ;
+ALTER TABLE `visa` CHANGE `IssuedDate` `IssuedDate` DATE NULL DEFAULT NULL ;
+ALTER TABLE `visa` CHANGE `ValidTill` `ValidTill` DATE NULL DEFAULT NULL ;
+ALTER TABLE `indianID` CHANGE `IssuedDate` `IssuedDate` DATE NULL DEFAULT NULL ;
+ALTER TABLE `indianID` CHANGE `ValidTill` `ValidTill` DATE NULL DEFAULT NULL ;

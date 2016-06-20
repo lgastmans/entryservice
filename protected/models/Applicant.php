@@ -86,6 +86,9 @@ class Applicant extends CActiveRecord
 
 			array('Notes, HomeAddress, BirthDate', 'safe'),
 
+			array('BirthDate', 'safe'),
+			array('BirthDate', 'default', 'setOnEmpty'=>true, 'value'=>null ),
+
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('nationality_fs, status_fs, full_name, DOB, ID, Name, Surname, AVName,BirthPlace, BirthDate, Photo, Sex, MaritalStatus, ResServiceNum, Notes, HomeAddress, NationalityID, PassportID, VisaID, IndiaID, Spouse, SpouseStatusID, IsArchived', 'safe', 'on'=>'search'),
@@ -177,6 +180,7 @@ class Applicant extends CActiveRecord
         parent::afterFind();
     }
 
+    /*
     protected function beforeSave()
     {
     	if (($this->BirthDate == "") || ($this->BirthDate == '1970-01-01')) {
@@ -185,20 +189,15 @@ class Applicant extends CActiveRecord
 
         return parent::beforeSave();
     }
-
-    protected function afterValidate ()
+    */
+    protected function beforeValidate()
     {
-    	if (($this->BirthDate == "") || ($this->BirthDate == '1970-01-01')) {
-    	    $this->BirthDate = null;
-    	}
-
-    	parent::afterValidate();
-    }
-
-    protected function beforeValidate ()
-    {
-        $this->BirthDate = strtotime($this->BirthDate);
-        $this->BirthDate = date('Y-m-d', $this->BirthDate);
+        if (empty($this->BirthDate)) {
+        	$this->BirthDate = null;
+        } else {
+        	$this->BirthDate = strtotime($this->BirthDate);
+        	$this->BirthDate = date('Y-m-d', $this->BirthDate);
+        }
 
         return parent::beforeValidate ();
     }

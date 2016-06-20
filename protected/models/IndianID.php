@@ -42,10 +42,12 @@ class IndianID extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('TypeID, Number, IssuedDate, ValidTill', 'required'),
+			array('TypeID', 'required'),
 			array('StateID', 'numerical', 'integerOnly'=>true),
 			array('TypeID', 'length', 'max'=>20),
 			array('Number', 'length', 'max'=>32),
+			array('IssuedDate, ValidTill', 'safe'),
+			array('IssuedDate, ValidTill', 'default', 'setOnEmpty'=>true, 'value'=>null ),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('ID, TypeID, Number, IssuedDate, ValidTill, StateID', 'safe', 'on'=>'search'),
@@ -79,6 +81,43 @@ class IndianID extends CActiveRecord
 			'StateID' => 'State',
 		);
 	}
+
+    protected function afterFind()
+    {
+        // convert to display format
+        $this->IssuedDate = Yii::app()->dateFormatter->format('dd-MM-yyyy', $this->IssuedDate);
+        $this->ValidTill = Yii::app()->dateFormatter->format('dd-MM-yyyy', $this->ValidTill);
+
+        parent::afterFind();
+    }
+
+    protected function afterSave()
+    {
+        // convert to display format
+        $this->IssuedDate = Yii::app()->dateFormatter->format('dd-MM-yyyy', $this->IssuedDate);
+        $this->ValidTill = Yii::app()->dateFormatter->format('dd-MM-yyyy', $this->ValidTill);
+
+        parent::afterSave();
+    }
+
+    protected function beforeValidate ()
+    {
+        if (empty($this->IssuedDate)) {
+        	$this->IssuedDate = null;
+        } else {
+        	$this->IssuedDate = strtotime($this->IssuedDate);
+        	$this->IssuedDate = date('Y-m-d', $this->IssuedDate);
+        }
+
+        if (empty($this->ValidTill)) {
+        	$this->ValidTill = null;
+        } else {
+            $this->ValidTill = strtotime($this->ValidTill);
+        	$this->ValidTill = date('Y-m-d', $this->ValidTill);
+        }
+
+        return parent::beforeValidate();
+    }
 
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
