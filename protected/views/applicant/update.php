@@ -24,7 +24,7 @@ $this->menu=array(
 
 //print_r($statusInfo);
 
-	$info = '<b>Age</b> '.$model->DOB.'<br>';
+	$info = '<b>Age</b> '.$model->Age.'<br>';
 	$dtStartedOn = new DateTime($statusInfo['current']['StartedOn']);
 	$dtStartedOn = $dtStartedOn->format('j M, Y');
 	if (isset($statusInfo['current']['CompletedOn'])) {
