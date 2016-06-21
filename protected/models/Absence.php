@@ -110,7 +110,7 @@ class Absence extends CActiveRecord
     {
         // convert to display format
         $this->AbsentOn = Yii::app()->dateFormatter->format('dd-MM-yyyy', $this->AbsentOn);
-        $this->ValidTill = Yii::app()->dateFormatter->format('dd-MM-yyyy', $this->ValidTill);
+        $this->AbsentTill = Yii::app()->dateFormatter->format('dd-MM-yyyy', $this->AbsentTill);
 
         parent::afterFind();
     }
@@ -119,7 +119,7 @@ class Absence extends CActiveRecord
     {
         // convert to display format
         $this->AbsentOn = Yii::app()->dateFormatter->format('dd-MM-yyyy', $this->AbsentOn);
-        $this->ValidTill = Yii::app()->dateFormatter->format('dd-MM-yyyy', $this->ValidTill);
+        $this->AbsentTill = Yii::app()->dateFormatter->format('dd-MM-yyyy', $this->AbsentTill);
 
         parent::afterSave();
     }
@@ -133,11 +133,11 @@ class Absence extends CActiveRecord
         	$this->AbsentOn = date('Y-m-d', $this->AbsentOn);
         }
 
-		if (empty($this->ValidTill)) {
-			$this->ValidTill = null;
+		if (empty($this->AbsentTill)) {
+			$this->AbsentTill = null;
 		} else {
-        	$this->ValidTill = strtotime($this->ValidTill);
-        	$this->ValidTill = date('Y-m-d', $this->ValidTill);
+        	$this->AbsentTill = strtotime($this->AbsentTill);
+        	$this->AbsentTill = date('Y-m-d', $this->AbsentTill);
         }
 
         return parent::beforeValidate();
