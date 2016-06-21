@@ -31,15 +31,33 @@
                 <label class="control-label" for="Interview_DateInterviewed">On</label>
                 <div class="controls">
                     <?php
-                    $this->widget('yiiwheels.widgets.datepicker.WhDatePicker',
-                        array(
-                            'model'     => $model,
-                            'attribute' => 'DateInterviewed',
-                            'pluginOptions' => array(
-                                'format' => 'yyyy-mm-dd'
-                            )
-                        )
-                    );
+                      $this->widget('zii.widgets.jui.CJuiDatePicker',array(
+                          'model'=> $model,
+                          'attribute'=>'DateInterviewed',
+                          'name'=>'datepicker-interviewIssuedDate',    
+                          //'value'=>date('d-m-Y'),
+                          'options'=>array(
+                              'showButtonPanel'=>true,
+                              'yearRange'=>'-10:+10',
+                              'changeMonth'=>true,
+                              'changeYear'=>true,
+                              'dateFormat'=>'dd-mm-yy',
+                              'showAnim'=>'fadeIn',//'slide','fold','slideDown','fadeIn','blind','bounce','clip','drop'
+                          ),
+                          'htmlOptions'=>array(
+                              'style'=>''
+                          ),
+                      ));
+
+                    // $this->widget('yiiwheels.widgets.datepicker.WhDatePicker',
+                    //     array(
+                    //         'model'     => $model,
+                    //         'attribute' => 'DateInterviewed',
+                    //         'pluginOptions' => array(
+                    //             'format' => 'yyyy-mm-dd'
+                    //         )
+                    //     )
+                    // );
                     ?>
                 </div>
             </div>

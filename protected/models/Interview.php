@@ -42,11 +42,12 @@ class Interview extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('ApplicantID, DateInterviewed, Present', 'required'),
+			array('ApplicantID', 'required'),
 			array('ApplicantID', 'numerical', 'integerOnly'=>true),
 			array('Present', 'length', 'max'=>128),
 			array('Title', 'length', 'max'=>128),
-			array('Interview', 'safe'),
+			array('Interview, DateInterviewed', 'safe'),
+			array('DateInterviewed', 'default', 'setOnEmpty'=>true, 'value'=>null ),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('ID, ApplicantID, DateInterviewed, Title, Present, Interview', 'safe', 'on'=>'search'),
@@ -79,6 +80,34 @@ class Interview extends CActiveRecord
 			'Interview' => 'Interview',
 		);
 	}
+
+    protected function afterFind()
+    {
+        // convert to display format
+        $this->DateInterviewed = Yii::app()->dateFormatter->format('dd-MM-yyyy', $this->DateInterviewed);
+
+        parent::afterFind();
+    }
+
+    protected function afterSave()
+    {
+        // convert to display format
+        $this->DateInterviewed = Yii::app()->dateFormatter->format('dd-MM-yyyy', $this->DateInterviewed);
+
+        parent::afterSave();
+    }
+
+    protected function beforeValidate()
+    {
+        if (empty($this->DateInterviewed)) {
+        	$this->DateInterviewed = null;
+        } else {
+        	$this->DateInterviewed = strtotime($this->DateInterviewed);
+        	$this->DateInterviewed = date('Y-m-d', $this->DateInterviewed);
+        }
+
+        return parent::beforeValidate();
+    }
 
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
