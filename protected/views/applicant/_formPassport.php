@@ -37,8 +37,8 @@
 				array(
 					'data' => array(
 						'PassportNumber' => $model->passport->PassportNumber,
-						'IssuedDate' => $model->passport->IssuedDate,
-						'ValidTill' => $model->passport->ValidTill,
+						'IssuedDate' => (is_null($model->passport->IssuedDate)? "": $model->passport->IssuedDate),
+						'ValidTill' => (is_null($model->passport->ValidTill)? "" : $model->passport->ValidTill),
 						'IssuedBy' => $model->passport->IssuedBy,
 					),
 					'attributes' => array(

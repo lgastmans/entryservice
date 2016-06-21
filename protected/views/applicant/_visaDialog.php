@@ -159,6 +159,9 @@
 
                             $("#Applicant_VisaID").val(arr.id);
 
+                            var str = arr.view;
+                            arr.view = str.replace("Not set", "");
+
                             $(".visa-detailview").html(arr.view);
                         }',
                         'failure'=>'js: function(data) {

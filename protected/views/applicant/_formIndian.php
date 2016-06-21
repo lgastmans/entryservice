@@ -34,8 +34,8 @@
 					'data' => array(
 						'TypeID' => $model->india->TypeID,
 						'Number' => $model->india->Number,
-						'IssuedDate' => $model->india->IssuedDate,
-						'ValidTill' => $model->india->ValidTill,
+						'IssuedDate' => (is_null($model->india->IssuedDate)? "" : $model->india->IssuedDate),
+						'ValidTill' => (is_null($model->india->ValidTill)? "" : $model->india->ValidTill),
 						'StateID' => $model->india->State,
 					),
 					'attributes' => array(

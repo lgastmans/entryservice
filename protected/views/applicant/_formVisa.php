@@ -38,8 +38,8 @@
 					'data' => array(
 						'VisaType' => $model->visa->VisaType,
 						'Number' => $model->visa->Number,
-						'IssuedDate' => $model->visa->IssuedDate,
-						'ValidTill' => $model->visa->ValidTill,
+						'IssuedDate' => (is_null($model->visa->IssuedDate)? "" : $model->visa->IssuedDate),
+						'ValidTill' => (is_null($model->visa->ValidTill)? "" : $model->visa->ValidTill),
 					),
 					'attributes' => array(
 						array('name' => 'VisaType'),

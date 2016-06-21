@@ -152,11 +152,15 @@
                             $("#applicantPassportDialog").dialog("close");
 
                             var arr = JSON.parse(data);
-                            //console.log(arr);
+                            console.log(arr);
 
                             $("#Applicant_PassportID").val(arr.id);
 
+                            var str = arr.view;
+                            arr.view = str.replace("Not set", "");
+
                             $(".passport-detailview").html(arr.view);
+
                         }',
                         'failure'=>'js: function(data) {
                             alert("error");
