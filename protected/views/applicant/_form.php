@@ -50,8 +50,13 @@
         $nat_foreign_visible = "none";
     }
     else {
-        $nat_india_visible = ($model->nationality->Nationality=="India") ? "visible" : "none";
-        $nat_foreign_visible = ($model->nationality->Nationality!=="India") ? "visible" : "none";
+        if (is_null($model->nationality)) {
+          $nat_india_visible = "none";
+          $nat_foreign_visible = "none";
+        } else {
+          $nat_india_visible = ($model->nationality->Nationality=="India") ? "visible" : "none";
+          $nat_foreign_visible = ($model->nationality->Nationality!=="India") ? "visible" : "none";
+        }
     }
 
 ?>
@@ -179,6 +184,17 @@
                         'id'=>'selNationality',
                     )
                 );
+            ?>
+
+            <?php
+              if (($nat_india_visible=='none') && ($nat_foreign_visible=='none')) {
+                $this->widget('yiiwheels.widgets.box.WhBox', array(
+                    'title' => 'Passport/Visa/Indian ID Details',
+                    'headerIcon' => TbHtml::ICON_INFO_SIGN,
+                    'content' => "Please specify nationality and click Save",
+                    'htmlOptions' => array('style'=>'width:470px;'),
+                ));
+              } 
             ?>
 
             <!-- INDIAN ID DETAILS -->
