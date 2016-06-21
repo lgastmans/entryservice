@@ -43,6 +43,7 @@ class Work extends CActiveRecord
 			array('ApplicantID', 'numerical', 'integerOnly'=>true),
 			array('Place', 'length', 'max'=>64),
 			array('Notes, FromDate, ToDate', 'safe'),
+			array('FromDate, ToDate', 'default', 'setOnEmpty'=>true, 'value'=>null ),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('ID, ApplicantID, Place, FromDate, ToDate, Notes', 'safe', 'on'=>'search'),
@@ -118,26 +119,32 @@ class Work extends CActiveRecord
         parent::afterFind();
     }
 
-    protected function beforeValidate ()
+    protected function afterSave()
     {
-        $this->FromDate = strtotime($this->FromDate);
-        $this->FromDate = date('Y-m-d', $this->FromDate);
+        // convert to display format
+        $this->FromDate = Yii::app()->dateFormatter->format('dd-MM-yyyy', $this->FromDate);
+        $this->ToDate = Yii::app()->dateFormatter->format('dd-MM-yyyy', $this->ToDate);
 
-        $this->ToDate = strtotime($this->ToDate);
-        $this->ToDate = date('Y-m-d', $this->ToDate);
-
-        return parent::beforeValidate ();
+        parent::afterSave();
     }
 
-    protected function beforeSave()
+    protected function beforeValidate()
     {
-    	if (($this->FromDate == "") || ($this->FromDate == '1970-01-01')) {
-    	    $this->FromDate = null;
-	    }
-    	if (($this->ToDate == "") || ($this->ToDate == '1970-01-01')) {
-    	    $this->ToDate = null;
-	    }
+        if (empty($this->FromDate)) {
+        	$this->FromDate = null;
+        } else {
+        	$this->FromDate = strtotime($this->FromDate);
+        	$this->FromDate = date('Y-m-d', $this->FromDate);
+        }
 
-	    return parent::beforeSave();
-    }	
+		if (empty($this->ToDate)) {
+			$this->ToDate = null;
+		} else {
+        	$this->ToDate = strtotime($this->ToDate);
+        	$this->ToDate = date('Y-m-d', $this->ToDate);
+        }
+
+        return parent::beforeValidate();
+    }
+
 }

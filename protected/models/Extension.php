@@ -45,6 +45,8 @@ class Extension extends CActiveRecord
 			array('ApplicantID, StatusID', 'required'),
 			array('ApplicantID, StatusID, ExtendedFor', 'numerical', 'integerOnly'=>true),
 			array('ExtendedPeriod', 'length', 'max'=>6),
+			array('ExtendedOn', 'safe'),
+			array('ExtendedOn', 'default', 'setOnEmpty'=>true, 'value'=>null ),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('ID, ApplicantID, StatusID, ExtendedOn, ExtendedFor, ExtendedPeriod', 'safe', 'on'=>'search'),
@@ -115,21 +117,24 @@ class Extension extends CActiveRecord
         parent::afterFind();
     }
 
-    protected function beforeValidate ()
+    protected function afterSave()
     {
-        $this->ExtendedOn = strtotime($this->ExtendedOn);
-        $this->ExtendedOn = date('Y-m-d', $this->ExtendedOn);
+        // convert to display format
+        $this->ExtendedOn = Yii::app()->dateFormatter->format('dd-MM-yyyy', $this->ExtendedOn);
 
-        return parent::beforeValidate ();
+        parent::afterSave();
     }
 
-    protected function beforeSave()
+    protected function beforeValidate()
     {
-    	if (($this->ExtendedOn == "") || ($this->ExtendedOn == '1970-01-01')) {
-    	    $this->ExtendedOn = null;
-	    }
+        if (empty($this->ExtendedOn)) {
+        	$this->ExtendedOn = null;
+        } else {
+        	$this->ExtendedOn = strtotime($this->ExtendedOn);
+        	$this->ExtendedOn = date('Y-m-d', $this->ExtendedOn);
+        }
 
-	    return parent::beforeSave();
+        return parent::beforeValidate();
     }
 
 	public function statusExtensions($applicant_id, $status_id) {

@@ -43,6 +43,9 @@ class Absence extends CActiveRecord
 		return array(
 			array('ApplicantID, StatusID', 'required'),
 			array('ApplicantID, StatusID', 'numerical', 'integerOnly'=>true),
+			array('AbsentOn, ValidTill', 'safe'),
+			array('AbsentOn, ValidTill', 'default', 'setOnEmpty'=>true, 'value'=>null ),
+
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('ID, ApplicantID, StatusID, AbsentOn, AbsentTill', 'safe', 'on'=>'search'),
@@ -102,36 +105,42 @@ class Absence extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
-
+    
     protected function afterFind()
     {
         // convert to display format
         $this->AbsentOn = Yii::app()->dateFormatter->format('dd-MM-yyyy', $this->AbsentOn);
-        $this->AbsentTill = Yii::app()->dateFormatter->format('dd-MM-yyyy', $this->AbsentTill);
+        $this->ValidTill = Yii::app()->dateFormatter->format('dd-MM-yyyy', $this->ValidTill);
 
         parent::afterFind();
     }
 
-    protected function beforeValidate ()
+    protected function afterSave()
     {
-        $this->AbsentOn = strtotime($this->AbsentOn);
-        $this->AbsentOn = date('Y-m-d', $this->AbsentOn);
+        // convert to display format
+        $this->AbsentOn = Yii::app()->dateFormatter->format('dd-MM-yyyy', $this->AbsentOn);
+        $this->ValidTill = Yii::app()->dateFormatter->format('dd-MM-yyyy', $this->ValidTill);
 
-        $this->AbsentTill = strtotime($this->AbsentTill);
-        $this->AbsentTill = date('Y-m-d', $this->AbsentTill);
-
-        return parent::beforeValidate ();
+        parent::afterSave();
     }
 
-    protected function beforeSave()
+    protected function beforeValidate()
     {
-    	if (($this->AbsentOn == "") || ($this->AbsentOn == '1970-01-01')) {
-    	    $this->AbsentOn = null;
-	    }
-    	if (($this->AbsentTill == "") || ($this->AbsentTill == '1970-01-01')) {
-    	    $this->AbsentTill = null;
-	    }
+        if (empty($this->AbsentOn)) {
+        	$this->AbsentOn = null;
+        } else {
+        	$this->AbsentOn = strtotime($this->AbsentOn);
+        	$this->AbsentOn = date('Y-m-d', $this->AbsentOn);
+        }
 
-	    return parent::beforeSave();
-    }	
+		if (empty($this->ValidTill)) {
+			$this->ValidTill = null;
+		} else {
+        	$this->ValidTill = strtotime($this->ValidTill);
+        	$this->ValidTill = date('Y-m-d', $this->ValidTill);
+        }
+
+        return parent::beforeValidate();
+    }
+
 }

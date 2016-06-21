@@ -39,3 +39,11 @@ ALTER TABLE `visa` CHANGE `IssuedDate` `IssuedDate` DATE NULL DEFAULT NULL ;
 ALTER TABLE `visa` CHANGE `ValidTill` `ValidTill` DATE NULL DEFAULT NULL ;
 ALTER TABLE `indianID` CHANGE `IssuedDate` `IssuedDate` DATE NULL DEFAULT NULL ;
 ALTER TABLE `indianID` CHANGE `ValidTill` `ValidTill` DATE NULL DEFAULT NULL ;
+
+===
+
+ALTER TABLE `visa` CHANGE `VisaType` `VisaType` ENUM( 'Visa', 'Bussiness', 'Tourist', 'PIO', 'OCI', 'Student', 'Entry', 'RP', 'Other', 'Stay Visa' ) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL ;
+ALTER TABLE `applicant_status` CHANGE `StartedOn` `StartedOn` DATE NULL DEFAULT NULL ;
+ALTER TABLE `extension` CHANGE `ExtendedOn` `ExtendedOn` DATE NULL DEFAULT NULL ;
+ALTER TABLE `absence` CHANGE `AbsentTill` `AbsentTill` DATE NULL DEFAULT NULL ;
+ALTER TABLE `absence` CHANGE `AbsentOn` `AbsentOn` DATE NULL DEFAULT NULL ;
