@@ -49,3 +49,6 @@ ALTER TABLE `absence` CHANGE `AbsentTill` `AbsentTill` DATE NULL DEFAULT NULL ;
 ALTER TABLE `absence` CHANGE `AbsentOn` `AbsentOn` DATE NULL DEFAULT NULL ;
 ALTER TABLE `contact` CHANGE `CountryID` `CountryID` INT( 11 ) NULL DEFAULT NULL ;
 ALTER TABLE `interview` CHANGE `DateInterviewed` `DateInterviewed` DATE NULL DEFAULT NULL ;
+ALTER TABLE `children` CHANGE `IssuedDate` `IssuedDate` DATE NULL DEFAULT NULL ;
+ALTER TABLE `children` CHANGE `ValidTill` `ValidTill` DATE NULL DEFAULT NULL ;
+ALTER TABLE `children` CHANGE `BirthDate` `BirthDate` DATE NULL DEFAULT NULL ;
