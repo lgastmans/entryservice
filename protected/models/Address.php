@@ -45,6 +45,7 @@ class Address extends CActiveRecord
 		return array(
 			array('ApplicantID, CommunityID', 'required'),
 			array('ApplicantID, CommunityID', 'numerical', 'integerOnly'=>true),
+			array('ToDate, FromDate', 'safe'),
 			array('ToDate, FromDate', 'default', 'setOnEmpty' => true, 'value' => null),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
@@ -100,11 +101,19 @@ class Address extends CActiveRecord
 
     protected function beforeValidate ()
     {
-        $this->FromDate = strtotime($this->FromDate);
-        $this->FromDate = date('Y-m-d', $this->FromDate);
+        if (empty($this->FromDate)) {
+        	$this->FromDate = null;
+        } else {
+	        $this->FromDate = strtotime($this->FromDate);
+	        $this->FromDate = date('Y-m-d', $this->FromDate);
+        }
 
-        $this->ToDate = strtotime($this->ToDate);
-        $this->ToDate = date('Y-m-d', $this->ToDate);
+        if (empty($this->ToDate)) {
+        	$this->ToDate = null;
+        } else {
+	        $this->ToDate = strtotime($this->ToDate);
+	        $this->ToDate = date('Y-m-d', $this->ToDate);
+	    }
 
         return parent::beforeValidate();
     }

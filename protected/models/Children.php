@@ -115,14 +115,26 @@ class Children extends CActiveRecord
 
     protected function beforeValidate ()
     {
-        $this->IssuedDate = strtotime($this->IssuedDate);
-        $this->IssuedDate = date('Y-m-d', $this->IssuedDate);
+        if (empty($this->IssuedDate)) {
+        	$this->IssuedDate = null;
+        } else {
+	        $this->IssuedDate = strtotime($this->IssuedDate);
+	        $this->IssuedDate = date('Y-m-d', $this->IssuedDate);
+	    }
 
-        $this->ValidTill = strtotime($this->ValidTill);
-        $this->ValidTill = date('Y-m-d', $this->ValidTill);
+        if (empty($this->ValidTill)) {
+        	$this->ValidTill = null;
+        } else {
+	        $this->ValidTill = strtotime($this->ValidTill);
+	        $this->ValidTill = date('Y-m-d', $this->ValidTill);
+	    }
 
-        $this->BirthDate = strtotime($this->BirthDate);
-        $this->BirthDate = date('Y-m-d', $this->BirthDate);
+        if (empty($this->BirthDate)) {
+        	$this->BirthDate = null;
+        } else {
+	        $this->BirthDate = strtotime($this->BirthDate);
+    	    $this->BirthDate = date('Y-m-d', $this->BirthDate);
+    	}
 
         return parent::beforeValidate();
     }
