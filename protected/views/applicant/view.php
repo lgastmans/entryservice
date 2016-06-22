@@ -36,13 +36,15 @@ $this->menu=array(
 <div>
 	<div style="float: left;margin-bottom:70px;">
 
-		<h3><?php echo $model->FullName." ( ".$model->ResServiceNum." )"; ?></h3>
+		<h3><?php echo $model->FullName." (".$model->AVName.")"; ?></h3>
 
 		<div>
 			<div style="float: left;width:200px;">
 				<b>Status</b>: <?php echo ApplicantStatus::model()->getCurrentStatus($model->ID);?>
 				<br>
 				<b>Nationality</b>: <?php echo $model->nationality->Nationality; ?>
+				<br>
+				<b>RS No.</b>: <?php echo $model->ResServiceNum; ?>
 			</div>
 			<div style="float: right;">
 				<?php
