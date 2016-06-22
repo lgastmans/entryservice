@@ -40,9 +40,9 @@ $this->menu=array(
 
 		<div>
 			<div style="float: left;width:200px;">
-				<?php echo ApplicantStatus::model()->getCurrentStatus($model->ID);?>
+				<b>Status</b>: <?php echo ApplicantStatus::model()->getCurrentStatus($model->ID);?>
 				<br>
-				<?php echo $model->nationality->Nationality; ?>
+				<b>Nationality</b>: <?php echo $model->nationality->Nationality; ?>
 			</div>
 			<div style="float: right;">
 				<?php
@@ -65,114 +65,67 @@ $this->menu=array(
 				echo TbHtml::icon(TbHtml::ICON_CAMERA);
 			*/
 		?>
-		<?php
-			$applicant_info = $model->ApplicantQRCode;
-
-			$this->widget('application.extensions.qrcode.QRCodeGenerator',array(
-			    'data' => $applicant_info,
-			    //'data' => "MECARD:N:Luk Gastmans;ADR:Auroville 605101;TEL:9047375310;EMAIL:lgastmans@gmail.com;URL:worktree.in;",
-			    //'filePath'=> 'protected/uploads',
-			    'fileUrl'=>'protected/uploads',
-			    'subfolderVar' => false,
-			    'matrixPointSize' => 5,
-			    'displayImage'=>true, // default to true, if set to false display a URL path
-			    'errorCorrectionLevel'=>'L', // available parameter is L,M,Q,H
-			    'matrixPointSize'=>4, // 1 to 10 only
-			));
-			
-		?>
 	</div>
 
 </div>
 <div style="clear:both;"></div>
+
+
+<!-- INDIA ID / PASSPORT / VISA -->
 
 <div>
-	<div style="float: left;width:350px;">
-		<?php
-			foreach ($model->contacts as $row) {
-				echo "<b>".$row->Category.":</b><br> ".$row->Relationship." ".$row->Name." ".$row->Surname."<br>".$row->Address."<br><br>";
+	<?php
+		if ($model->nationality->Nationality=="India") {
+			$info="Not Set";
+			if (isset($model->india->TypeID)) {
+				$info = $model->india->TypeID." ".$model->india->Number;
+			}
+	?>
+	
+		<b>ID</b>: <?php echo $IDType;?>
+
+	<?php
+		} else {
+			$ppInfo = "<b>Passport</b>: Not Set";
+			if (isset($model->passport)) {
+				$ppInfo = "<b>Passport</b>: ".$model->passport->PassportNumber.", valid till ".$model->passport->ValidTill;
 			}
 
-		?>
-	</div>
-	<div style="float: right;width:350px;">
-		<?php
-
-			$this->widget('zii.widgets.CDetailView',array(
-			    'htmlOptions' => array(
-			        'class' => 'table detail-view table-striped table-condensed table-hover',
-			    ),
-			    'data'=>$model,
-			    'attributes'=>array(
-					'BirthPlace',
-					array(
-						'name'=>'BirthDate',
-						'value'=>Yii::app()->dateFormatter->formatDateTime($model->BirthDate, "long", null),
-					),
-					array(
-						'name'=>'Age',
-						'value'=>$model->DOB,
-					),
-					array(
-						'name'=>'Sex',
-						'value'=>($model->Sex=='M') ? "Male" : "Female",
-					),
-					'MaritalStatus',
-					'Spouse',
-				),
-			)); 
-		?>
-
-
-		<?php
-
-			if ($model->nationality->Nationality=="India") {
-
-				echo "<span class='label label-success'>Identification</span>";
-
-				$this->widget('zii.widgets.CDetailView',array(
-				    'htmlOptions' => array(
-				        'class' => 'table detail-view table-striped table-condensed table-hover',
-				    ),
-				    'data'=>$model,
-				    'attributes'=>array(
-						'IndiaID',
-					),
-				)); 
+			$vInfo = "<b>Visa</b>: Not Set";
+			if (isset($model->visa)) {
+				$vInfo = "<b>Visa</b>: ".$model->visa->VisaType.", valid till ".$model->visa->ValidTill;
 			}
-			else {
-				//$modelPassport = Passport::model()->
-				echo "<span class='label label-success'>Passport</span>";
+	?>
 
-				$this->widget('zii.widgets.CDetailView',array(
-				    'htmlOptions' => array(
-				        'class' => 'table detail-view table-striped table-condensed table-hover',
-				    ),
-				    'data'=>$model,
-				    'attributes'=>array(
-						'passport.PassportNumber',
-						'passport.IssuedDate',
-						'passport.ValidTill',
-					),
-				)); 
+		<?php echo $ppInfo."<br>".$vInfo; ?>
 
-				echo "<span class='label label-success'>Visa</span>";
-
-				$this->widget('zii.widgets.CDetailView',array(
-				    'htmlOptions' => array(
-				        'class' => 'table detail-view table-striped table-condensed table-hover',
-				    ),
-				    'data'=>$model,
-				    'attributes'=>array(
-						'visa.VisaType',
-						'visa.Number',
-						'visa.IssuedDate',
-						'visa.ValidTill',
-					),
-				)); 
-			}
-		?>
-	</div>
+	<?php
+		}
+	?>
 </div>
-<div style="clear:both;"></div>
 
+
+<!-- ADDRESSES -->
+<br>
+<div>
+	<?php 
+		$arr = Address::model()->search($model->ID);
+		//print_r($arr);
+
+		foreach ($arr->getData() as $address)
+			echo "<b>RES</b>: ".$address['community']['Name'].", from ".$address['FromDate']." to ".$address['ToDate']."<br>";
+	?>
+</div>
+
+
+<!-- WORK -->
+<br>
+<div>
+	<?php 
+		$arr = Work::model()->search($model->ID);
+		//print_r($arr);
+
+		foreach ($arr->getData() as $work)
+			echo "<b>WORK</b>: ".$work['Place'].", from ".$work['FromDate']." to ".$work['ToDate']."<br>";
+	?>
+</div>
