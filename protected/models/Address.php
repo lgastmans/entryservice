@@ -45,7 +45,7 @@ class Address extends CActiveRecord
 		return array(
 			array('ApplicantID, CommunityID', 'required'),
 			array('ApplicantID, CommunityID', 'numerical', 'integerOnly'=>true),
-			array('ToDate, FromDate', 'safe'),
+			array('ToDate, FromDate, Status', 'safe'),
 			array('ToDate, FromDate', 'default', 'setOnEmpty' => true, 'value' => null),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
