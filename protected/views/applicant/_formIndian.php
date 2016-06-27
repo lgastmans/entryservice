@@ -11,6 +11,7 @@
 	            	$(".indian-buttons").empty();
 	            	$(".indian-detailview").empty();
 	            	$(".indian-detailview").html(data);
+	            	$("#Applicant_IndianID").val(null);
 	            }'
 	        ),
 	        array('id'=>'delApplicantIndian')
