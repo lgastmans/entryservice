@@ -182,7 +182,7 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 				//'model' => $model,
 				'attribute' => 'NationalityID',
 				'url' => $this->createUrl('applicant/editable'),
-				'source' => CHtml::listData(Nationality::model()->findAll(), 'ID', 'Nationality')
+				'source' => CHtml::listData(Nationality::model()->findAll(array("order"=>"Nationality")), 'ID', 'Nationality')
 			)
 		),
 		/*
