@@ -131,7 +131,7 @@ $this->widget('bootstrap.widgets.TbGridView',array(
 $this->beginWidget('zii.widgets.jui.CJuiDialog', array(
     'id'=>'address-cru-dialog',
     'options'=>array(
-        'title'=>'Address Details',
+        'title'=>'Auroville Address Details',
         'autoOpen'=>false,
         'modal'=>false,
         'width'=>600,

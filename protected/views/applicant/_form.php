@@ -273,7 +273,7 @@
                 ));
 
                 $this->widget('yiiwheels.widgets.box.WhBox', array(
-                    'title' => 'Address',
+                    'title' => 'Address in Auroville',
                     'headerIcon' => TbHtml::ICON_INFO_SIGN,
                     'content' => $this->renderPartial("_formAddress", array('applicant_id'=>$model->ID, 'model' => $modelAddress),true),
                     'htmlOptions' => array('style'=>'width:460px;'),
@@ -301,7 +301,7 @@
                 ));
 
                 $this->widget('yiiwheels.widgets.box.WhBox', array(
-                    'title' => 'Contact Person',
+                    'title' => 'Mentor / Contact Person',
                     'headerIcon' => TbHtml::ICON_INFO_SIGN,
                     'content' => $this->renderPartial("_formContact", array('applicant_id'=>$model->ID, 'model' => $modelContact),true),
                     'htmlOptions' => array('style'=>'width:460px;'),

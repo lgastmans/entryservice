@@ -116,7 +116,7 @@ $this->widget('bootstrap.widgets.TbGridView',array(
 $this->beginWidget('zii.widgets.jui.CJuiDialog', array(
     'id'=>'contact-cru-dialog',
     'options'=>array(
-        'title'=>'Contact Details',
+        'title'=>'Mentor / Contact Details',
         'autoOpen'=>false,
         'modal'=>false,
         'width'=>600,
