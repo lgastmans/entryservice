@@ -36,7 +36,11 @@ $this->widget('bootstrap.widgets.TbGridView',array(
 		*/
     'FullName',
     'Email',
-    'Phone',
+    //'Phone',
+    array(
+    	'header'=>'Phone/Cell',
+    	'value'=>'((!empty($data->Phone))?$data->Phone:"")." ".((!empty($data->Cell))?$data->Cell:"")',
+    ),
     /*
 		array(
 			'class' => 'yiiwheels.widgets.editable.WhEditableColumn',

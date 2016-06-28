@@ -34,13 +34,13 @@ $this->widget('bootstrap.widgets.TbGridView',array(
 		$ValidTill
 		$BirthDate
 		*/
-    'Name',
-    'Surname',
-    array(
-      'name'=>'BirthDate',
-      'value'=>'Yii::app()->dateFormatter->format("dd-MM-yyyy", $data->BirthDate)',
-      //'value' => '($data->BirthDate=="0000-00-00")?"":Yii::app()->dateFormatter->formatDateTime($data->BirthDate, "long", null)',
-    ),
+    	'Name',
+    	'Surname',
+    	'Sex',
+	    array(
+	      'name'=>'BirthDate',
+	      'value'=>'Yii::app()->dateFormatter->format("dd-MM-yyyy", $data->BirthDate)',
+	    ),
     /*
 		array(
 			'class' => 'yiiwheels.widgets.editable.WhEditableColumn',

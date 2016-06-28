@@ -90,12 +90,18 @@ $this->menu=array(
 		} else {
 			$ppInfo = "<b>Passport</b>: Not Set";
 			if (isset($model->passport)) {
-				$ppInfo = "<b>Passport</b>: ".$model->passport->PassportNumber.", valid till ".$model->passport->ValidTill;
+				if (isset($model->passport->ValidTill))
+					$ppInfo = "<b>Passport</b>: ".$model->passport->PassportNumber.", valid till ".$model->passport->ValidTill;
+				else
+					$ppInfo = "<b>Passport</b>: ".$model->passport->PassportNumber;
 			}
 
 			$vInfo = "<b>Visa</b>: Not Set";
 			if (isset($model->visa)) {
-				$vInfo = "<b>Visa</b>: ".$model->visa->VisaType.", valid till ".$model->visa->ValidTill;
+				if (isset($model->visa->ValidTill))
+					$vInfo = "<b>Visa</b>: ".$model->visa->VisaType.", valid till ".$model->visa->ValidTill;
+				else
+					$vInfo = "<b>Visa</b>: ".$model->visa->VisaType;
 			}
 	?>
 
@@ -114,8 +120,19 @@ $this->menu=array(
 		$arr = Address::model()->search($model->ID);
 		//print_r($arr);
 
-		foreach ($arr->getData() as $address)
-			echo "<b>RES</b>: ".$address['community']['Name'].", from ".$address['FromDate']." to ".$address['ToDate']."<br>";
+		foreach ($arr->getData() as $address) {
+			$str = "<b>RES</b>: ".$address['community']['Name'];
+
+			if (isset($address['FromDate']))
+				$str .= ", from ".$address['FromDate'];
+
+			if (isset($address['ToDate']))
+				$str .= " to ".$address['ToDate'];
+
+			$str .= "<br>";
+
+			echo $str;
+		}
 	?>
 </div>
 
@@ -127,7 +144,18 @@ $this->menu=array(
 		$arr = Work::model()->search($model->ID);
 		//print_r($arr);
 
-		foreach ($arr->getData() as $work)
-			echo "<b>WORK</b>: ".$work['Place'].", from ".$work['FromDate']." to ".$work['ToDate']."<br>";
+		foreach ($arr->getData() as $work) {
+			$str = "<b>WORK</b>: ".$work['Place'];
+
+			if (isset($work['FromDate']))
+				$str .= ", from ".$work['FromDate'];
+
+			if (isset($work['ToDate']))
+				$str .= " to ".$work['ToDate'];
+
+			$str .= "<br>";
+
+			echo $str;
+		}
 	?>
 </div>
