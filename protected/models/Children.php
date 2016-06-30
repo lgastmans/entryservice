@@ -69,6 +69,7 @@ class Children extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'applicant' => array(self::BELONGS_TO, 'Applicant', 'ApplicantID'),
+			'school' => array(self::BELONGS_TO, 'School', 'SchoolID'),
 		);
 	}
 
