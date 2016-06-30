@@ -392,10 +392,24 @@ class ApplicantController extends Controller
 			$model->attributes=$_POST['Applicant'];
 
 			//$model->Password = sha1($model->Password);
+			if (array_key_exists("delimg",$_POST['Applicant'])) {
+				@unlink(getcwd()."/images/applicants/".$model->Photo);
+				$model->Photo='';
+			}
+			else {
+				$photo = CUploadedFile::getInstance($model,'Photo');
+
+				if (isset($photo)) {
+					$model->Photo = $photo->name;
+				}
+			}
 
 			try {
 
 				if ($model->save()) {
+					
+					if (isset($photo))
+						$photo->saveAs(Yii::getPathOfAlias('webroot').'/images/applicants/'.$photo->name);
 
 					$this->insertDefaultMilestones($model->ID);
 
