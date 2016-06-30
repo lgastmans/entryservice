@@ -84,7 +84,7 @@ $this->menu=array(
 			}
 	?>
 	
-		<b>ID</b>: <?php echo $IDType;?>
+		<b>ID</b>: <?php echo $info;?>
 
 	<?php
 		} else {
