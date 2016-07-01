@@ -52,3 +52,7 @@ ALTER TABLE `interview` CHANGE `DateInterviewed` `DateInterviewed` DATE NULL DEF
 ALTER TABLE `children` CHANGE `IssuedDate` `IssuedDate` DATE NULL DEFAULT NULL ;
 ALTER TABLE `children` CHANGE `ValidTill` `ValidTill` DATE NULL DEFAULT NULL ;
 ALTER TABLE `children` CHANGE `BirthDate` `BirthDate` DATE NULL DEFAULT NULL ;
+
+===
+
+ALTER TABLE `applicant_status` ADD `IsCurrent` BOOLEAN NULL DEFAULT NULL AFTER `StatusID` ;
