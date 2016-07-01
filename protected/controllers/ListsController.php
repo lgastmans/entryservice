@@ -36,14 +36,15 @@ class ListsController extends Controller
 		if (isset($_POST['data'])) {
 			$vals = json_decode($_POST['data']);
 
-			Yii::app()->session['lists_filter'] = $vals[0];
-			Yii::app()->session['lists_applicantStatus'] = $vals[1];
+			//Yii::app()->session['lists_filter'] = $vals[0];
+			Yii::app()->session['lists_applicantStatus'] = $vals[0];
+			Yii::app()->session['lists_searchDate'] = $vals[1];
 			Yii::app()->session['lists_dateFrom'] = $vals[2];
 			Yii::app()->session['lists_dateTo'] = $vals[3];
-			Yii::app()->session['lists_milestoneStatus'] = $vals[4];
+			//Yii::app()->session['lists_milestoneStatus'] = $vals[4];
 
-			$milestones = $vals[5];
-			Yii::app()->session['lists_milestones'] = $vals[5];
+			//$milestones = $vals[5];
+			//Yii::app()->session['lists_milestones'] = $vals[5];
 		}
 
 		echo json_encode("done");

@@ -181,6 +181,10 @@ class Lists extends CActiveRecord
 			}
 		}
 
+		$searchDate = 'StartedOn';
+		if (isset(Yii::app()->session['lists_searchDate']))
+			$searchDate = Yii::app()->session['lists_searchDate'];
+
 		$dateFrom = '';
 		$dateTo = '';
 		if ((isset(Yii::app()->session['lists_dateFrom'])) && (Yii::app()->session['lists_dateFrom']!='')) {
@@ -189,18 +193,19 @@ class Lists extends CActiveRecord
 
 			if ($from=='') {
 				$from = ", applicant_status aps";
-				$where = "AND (aps.ApplicantID = a.ID) AND (aps.StartedOn BETWEEN '".$dateFrom."' AND '".$dateTo."')";
+				$where = "AND (aps.ApplicantID = a.ID) AND (aps.".$searchDate." BETWEEN '".$dateFrom."' AND '".$dateTo."')";
 			}
 			else {
-				$where .= "AND (aps.StartedOn BETWEEN '".$dateFrom."' AND '".$dateTo."')";
+				$where .= "AND (aps.".$searchDate." BETWEEN '".$dateFrom."' AND '".$dateTo."')";
 			}
 		}
 
-
+		/*
 		$milestoneStatus = '';
 		if (isset(Yii::app()->session['lists_milestoneStatus']))
 			$milestoneStatus = Yii::app()->session['lists_milestoneStatus'];
-
+		*/
+		/*
 		$sql= "
 			SELECT a.ID, a.Name, a.Surname, a.ResServiceNum, n.Nationality
 			FROM (applicant a, nationality n".$from.")
@@ -208,7 +213,16 @@ class Lists extends CActiveRecord
 				AND (a.NationalityID = n.ID)
 				".$where."
 			ORDER BY Name, Surname";
+		*/
 
+		$sql= "
+			SELECT a.ID, a.Name, a.Surname, a.ResServiceNum, n.Nationality
+			FROM (applicant a, nationality n".$from.")
+			WHERE (a.NationalityID = n.ID)
+				".$where."
+			ORDER BY Name, Surname";
+
+// die($sql);
 		$connection=Yii::app()->db;
 		$command=$connection->createCommand($sql);
 		$dataReader=$command->query();

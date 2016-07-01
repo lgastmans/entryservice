@@ -19,32 +19,20 @@ $this->breadcrumbs=array(
 		}
 	}
 
-	/*
-		Milestones
-	*/
-	$criteria=new CDbCriteria;
-	$criteria->select='ID, Description';
-	$criteria->condition='IsActive=true';
-	$criteria->order='Description ASC';
-	$data = Milestone::model()->findAll($criteria);
-	$milestones = array();
-	if ($data) {
-		foreach ($data as $item) {
-			$milestones[$item->ID] = $item->Description;
-		}
-	}
 
 
 Yii::app()->clientScript->registerScript('getData', "
 	function getPostData() {
 		var arr = [];
 
-		arr.push($('#filter').val());
+		//arr.push($('#filter').val());
 		arr.push($('#applicantStatus').val());
+		arr.push($('#searchDate').val());
 		arr.push($('#dateFrom').val());
 		arr.push($('#dateTo').val());
-		arr.push($('#milestoneStatus').val());
+		//arr.push($('#milestoneStatus').val());
 
+		/*
 		var milestones = [];
 		$('[id^=\"milestone_\"]').each(function(index, element){
 			if ($(element).attr('checked')) {
@@ -52,8 +40,9 @@ Yii::app()->clientScript->registerScript('getData', "
 			}
 		});
 		arr.push(milestones);
+		*/
 
-		//console.log(arr);
+		console.log(arr);
 		return JSON.stringify(arr);
 	};
 ");
@@ -62,16 +51,99 @@ Yii::app()->clientScript->registerScript('getData', "
 
 <div>
 	<div style="float: left; width:300px; padding:0px;">
-		<?php
-			echo TbHtml::small('Filter applicant on Name or Surname');
-			echo "<br>";
 
-			$val = '';
-			if (isset(Yii::app()->session['lists_filter']))
-				$val = Yii::app()->session['lists_filter'];
-			echo TbHtml::textField('filter', $val, array('placeholder' => '', 'size' => TbHtml::INPUT_SIZE_DEFAULT));
-			echo "<br>";
+			<div class="control-group ">
+	            <label class="control-label" for="dateFrom">Status</label>
+	            <div class="controls">
+					<?php
 
+						$val = '';
+						if (isset(Yii::app()->session['lists_applicantStatus']))
+							$val = Yii::app()->session['lists_applicantStatus'];
+						echo TbHtml::dropDownList('applicantStatus', $val, $statuses);
+						echo "<br>";
+
+						$val = '';
+						if (isset(Yii::app()->session['lists_dateFrom']))
+							$val = Yii::app()->session['lists_dateFrom'];
+					?>
+				</div>
+			</div>
+
+			<div class="control-group ">
+	            <label class="control-label" for="dateFrom">Date</label>
+	            <div class="controls">
+					<?php
+
+						$val = '';
+						if (isset(Yii::app()->session['lists_searchDate']))
+							$val = Yii::app()->session['lists_searchDate'];
+						echo TbHtml::dropDownList('searchDate', $val, array('StartedOn'=>'Started On', 'CompletedOn'=>'Completed On'));
+						echo "<br>";
+
+					?>
+				</div>
+			</div>
+
+            <div class="control-group ">
+                <label class="control-label" for="dateFrom">From</label>
+                <div class="controls">
+					<?php			
+						$val = '';
+						if (isset(Yii::app()->session['lists_dateFrom']))
+							$val = Yii::app()->session['lists_dateFrom'];
+
+						$this->widget('zii.widgets.jui.CJuiDatePicker',array(
+						  //'model'=> $model,
+						  //'attribute'=>'IssuedDate',
+						  'name'=>'dateFrom',    
+						  'value'=>$val,
+						  'options'=>array(
+						      'showButtonPanel'=>true,
+						      'yearRange'=>'-50:+50',
+						      'changeMonth'=>true,
+						      'changeYear'=>true,
+						      'dateFormat'=>'dd-mm-yy',
+						      'showAnim'=>'fadeIn',//'slide','fold','slideDown','fadeIn','blind','bounce','clip','drop'
+						  ),
+						  'htmlOptions'=>array(
+						      'style'=>''
+						  ),
+						));
+		            ?>
+		        </div>
+		    </div>
+
+            <div class="control-group ">
+                <label class="control-label" for="dateTo">To</label>
+                <div class="controls">
+					<?php			
+						$val = '';
+						if (isset(Yii::app()->session['lists_dateTo']))
+							$val = Yii::app()->session['lists_dateTo'];
+
+						$this->widget('zii.widgets.jui.CJuiDatePicker',array(
+						  //'model'=> $model,
+						  //'attribute'=>'IssuedDate',
+						  'name'=>'dateTo',    
+						  'value'=>$val,
+						  'options'=>array(
+						      'showButtonPanel'=>true,
+						      'yearRange'=>'-50:+50',
+						      'changeMonth'=>true,
+						      'changeYear'=>true,
+						      'dateFormat'=>'dd-mm-yy',
+						      'showAnim'=>'fadeIn',//'slide','fold','slideDown','fadeIn','blind','bounce','clip','drop'
+						  ),
+						  'htmlOptions'=>array(
+						      'style'=>''
+						  ),
+						));
+		            ?>
+		        </div>
+		    </div>
+
+		    <?php
 			echo TbHtml::ajaxButton(
 		        'Search',
 		        array('lists/processData'),
@@ -100,74 +172,7 @@ Yii::app()->clientScript->registerScript('getData', "
 		        )
 		    );
 			echo "<hr>";
-
-			$val = '';
-			if (isset(Yii::app()->session['lists_applicantStatus']))
-				$val = Yii::app()->session['lists_applicantStatus'];
-			echo TbHtml::dropDownList('applicantStatus', $val, $statuses);
-			echo "<br>";
-
-			$val = '';
-			if (isset(Yii::app()->session['lists_dateFrom']))
-				$val = Yii::app()->session['lists_dateFrom'];
-			echo TbHtml::small('From');
-			echo "<br>";
 			?>
-		    <div class="input-append">
-			    <?php
-			    	$this->widget('yiiwheels.widgets.datepicker.WhDatePicker', array(
-					    'name' => 'dateFrom',
-					    'value' => $val,
-					    'pluginOptions' => array(
-					    	'format' => 'dd-mm-yyyy'
-					    ),
-					    'htmlOptions' => array(
-					    	'id' => 'dateFrom'
-					    )
-				    ));
-			    ?>
-			    <span class="add-on"><icon class="icon-calendar"></icon></span>
-		    </div>
-		    <br>
-
-		    <?php
-			$val = '';
-			if (isset(Yii::app()->session['lists_dateTo']))
-				$val = Yii::app()->session['lists_dateTo'];
-			echo TbHtml::small('To');
-			echo "<br>";
-			?>
-		    <div class="input-append">
-			    <?php
-			    	$this->widget('yiiwheels.widgets.datepicker.WhDatePicker', array(
-					    'name' => 'dateTo',
-					    'value' => $val,
-					    'pluginOptions' => array(
-					    	'format' => 'dd-mm-yyyy'
-					    ),
-					    'htmlOptions' => array(
-					    	'id' => 'dateTo'
-					    )
-				    ));
-			    ?>
-			    <span class="add-on"><icon class="icon-calendar"></icon></span>
-		    </div>
-		    <br>
-
-		    <?php
-
-			echo "<hr>";
-
-			echo TbHtml::small('Milestones');
-			echo "<br>";
-
-			echo TbHtml::dropDownList('milestoneStatus', '', array('All','Pending','Completed','Cancelled','NA','Extended'));
-			echo "<br>";
-
-			foreach ($milestones as $key=>$value) {
-				echo TbHtml::checkBox($key, false, array('label' => $value, 'id'=>"milestone_".$key))."<br>";
-			}
-		?>
 
 	</div>
 	<div style="float: left;">
