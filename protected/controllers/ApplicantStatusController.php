@@ -36,7 +36,7 @@ class ApplicantStatusController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete','editable','addnew','editStatus','statusInformation'),
+				'actions'=>array('admin','delete','editable','addnew','editStatus','currentStatus','statusInformation'),
 				'users'=>Yii::app()->getModule('user')->getAdmins(), //array('admin'),
 			),
 			array('deny',  // deny all users
@@ -70,6 +70,16 @@ class ApplicantStatusController extends Controller
 		return true;
 	}
 
+	public function actionCurrentStatus($ApplicantID) {
+		$data = array();
+
+		if (isset($ApplicantID)) {
+			$data = ApplicantStatus::model()->statusInformation($ApplicantID);
+		}
+		
+		echo json_encode($data);
+	}
+
 	public function actionStatusInformation($applicant_id, $status_id=NULL) {
 		$data = ApplicantStatus::model()->statusInformation($applicant_id, $status_id);
 
@@ -85,12 +95,22 @@ class ApplicantStatusController extends Controller
 
 	    if(isset($_POST['ApplicantStatus']))
 	    {
+
 	        $model->attributes=$_POST['ApplicantStatus'];
+
+			$sql= "
+				UPDATE applicant_status
+				SET IsCurrent = 0
+				WHERE (ApplicantID = ".$model->ApplicantID.")";
+
+			$connection=Yii::app()->db;
+			$command=$connection->createCommand($sql)->execute();	        
+
 	        if($model->save())
 	            if (!empty($_GET['asDialog']))
 	            {
 	                //Close the dialog, reset the iframe and update the grid
-	                echo CHtml::script("window.parent.$('#status-cru-dialog').dialog('close');window.parent.$('#status-cru-frame').attr('src','');window.parent.$.fn.yiiGridView.update('{$_GET['gridId']}');");
+	                echo CHtml::script("window.parent.$('#status-cru-dialog').dialog('close');window.parent.$('#status-cru-frame').attr('src','');window.parent.$.fn.yiiGridView.update('{$_GET['gridId']}');window.parent.updateStatus(".$model->ApplicantID.");");
 	                Yii::app()->end();
 	            }
 	            else
@@ -113,11 +133,21 @@ class ApplicantStatusController extends Controller
 		{
 			$model->attributes=$_POST['ApplicantStatus'];
 
+			if ($model->IsCurrent==1) {
+				$sql= "
+					UPDATE applicant_status
+					SET IsCurrent = 0
+					WHERE (ApplicantID = ".$model->ApplicantID.")";
+
+				$connection=Yii::app()->db;
+				$command=$connection->createCommand($sql)->execute();
+			}
+
 			if($model->save())
 				if (!empty($_GET['asDialog']))
 				{
 					//Close the dialog, reset the iframe and update the grid
-					echo CHtml::script("window.parent.$('#status-cru-dialog').dialog('close');window.parent.$('#status-cru-frame').attr('src','');window.parent.$.fn.yiiGridView.update('{$_GET['gridId']}');");
+					echo CHtml::script("window.parent.$('#status-cru-dialog').dialog('close');window.parent.$('#status-cru-frame').attr('src','');window.parent.$.fn.yiiGridView.update('{$_GET['gridId']}');window.parent.updateStatus(".$model->ApplicantID.");");
 					Yii::app()->end();
 				}
 		}

@@ -40,6 +40,13 @@ $this->widget('bootstrap.widgets.TbGridView',array(
 			'value'=>'$data->status->Description',
 		),
 		array(
+			'name'=>'IsCurrent',
+			'header' => 'Current',
+			'type'=>'raw',
+         	'value' => '($data->IsCurrent) ? "<a><span class=\"icon-ok\"></span></a>" : ""',
+         	//'value'=>'($data->IsCurrent?"Yes":"")',
+		),
+		array(
 			'name'=>'StartedOn',
 			'header' => 'Started',
 			//'value'=>'Yii::app()->dateFormatter->formatDateTime($data->StartedOn, "long", null)',

@@ -2,6 +2,14 @@
 /* @var $this ApplicantStatusController */
 /* @var $model ApplicantStatus */
 /* @var $form TbActiveForm */
+
+/*
+
+
+  This is the edit / add dialog that appears
+
+
+*/
 ?>
 <?php
 
@@ -64,6 +72,10 @@
                         'empty' => 'Select Status...',
                     )
                 );
+            ?>
+
+            <?php 
+              echo $form->checkBoxControlGroup($model, 'IsCurrent', array('disabled' => false));
             ?>
 
             <div class="control-group ">

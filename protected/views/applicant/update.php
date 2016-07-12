@@ -19,41 +19,28 @@ $this->menu=array(
 	array('label'=>'Manage', 'url'=>array('admin')),
 );
 
+Yii::app()->clientScript->registerScript('updateJSFuncs', "
+	function updateStatus(applicant_id) {
+		$.ajax({
+			method: 'POST',
+			url: '".Yii::app()->createUrl('applicantStatus/currentStatus')."',
+			data: { ApplicantID: applicant_id }
+		})
+		.done(function( msg ) {
+			var obj = jQuery.parseJSON(msg);
+			$('#infoStatus').html('<b>Status</b> '+obj.current.Description);
+			$('#infoPeriod').html(obj.current.StatusPeriod);
+		});
+		
+	}
+", CClientScript::POS_END);
+
 
 	$statusInfo = ApplicantStatus::model()->statusInformation($model->ID);
-
 //print_r($statusInfo);
-
-	$info = '<b>Age</b> '.$model->Age.'<br>';
-	$dtStartedOn = new DateTime($statusInfo['current']['StartedOn']);
-	$dtStartedOn = $dtStartedOn->format('j M, Y');
-	if (isset($statusInfo['current']['CompletedOn'])) {
-		$dtCompletedOn = new DateTime($statusInfo['current']['CompletedOn']);
-		$dtCompletedOn = $dtCompletedOn->format('j M, Y');
-	}
-
-	if ($statusInfo['current']['IsSet']) {
-
-		if ($statusInfo['current']['DaysCompleted'] < 0) {
-			$str = $statusInfo['current']['Description']. ' status overdue by '.abs($statusInfo['current']['DaysCompleted']).' days';
-			echo TbHtml::blockAlert(TbHtml::ALERT_COLOR_ERROR, $str);
-			$str = '';
-		}
-		elseif ($statusInfo['current']['ExtensionsTotalDays'] > 0)
-			$str = ', extended by <b>'.$statusInfo['current']['ExtensionsTotalDays'].'</b> days';
-		else
-			$str = '';
-
-		if ($statusInfo['current']['DaysTotal']=='None')
-			$info .= 'Currently <b>'.$statusInfo['current']['Description'].'</b><br>'.
-				'Started on <b>'.$dtStartedOn.'</b>'.$str;
-		else
-			$info .= 'Currently <b>'.$statusInfo['current']['Description'].'</b><br>'.
-				'Started on <b>'.$dtStartedOn.'</b>, completes on <b>'.$dtCompletedOn.'</b>'.$str;
-	}
-	else
-		$info .= 'Status Not Set';
-
+	$infoAge = '<b>Age</b> '.$model->Age.'<br>';
+	$infoStatus = '<b>Status</b> '.$statusInfo['current']['Description'];
+	$infoPeriod = $statusInfo['current']['StatusPeriod'];
 
 ?>
 
@@ -74,8 +61,15 @@ $this->menu=array(
 					echo " ( $model->AVName )";
 			?>
 		</h1>
+
 		<br>
-		<?php echo TbHtml::well($info); ?>
+
+		<div>
+			<div id="infoAge"><?php echo $infoAge; ?></div>
+			<div id="infoStatus"><?php echo $infoStatus; ?></div>
+			<div id="infoPeriod"><?php echo $infoPeriod; ?></div>
+		</div>
+
 	</div>
 	<div style="float: right;padding-right:100px;">
 		<?php

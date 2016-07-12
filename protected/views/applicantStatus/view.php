@@ -29,6 +29,7 @@ $this->menu=array(
 		'ID',
 		'ApplicantID',
 		'StatusID',
+		'IsCurrent',
 		'StartedOn',
 		'CompletedOn',
 		'Color',

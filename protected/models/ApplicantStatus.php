@@ -7,6 +7,7 @@
  * @property integer $ID
  * @property integer $ApplicantID
  * @property integer $StatusID
+ * @property integer $IsCurrent
  * @property string $StartedOn
  * @property integer $IsCompleted
  * @property string $CompletedOn
@@ -51,14 +52,14 @@ class ApplicantStatus extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('ApplicantID, StatusID, StartedOn', 'required'),
-			array('ApplicantID, StatusID, Duration', 'numerical', 'integerOnly'=>true),
+			array('ApplicantID, StatusID, IsCurrent, Duration', 'numerical', 'integerOnly'=>true),
 			array('Color', 'length', 'max'=>10),
 			array('DurationPeriod', 'length', 'max'=>6),
 			array('CompletedOn', 'safe'),
 			array('StartedOn, CompletedOn, NewsAndNotes', 'default', 'setOnEmpty' => true, 'value' => null),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('current_status, ID, ApplicantID, StatusID, StartedOn, IsCompleted, CompletedOn, NewsAndNotes, Color, Duration, DurationPeriod', 'safe', 'on'=>'search'),
+			array('current_status, ID, ApplicantID, StatusID, IsCurrent, StartedOn, IsCompleted, CompletedOn, NewsAndNotes, Color, Duration, DurationPeriod', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -85,6 +86,7 @@ class ApplicantStatus extends CActiveRecord
 			'ApplicantID' => 'Applicant',
 			'current_status' => 'Status',
 			'StatusID' => 'Status',
+			'IsCurrent' => 'Current',
 			'StartedOn' => 'Started On',
 			'IsCompleted' => 'Completed',
 			'CompletedOn' => 'Completed On',
@@ -144,6 +146,7 @@ class ApplicantStatus extends CActiveRecord
 		$criteria->compare('current_status',$this->ID);
 		$criteria->compare('ApplicantID',$this->ApplicantID);
 		$criteria->compare('StatusID',$this->StatusID);
+		$criteria->compare('IsCurrent',$this->IsCurrent);
 		$criteria->compare('StartedOn',$this->StartedOn,true);
 		$criteria->compare('IsCompleted',$this->IsCompleted,true);
 		$criteria->compare('CompletedOn',$this->CompletedOn,true);
@@ -199,14 +202,15 @@ class ApplicantStatus extends CActiveRecord
 
 		return $ret;
 	}
-
+	
 	public function getCurrentStatus($applicant_id) {
 		/*
 			get the current status
 		*/
 		$criteria=new CDbCriteria;
 		$criteria->select='*';
-		$criteria->condition='(applicantID=:applicantID) AND ((CompletedOn IS NULL) OR (YEAR(CompletedOn) = 0))';
+		//$criteria->condition='(applicantID=:applicantID) AND ((CompletedOn IS NULL) OR (YEAR(CompletedOn) = 0))';
+		$criteria->condition='(applicantID=:applicantID) AND (IsCurrent)';
 		$criteria->params=array(':applicantID'=>$applicant_id);
 		$criteria->with=array('status');
 
@@ -289,7 +293,7 @@ class ApplicantStatus extends CActiveRecord
 			FROM `applicant_status` apps
 			INNER JOIN `status` s ON (s.ID = apps.StatusID)
 			INNER JOIN `applicant` a ON (a.ID = apps.ApplicantID)
-			WHERE (CompletedOn IS NULL) AND (a.IsArchived=FALSE)
+			WHERE (IsCurrent) AND (a.IsArchived=FALSE)
 			GROUP BY StatusID
 			ORDER BY s.Description";
 
@@ -368,11 +372,17 @@ class ApplicantStatus extends CActiveRecord
 		$criteria->select='*';  // only select the 'title' column
 		//$criteria->condition='(applicantID=:applicantID) AND ((CompletedOn IS NULL) OR (YEAR(CompletedOn) = 0))';
 		//$criteria->condition='(applicantID=:applicantID) AND (IsCompleted = 0)';
-		$criteria->condition='(applicantID=:applicantID) AND (CompletedOn IS NULL)';
+		//$criteria->condition='(applicantID=:applicantID) AND (CompletedOn IS NULL)';
+		$criteria->condition='(applicantID=:applicantID) AND (IsCurrent)';
 		$criteria->params=array(':applicantID'=>$applicant_id);
 		$criteria->with=array('status');
 
 		$data = $this->find($criteria);
+
+		/*
+			string describing current status period
+		*/
+		$statusPeriod = '';
 
 		if ($data) {
 			/*
@@ -408,11 +418,38 @@ class ApplicantStatus extends CActiveRecord
 				$info['current']['DaysCompleted'] = $info_completed['interval'];
 				$info['current']['CompletedOn'] = $info_completed['on'];
 			}
+
+			/*
+				Generate the current status period info string
+			*/
+			$dtStartedOn = new DateTime($info['current']['StartedOn']);
+			$dtStartedOn = $dtStartedOn->format('j M, Y');
+			if (isset($info['current']['CompletedOn'])) {
+				$dtCompletedOn = new DateTime($info['current']['CompletedOn']);
+				$dtCompletedOn = $dtCompletedOn->format('j M, Y');
+			}
+			
+			if ($info['current']['DaysCompleted'] < 0) {
+				$str = '<br/>Overdue by '.abs($info['current']['DaysCompleted']).' days';
+			}
+			elseif ($info['current']['ExtensionsTotalDays'] > 0)
+				$str = '<br/>Extended by <b>'.$info['current']['ExtensionsTotalDays'].'</b> days';
+			else
+				$str = '';
+
+			if ($info['current']['DaysTotal']=='None')
+				$statusPeriod .= 'Started on <b>'.$dtStartedOn.'</b>'.$str;
+			else
+				$statusPeriod .= 'Started on <b>'.$dtStartedOn.'</b>, completes on <b>'.$dtCompletedOn.'</b>'.$str;
+			
+			$info['current']['StatusPeriod'] = $statusPeriod;
+
 		}
 		else {
 			$info['current']['IsSet'] = false;
 			$info['current']['StatusID'] = 0;
 			$info['current']['Description'] = 'Status Not Set';
+			$info['current']['StatusPeriod'] = '';
 			$info['current']['StartedOn'] = '';
 			$info['current']['ExtensionsTotalDays'] = 0;
 			$info['current']['DaysTotal'] = 0;

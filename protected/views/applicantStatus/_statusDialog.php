@@ -48,6 +48,11 @@
                 );
             ?>
 
+            <?php 
+              echo $form->checkBoxControlGroup($model, 'IsCurrent', array('disabled' => false));
+            ?>
+
+
             <div class="control-group ">
                 <label class="control-label" for="ApplicantStatus_StartedOn">Started On</label>
                 <div class="controls">
