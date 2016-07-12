@@ -56,3 +56,4 @@ ALTER TABLE `children` CHANGE `BirthDate` `BirthDate` DATE NULL DEFAULT NULL ;
 ===
 
 ALTER TABLE `applicant_status` ADD `IsCurrent` BOOLEAN NULL DEFAULT NULL AFTER `StatusID` ;
+UPDATE applicant_status SET IsCurrent =1 WHERE (CompletedOn IS NULL)
