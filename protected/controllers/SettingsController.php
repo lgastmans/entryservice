@@ -160,10 +160,11 @@ class SettingsController extends Controller
 		//exec('cd /home/luk/Desktop/', $output, $result);
 		//exec('git pull https://github.com/lgastmans/entryservice.git', $output, $result);
 		//exec('cd /home/luk/Desktop/entryservice; git pull 2->&1;', $output, $result);
-		exec('cd /home/luk/Desktop/entryservice; git status 2->&1;', $output, $result);
+		//exec('cd /var/www/entryservice; git status 2->&1;', $output, $result);
+		exec('cd /var/www/entryservice; git pull 2->&1;', $output, $result);
 
-		$arr[] = $output;
-		$arr[] = $result;
+		$arr['output'] = $output;
+		$arr['result'] = $result;
 
 		echo json_encode($arr);
 	}

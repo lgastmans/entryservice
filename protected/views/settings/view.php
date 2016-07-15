@@ -30,8 +30,9 @@ $this->menu=array(
 					'url' => CController::createUrl('settings/checkUpdates'),
 					//'data' => '',
 			'success'=>"js:function(data) {
-				$('#update-output').text(data);
-				console.log(data);
+				var obj = jQuery.parseJSON(data);
+				//$('#update-output').html('output:' + obj.output + ', result: ' + obj.result);
+				console.log(obj);
 			}",
         ),
         array(
