@@ -46,7 +46,7 @@ class ApplicantController extends Controller
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
 				'actions'=>array('create','update','admin','editable','import',
 					'addPassport', 'deletePassport', 'updatePassport',
-					'addVisa', 'deleteVisa', 'updateVisa',
+					'addVisa', 'deleteVisa', 'updateVisa', 'exportData',
 					'addIndian', 'deleteIndian', 'updateIndian',
 					'viewApplicant','archiveApplicant','error'),
 				'users'=>array('@'),
@@ -60,6 +60,53 @@ class ApplicantController extends Controller
 				'users'=>array('*'),
 			),
 		);
+	}
+
+	public function actionExportData() {
+		//$data=array();
+
+		header("Content-Type: application/text; name=invent.csv");
+		header("Content-Transfer-Encoding: binary");
+		header("Content-Disposition: attachment; filename=applicants.csv");
+		header("Expires: 0");
+		header("Cache-Control: no-cache, must-revalidate");
+		header("Pragma: no-cache");
+
+		echo "Name \t Surname \t AV Name \t Status \t DOB \t Age \t Sex \t Marital Status \t RS Number \t Nationality \n";
+
+		$model = new Applicant();
+		$dataProvider = $model->search();
+		$dataProvider->setPagination(false);
+		
+		foreach($dataProvider->getData() as $record) {
+			/*
+   			$data[$record->ID]['Name'] = $record->Name;
+   			$data[$record->ID]['SurName'] = $record->Surname;
+   			$data[$record->ID]['AVName'] = $record->AVName;
+   			$data[$record->ID]['Status'] = ApplicantStatus::model()->getCurrentStatus($record->ID);
+   			$data[$record->ID]['BirthDate'] = $record->BirthDate;
+   			$data[$record->ID]['Age'] = $record->Age;
+   			$data[$record->ID]['Sex'] = $record->Sex;
+   			$data[$record->ID]['MaritalStatus'] = $record->MaritalStatus;
+   			$data[$record->ID]['ResServiceNum'] = $record->ResServiceNum;
+   			$data[$record->ID]['Nationality'] = $record->nationality->Nationality;
+   			*/
+
+			$str = $record->Name."\t".
+				$record->Surname."\t".
+				$record->AVName."\t".
+				ApplicantStatus::model()->getCurrentStatus($record->ID)."\t".
+				$record->BirthDate."\t".
+				$record->Age."\t".
+				$record->Sex."\t".
+				$record->MaritalStatus."\t".
+				$record->ResServiceNum."\t".
+				$record->nationality->Nationality."\n";
+
+			echo $str;
+  		}
+
+		//echo json_encode($data);
 	}
 
 	public function actionArchiveApplicant($id){

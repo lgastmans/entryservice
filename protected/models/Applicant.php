@@ -217,10 +217,10 @@ class Applicant extends CActiveRecord
 		if (isset($_SESSION['adminFilterData'])) {
 			//$this->full_name 		=$_SESSION['adminFilterData']['full_name'];
 			$this->Name 			=$_SESSION['adminFilterData']['Name'];
-			$this->Surname	 		=$_SESSION['adminFilterData']['Surname'];
+			$this->Surname			=$_SESSION['adminFilterData']['Surname'];
 			$this->AVName 			=$_SESSION['adminFilterData']['AVName'];
 			$this->status_fs 		=$_SESSION['adminFilterData']['status_fs'];
-			$this->BirthDate  		=$_SESSION['adminFilterData']['BirthDate'];
+			$this->BirthDate 		=$_SESSION['adminFilterData']['BirthDate'];
 			$this->Sex 				=$_SESSION['adminFilterData']['Sex'];
 			$this->MaritalStatus	=$_SESSION['adminFilterData']['MaritalStatus'];
 			$this->ResServiceNum	=$_SESSION['adminFilterData']['ResServiceNum'];

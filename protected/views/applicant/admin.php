@@ -53,7 +53,39 @@ Yii::app()->clientScript->registerScript("jsfuncs", "
 	<div style="float: right;">
 		
 		<?php
-			
+			echo TbHtml::linkButton(
+				'Export to Excel',
+				array(
+					'submit'=>CController::createUrl('applicant/exportData'),
+					'color'=>TbHtml::BUTTON_COLOR_PRIMARY,
+				)
+			); 
+		?>
+
+		<?php
+			/*
+			echo TbHtml::ajaxButton(
+		        'Export to Excel',
+		        array('applicant/exportData'),
+		        array(
+			        'dataType'=>'json',
+			        'type'=>'post',
+							'url' => CController::createUrl('applicant/exportData'),
+							'data' => 'js:{ "data": null }',
+					'success'=>"js:function(data) {
+						console.log(data);
+					}",
+		        ),
+		        array(
+			        'id'=>'exportID',
+			        'size'=>TbHtml::BUTTON_SIZE_DEFAULT,
+			        'color'=>TbHtml::BUTTON_COLOR_PRIMARY,
+		        )
+		    );
+		    */
+
+			echo "&nbsp;&nbsp;";
+
 			echo TbHtml::buttonGroup(
 				array(
 			    	array('label' => 'All', 'onclick'=>'toggleArchived("All")'),
@@ -62,7 +94,7 @@ Yii::app()->clientScript->registerScript("jsfuncs", "
 				), 
 				array(
 					'id' => 'toggle-archived',
-					'toggle' => TbHtml::BUTTON_TOGGLE_RADIO, 
+					'toggle' => TbHtml::BUTTON_TOGGLE_RADIO,
 					'color' => TbHtml::BUTTON_COLOR_PRIMARY
 				)
 			);
