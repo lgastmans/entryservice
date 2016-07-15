@@ -429,13 +429,16 @@ class ApplicantStatus extends CActiveRecord
 				$dtCompletedOn = $dtCompletedOn->format('j M, Y');
 			}
 			
-			if ($info['current']['DaysCompleted'] < 0) {
-				$str = '<br/>Overdue by '.abs($info['current']['DaysCompleted']).' days';
+			$str='';
+			if (($data->DurationPeriod != 'None') && ($data->DurationPeriod != '')) {
+				if ($info['current']['DaysCompleted'] < 0) {
+					$str = '<br/>Overdue by '.abs($info['current']['DaysCompleted']).' days';
+				}
+				elseif ($info['current']['ExtensionsTotalDays'] > 0)
+					$str = '<br/>Extended by '.$info['current']['ExtensionsTotalDays'].' days';
+				else
+					$str = '';
 			}
-			elseif ($info['current']['ExtensionsTotalDays'] > 0)
-				$str = '<br/>Extended by <b>'.$info['current']['ExtensionsTotalDays'].'</b> days';
-			else
-				$str = '';
 
 			if ($info['current']['DaysTotal']=='None')
 				$statusPeriod .= 'Started on <b>'.$dtStartedOn.'</b>'.$str;
