@@ -187,14 +187,16 @@
             ?>
 
             <?php
-              if (($nat_india_visible=='none') && ($nat_foreign_visible=='none')) {
-                $this->widget('yiiwheels.widgets.box.WhBox', array(
-                    'title' => 'Passport/Visa/Indian ID Details',
-                    'headerIcon' => TbHtml::ICON_INFO_SIGN,
-                    'content' => "Please specify nationality and click Save",
-                    'htmlOptions' => array('style'=>'width:470px;'),
-                ));
-              } 
+              if (! $model->isNewRecord) {
+                if (($nat_india_visible=='none') && ($nat_foreign_visible=='none')) {
+                  $this->widget('yiiwheels.widgets.box.WhBox', array(
+                      'title' => 'Passport/Visa/Indian ID Details',
+                      'headerIcon' => TbHtml::ICON_INFO_SIGN,
+                      'content' => "Please specify nationality and click Save",
+                      'htmlOptions' => array('style'=>'width:470px;'),
+                  ));
+                } 
+              }
             ?>
 
             <!-- INDIAN ID DETAILS -->
