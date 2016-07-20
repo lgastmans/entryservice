@@ -66,24 +66,13 @@ class ApplicantController extends Controller
 
 		$model = Applicant::model()->findByPk($ID);
 
-		// header("Content-Type: application/pdf; name=".$model->Name."pdf");
-		// header("Content-Transfer-Encoding: binary");
-		// header("Content-Disposition: attachment; filename=".$model->Name."pdf");
-		// header("Expires: 0");
-		// header("Cache-Control: no-cache, must-revalidate");
-		// header("Pragma: no-cache");
-
-		$border=0;
-		$caption_width=4;
-		$grand_total=0;
-
 		// create new PDF document
 		$pdf = Yii::createComponent('application.extensions.tcpdf.ETcPdf', 'P', 'cm', 'A4', true, 'UTF-8');
 
 		// set document information
 		$pdf->SetCreator('Auroville Entry Service');
 		$pdf->SetAuthor('Auroville Entry Service');
-		$pdf->SetTitle('Auroville Entry Service');
+		$pdf->SetTitle('Applicant Details');
 		$pdf->SetKeywords('Entry Service, Auroville');
 		$pdf->SetPrintHeader(false);
 
@@ -108,6 +97,11 @@ class ApplicantController extends Controller
 		 * Cell(w=0, h=0, txt='', border=0, ln=0, align='', fill=false, link='', stretch=0, ignore_min_height=false, calign='T', valign='M')
 		 */
 
+
+		/*
+			Header
+		*/
+
 		/*
 		function Image($file, $x='', $y='', $w=0, $h=0, $type='', $link='', $align='', $resize=false, $dpi=300, $palign='', $ismask=false, $imgmask=false, $border=0, $fitbox=false, $hidden=false, $fitonpage=false, $alt=false, $altimgs=array())
 		*/
@@ -123,7 +117,7 @@ class ApplicantController extends Controller
 		else
 			$pdf->Cell(0, 0, $model->FullName, 0, 1, 'L', 0, '', 0);
 
-		$pdf->SetFont('dejavusans', '', 14, '', true);
+		$pdf->SetFont('dejavusans', '', 12, '', true);
 
 		$pdf->setXY($pdf->margin_left, $pdf->GetY());
 		$pdf->Cell(0, 0, "Status : ".ApplicantStatus::model()->getCurrentStatus($model->ID), 0, 1, 'L', 0, '', 0);
@@ -138,6 +132,10 @@ class ApplicantController extends Controller
 		$pdf->Cell(0, 0, " ", 0, 1, 'L', 0, '', 0);
 
 		$pdf->Line($pdf->margin_left, $pdf->GetY(), 20, $pdf->GetY());
+
+		/*
+			Body
+		*/
 
 		if ($model->nationality->Nationality=="India") {
 			$info="ID : Not Set";
@@ -214,6 +212,17 @@ class ApplicantController extends Controller
 			$pdf->setXY($pdf->margin_left, $pdf->GetY());
 			$pdf->Cell(0, 0, $str, 0, 1, 'L', 0, '', 0);
 		}
+
+		/*
+			Footer
+		*/
+		$pdf->Line($pdf->margin_left, 24, 20, 24);
+
+		$pdf->SetFont('dejavusans', '', 10, '', true);
+
+		$pdf->setXY($pdf->margin_left, 24);
+		$pdf->Cell(0, 0, "Auroville Entry Service", 0, 1, 'L', 0, '', 0);
+		
 
 
 		$pdf->Output("applicant".$model->ID.".pdf", 'D');

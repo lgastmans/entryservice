@@ -73,6 +73,16 @@ Yii::app()->clientScript->registerScript('updateJSFuncs', "
 	</div>
 	<div style="float: right;padding-right:100px;">
 		<?php
+			echo TbHtml::linkButton(
+				'Export to PDF',
+				array(
+					'submit'=>CController::createUrl('applicant/viewPdf', array('ID'=>$model->ID)),
+					'color'=>TbHtml::BUTTON_COLOR_PRIMARY,
+					'id'=>'btnPDF'
+				)
+			);
+			
+			/*
 			$applicant_info = $model->ApplicantQRCode;
 
 			$this->widget('application.extensions.qrcode.QRCodeGenerator',array(
@@ -87,7 +97,7 @@ Yii::app()->clientScript->registerScript('updateJSFuncs', "
 			    'errorCorrectionLevel'=>'L', // available parameter is L,M,Q,H
 			    'matrixPointSize'=>4, // 1 to 10 only
 			));
-
+			*/
 		?>
 	</div>
 </div>
