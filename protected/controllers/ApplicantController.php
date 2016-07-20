@@ -216,7 +216,7 @@ class ApplicantController extends Controller
 		}
 
 
-		$pdf->Output('invoice.pdf', 'D');
+		$pdf->Output("applicant".$model->ID.".pdf", 'D');
 
 	}
 
