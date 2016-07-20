@@ -58,6 +58,7 @@ Yii::app()->clientScript->registerScript("jsfuncs", "
 				array(
 					'submit'=>CController::createUrl('applicant/exportData'),
 					'color'=>TbHtml::BUTTON_COLOR_PRIMARY,
+					'id'=>'btnExcel'
 				)
 			); 
 		?>
@@ -236,6 +237,11 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 			'class'=>'bootstrap.widgets.TbButtonColumn',
             'template'=>'{view} {update} {archive}',
             'buttons'=>array(
+            	'download'=>array(
+                    'label'=>'Download applicant PDF',
+                    'icon'=>(TbHtml::ICON_FILE),
+                    'url'=>'Yii::app()->createUrl("applicant/viewPdf", array("id"=>$data->ID)',
+           		),
                 'view'=> array(
                     'label'=>'View applicant details',
                     'url'=>'Yii::app()->createUrl("applicant/viewApplicant", array("id"=>$data->ID,"asDialog"=>1))',

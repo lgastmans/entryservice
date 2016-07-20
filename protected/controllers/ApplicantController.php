@@ -48,7 +48,7 @@ class ApplicantController extends Controller
 					'addPassport', 'deletePassport', 'updatePassport',
 					'addVisa', 'deleteVisa', 'updateVisa', 'exportData',
 					'addIndian', 'deleteIndian', 'updateIndian',
-					'viewApplicant','archiveApplicant','error'),
+					'viewApplicant','archiveApplicant','error','viewPdf'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -60,6 +60,164 @@ class ApplicantController extends Controller
 				'users'=>array('*'),
 			),
 		);
+	}
+
+	public function actionViewPdf($ID) {
+
+		$model = Applicant::model()->findByPk($ID);
+
+		// header("Content-Type: application/pdf; name=".$model->Name."pdf");
+		// header("Content-Transfer-Encoding: binary");
+		// header("Content-Disposition: attachment; filename=".$model->Name."pdf");
+		// header("Expires: 0");
+		// header("Cache-Control: no-cache, must-revalidate");
+		// header("Pragma: no-cache");
+
+		$border=0;
+		$caption_width=4;
+		$grand_total=0;
+
+		// create new PDF document
+		$pdf = Yii::createComponent('application.extensions.tcpdf.ETcPdf', 'P', 'cm', 'A4', true, 'UTF-8');
+
+		// set document information
+		$pdf->SetCreator('Auroville Entry Service');
+		$pdf->SetAuthor('Auroville Entry Service');
+		$pdf->SetTitle('Auroville Entry Service');
+		$pdf->SetKeywords('Entry Service, Auroville');
+		$pdf->SetPrintHeader(false);
+
+		//set margins
+		$pdf->SetMargins($pdf->margin_left, $pdf->margin_top, $pdf->margin_right);
+		//$pdf->SetHeaderMargin($pdf->header_margin);
+		//$pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
+
+		//set auto page breaks
+		$pdf->SetAutoPageBreak(TRUE, $pdf->margin_bottom);
+
+		// Add a page
+		$pdf->AddPage();
+
+		// Set font
+		$pdf->SetFont('dejavusans', 'B', 22, '', true);
+		
+		//$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
+		$pdf->setImageScale(1);
+
+		/*
+		 * Cell(w=0, h=0, txt='', border=0, ln=0, align='', fill=false, link='', stretch=0, ignore_min_height=false, calign='T', valign='M')
+		 */
+
+		/*
+		function Image($file, $x='', $y='', $w=0, $h=0, $type='', $link='', $align='', $resize=false, $dpi=300, $palign='', $ismask=false, $imgmask=false, $border=0, $fitbox=false, $hidden=false, $fitonpage=false, $alt=false, $altimgs=array())
+		*/
+		$file = Yii::getPathOfAlias('webroot')."/images/applicants/".$model->Photo;
+		if (!(empty($model->Photo)) && (file_exists($file)))
+			$pdf->Image(Yii::app()->getBaseUrl(true)."/images/applicants/".$model->Photo, 17.5, 1, 2.5, 0, 'JPG', '', '', true);
+
+		$pdf->SetFont('dejavusans', 'B', 14, '', true);
+
+		$pdf->setXY($pdf->margin_left, 1);
+		if (!(empty($model->AVName)))
+			$pdf->Cell(0, 0, $model->FullName." (".$model->AVName.")", 0, 1, 'L', 0, '', 0);
+		else
+			$pdf->Cell(0, 0, $model->FullName, 0, 1, 'L', 0, '', 0);
+
+		$pdf->SetFont('dejavusans', '', 14, '', true);
+
+		$pdf->setXY($pdf->margin_left, $pdf->GetY());
+		$pdf->Cell(0, 0, "Status : ".ApplicantStatus::model()->getCurrentStatus($model->ID), 0, 1, 'L', 0, '', 0);
+
+		$pdf->setXY($pdf->margin_left, $pdf->GetY());
+		$pdf->Cell(0, 0, "Nationality : ".$model->nationality->Nationality, 0, 1, 'L', 0, '', 0);
+
+		$pdf->setXY($pdf->margin_left, $pdf->GetY());
+		$pdf->Cell(0, 0, "R.S. Number : ".$model->ResServiceNum, 0, 1, 'L', 0, '', 0);
+
+		$pdf->setXY($pdf->margin_left, $pdf->GetY());
+		$pdf->Cell(0, 0, " ", 0, 1, 'L', 0, '', 0);
+
+		$pdf->Line($pdf->margin_left, $pdf->GetY(), 20, $pdf->GetY());
+
+		if ($model->nationality->Nationality=="India") {
+			$info="ID : Not Set";
+			if (isset($model->india->TypeID)) {
+				$info = $model->india->TypeID." ".$model->india->Number;
+			}
+	
+			$pdf->setXY($pdf->margin_left, $pdf->GetY());
+			$pdf->Cell(0, 0, "ID : ".$info, 0, 1, 'L', 0, '', 0);
+
+		} else {
+
+			$ppInfo = "Passport : Not Set";
+
+			if (isset($model->passport)) {
+				if (isset($model->passport->ValidTill))
+					$ppInfo = "Passport : ".$model->passport->PassportNumber.", valid till ".$model->passport->ValidTill;
+				else
+					$ppInfo = "Passport : ".$model->passport->PassportNumber;
+			}
+
+			$vInfo = "Visa : Not Set";
+			if (isset($model->visa)) {
+				if (isset($model->visa->ValidTill))
+					$vInfo = "Visa : ".$model->visa->VisaType.", valid till ".$model->visa->ValidTill;
+				else
+					$vInfo = "Visa : ".$model->visa->VisaType;
+			}
+	
+			$pdf->setXY($pdf->margin_left, $pdf->GetY());
+			$pdf->Cell(0, 0, " ", 0, 1, 'L', 0, '', 0);
+
+			$pdf->setXY($pdf->margin_left, $pdf->GetY());
+			$pdf->Cell(0, 0, $ppInfo, 0, 1, 'L', 0, '', 0);
+
+			$pdf->setXY($pdf->margin_left, $pdf->GetY());
+			$pdf->Cell(0, 0, $vInfo, 0, 1, 'L', 0, '', 0);
+		}
+
+		$pdf->setXY($pdf->margin_left, $pdf->GetY());
+		$pdf->Cell(0, 0, " ", 0, 1, 'L', 0, '', 0);
+
+		$arr = Address::model()->search($model->ID);
+
+		foreach ($arr->getData() as $address) {
+			$str = "RES: ".$address['community']['Name'];
+
+			if (isset($address['FromDate']))
+				$str .= ", from ".$address['FromDate'];
+
+			if (isset($address['ToDate']))
+				$str .= " to ".$address['ToDate'];
+
+			$pdf->setXY($pdf->margin_left, $pdf->GetY());
+			$pdf->Cell(0, 0, $str, 0, 1, 'L', 0, '', 0);
+		}
+
+		$arr = Work::model()->search($model->ID);
+
+		if (count($arr)>0) {
+			$pdf->setXY($pdf->margin_left, $pdf->GetY());
+			$pdf->Cell(0, 0, " ", 0, 1, 'L', 0, '', 0);
+		}
+
+		foreach ($arr->getData() as $work) {
+			$str = "WORK: ".$work['Place'];
+
+			if (isset($work['FromDate']))
+				$str .= ", from ".$work['FromDate'];
+
+			if (isset($work['ToDate']))
+				$str .= " to ".$work['ToDate'];
+
+			$pdf->setXY($pdf->margin_left, $pdf->GetY());
+			$pdf->Cell(0, 0, $str, 0, 1, 'L', 0, '', 0);
+		}
+
+
+		$pdf->Output('invoice.pdf', 'D');
+
 	}
 
 	public function actionExportData() {
@@ -132,6 +290,9 @@ class ApplicantController extends Controller
 
 		if (Yii::app()->request->isAjaxRequest)
 	    {
+			Yii::app()->clientScript->scriptMap['jquery.js'] = false;
+			Yii::app()->clientScript->scriptMap['jquery.min.js'] = false;
+
 	        //outputProcessing = true because including css-files ...
 	        $this->renderPartial('view', array('model'=>$this->loadModel($id),),false,true);
 

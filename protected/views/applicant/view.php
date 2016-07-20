@@ -33,6 +33,17 @@ $this->menu=array(
 	}
 </style>
 
+<?php
+	echo TbHtml::linkButton(
+		'Export to PDF',
+		array(
+			'submit'=>CController::createUrl('applicant/viewPdf', array('ID'=>$model->ID)),
+			'color'=>TbHtml::BUTTON_COLOR_PRIMARY,
+			'id'=>'btnPDF'
+		)
+	); 
+?>
+
 <div>
 	<div style="float: left;margin-bottom:70px;">
 
@@ -78,7 +89,7 @@ $this->menu=array(
 <div>
 	<?php
 		if ($model->nationality->Nationality=="India") {
-			$info="Not Set";
+			$info="ID : Not Set";
 			if (isset($model->india->TypeID)) {
 				$info = $model->india->TypeID." ".$model->india->Number;
 			}
